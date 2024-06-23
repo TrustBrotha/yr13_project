@@ -7,6 +7,7 @@ const JUMP_VELOCITY = 4.5
 @onready var cam_pivot_y = $cam_origin_y
 
 @export var sensitivity = 0.5
+@export var vel_tolerance = 2
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -23,8 +24,10 @@ func _input(event):
 
 
 func _physics_process(delta):
-	print(velocity)
-	if velocity != Vector3.ZERO:
+	
+	var vel_size = sqrt(velocity.x**2+velocity.y**2+velocity.z**2)
+	print(vel_size)
+	if vel_size > vel_tolerance:
 		$Node3D.rotation.y=lerp_angle($Node3D.rotation.y,atan2(velocity.x,velocity.z),7.5*delta)
 	if velocity == Vector3.ZERO:
 		$Node3D.rotation.y=$Node3D.rotation.y
