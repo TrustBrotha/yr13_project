@@ -1,6 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dt3wnnohrvbua"]
+[gd_scene load_steps=8 format=3 uid="uid://dt3wnnohrvbua"]
 
-[ext_resource type="Script" path="res://scripts/player.gd" id="1_jlnu4"]
+[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_lmefh"]
+[ext_resource type="Script" path="res://scripts/player/player_state_machine/character_state_machine.gd" id="2_stxjh"]
+[ext_resource type="Script" path="res://scripts/player/player_state_machine/ground_state.gd" id="3_lq7sl"]
+[ext_resource type="Script" path="res://scripts/player/player_state_machine/air_state.gd" id="4_hopct"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_7mgqi"]
 
@@ -11,7 +14,7 @@ radius = 0.2
 height = 0.4
 
 [node name="player" type="CharacterBody3D"]
-script = ExtResource("1_jlnu4")
+script = ExtResource("1_lmefh")
 
 [node name="player_asset" type="CSGMesh3D" parent="."]
 mesh = SubResource("CapsuleMesh_7mgqi")
@@ -22,7 +25,7 @@ shape = SubResource("CapsuleShape3D_ebtdl")
 [node name="Node3D" type="Node3D" parent="."]
 
 [node name="direction_show" type="CSGMesh3D" parent="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 gi_mode = 2
 mesh = SubResource("SphereMesh_pwod1")
 
@@ -38,4 +41,13 @@ margin = 0.5
 [node name="Camera3D" type="Camera3D" parent="cam_origin_y/cam_origin_x/SpringArm3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
 
-[node name="state_machine" type="Node" parent="."]
+[node name="character_state_machine" type="Node" parent="." node_paths=PackedStringArray("character", "current_state")]
+script = ExtResource("2_stxjh")
+character = NodePath("..")
+current_state = NodePath("ground")
+
+[node name="ground" type="Node" parent="character_state_machine"]
+script = ExtResource("3_lq7sl")
+
+[node name="air" type="Node" parent="character_state_machine"]
+script = ExtResource("4_hopct")

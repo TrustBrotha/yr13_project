@@ -4,7 +4,11 @@ extends CharacterBody3D
 const SPEED = 10.0
 const ACCELERATION = 0.2
 const SPRITE_TURN_SPEED = 8
-const JUMP_VELOCITY = 4.5
+const JUMP_VELOCITY = 10
+
+# defines the state machine to me manipulated as a variable
+@onready var state_machine : CharacterStateMachine = $character_state_machine
+
 @onready var cam_pivot_x = $cam_origin_y/cam_origin_x
 @onready var cam_pivot_y = $cam_origin_y
 @onready var sprite = $Node3D
@@ -40,19 +44,18 @@ func _physics_process(delta):
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_forward", "ui_back")
 	var direction = (cam_pivot_y.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
+		
 		velocity.x = lerp(velocity.x,direction.x*SPEED,ACCELERATION)
 		velocity.z = lerp(velocity.z,direction.z*SPEED,ACCELERATION)
 		
 		# controls the rotation of the sprite
-		sprite.rotation.y=lerp_angle(sprite.rotation.y,atan2(direction.x,direction.z),SPRITE_TURN_SPEED*delta)
+		sprite.rotation.y=lerp_angle(sprite.rotation.y,atan2(direction.x,direction.z)+PI,SPRITE_TURN_SPEED*delta)
 		
 	else:
 		velocity.x = lerp(velocity.x,0.0,ACCELERATION)
 		velocity.z = lerp(velocity.z,0.0,ACCELERATION)
-	
-	
 	
 	move_and_slide()
