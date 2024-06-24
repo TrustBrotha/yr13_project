@@ -15,10 +15,10 @@ background_mode = 2
 sky = SubResource("Sky_eoj84")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hp8qt"]
-size = Vector3(30, 0.5, 30)
+size = Vector3(50, 0.5, 50)
 
 [sub_resource type="BoxMesh" id="BoxMesh_whfrt"]
-size = Vector3(30, 0.5, 30)
+size = Vector3(50, 0.5, 50)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4xgqa"]
 size = Vector3(5, 4, 5)
