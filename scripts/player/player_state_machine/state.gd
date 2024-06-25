@@ -2,7 +2,9 @@ extends Node
 class_name State
 
 @export var can_move_state = true
-var character : CharacterBody2D
+@export var sprite_lock = false
+var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+var character : CharacterBody3D
 var next_state : State
 
 

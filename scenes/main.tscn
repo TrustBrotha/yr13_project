@@ -1,6 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cii7v3g4w22t3"]
+[gd_scene load_steps=11 format=3 uid="uid://cii7v3g4w22t3"]
 
 [ext_resource type="PackedScene" uid="uid://dt3wnnohrvbua" path="res://scenes/player.tscn" id="1_1nft5"]
+[ext_resource type="Script" path="res://scripts/test_world.gd" id="1_caq4c"]
+[ext_resource type="PackedScene" uid="uid://b1ssecsvg82dl" path="res://scenes/hud.tscn" id="1_senue"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_n27jv"]
 sky_top_color = Color(0.211765, 0.313726, 0.552941, 1)
@@ -27,6 +29,9 @@ size = Vector3(5, 4, 5)
 size = Vector3(5, 4, 5)
 
 [node name="main" type="Node3D"]
+script = ExtResource("1_caq4c")
+
+[node name="HUD" parent="." instance=ExtResource("1_senue")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_5jn7y")

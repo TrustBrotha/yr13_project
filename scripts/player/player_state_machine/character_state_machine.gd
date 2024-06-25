@@ -29,6 +29,9 @@ func _physics_process(delta):
 func check_if_can_move():
 	return current_state.can_move_state
 
+func check_sprite_lock():
+	return current_state.sprite_lock
+
 
 # controls on exit and on enter functions for states
 func switch_states(new_state : State):

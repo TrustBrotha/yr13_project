@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://dt3wnnohrvbua"]
+[gd_scene load_steps=9 format=3 uid="uid://dt3wnnohrvbua"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_lmefh"]
 [ext_resource type="Script" path="res://scripts/player/player_state_machine/character_state_machine.gd" id="2_stxjh"]
 [ext_resource type="Script" path="res://scripts/player/player_state_machine/ground_state.gd" id="3_lq7sl"]
 [ext_resource type="Script" path="res://scripts/player/player_state_machine/air_state.gd" id="4_hopct"]
+[ext_resource type="Script" path="res://scripts/player/player_state_machine/dash_state.gd" id="5_xohg7"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_7mgqi"]
 
@@ -29,6 +30,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 gi_mode = 2
 mesh = SubResource("SphereMesh_pwod1")
 
+[node name="timers" type="Node" parent="."]
+
+[node name="dash_time" type="Timer" parent="timers"]
+wait_time = 0.2
+one_shot = true
+
 [node name="cam_origin_y" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.864481, 0)
 
@@ -44,10 +51,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
 [node name="character_state_machine" type="Node" parent="." node_paths=PackedStringArray("character", "current_state")]
 script = ExtResource("2_stxjh")
 character = NodePath("..")
-current_state = NodePath("ground")
+current_state = NodePath("air")
 
-[node name="ground" type="Node" parent="character_state_machine"]
+[node name="ground" type="Node" parent="character_state_machine" node_paths=PackedStringArray("air_state_var", "dash_state_var")]
 script = ExtResource("3_lq7sl")
+air_state_var = NodePath("../air")
+dash_state_var = NodePath("../dash")
 
-[node name="air" type="Node" parent="character_state_machine"]
+[node name="air" type="Node" parent="character_state_machine" node_paths=PackedStringArray("ground_state_var", "dash_state_var")]
 script = ExtResource("4_hopct")
+ground_state_var = NodePath("../ground")
+dash_state_var = NodePath("../dash")
+
+[node name="dash" type="Node" parent="character_state_machine" node_paths=PackedStringArray("air_state_var")]
+script = ExtResource("5_xohg7")
+air_state_var = NodePath("../air")
+can_move_state = false
+sprite_lock = true
+
+[connection signal="timeout" from="timers/dash_time" to="character_state_machine/dash" method="_on_dash_time_timeout"]

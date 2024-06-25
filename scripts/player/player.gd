@@ -12,10 +12,15 @@ const JUMP_VELOCITY = 10
 @onready var cam_pivot_x = $cam_origin_y/cam_origin_x
 @onready var cam_pivot_y = $cam_origin_y
 @onready var sprite = $Node3D
+@onready var dash_timer=$timers/dash_time
+
 @export var sensitivity = 0.5
 @export var vel_tolerance = 1
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+
+var direction
+var sprite_lock = false
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -31,28 +36,26 @@ func _input(event):
 
 
 func _physics_process(delta):
-	# Add the gravity.
-	if not is_on_floor():
-		velocity.y -= gravity * delta
-	
-	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-	
+
 	if Input.is_action_just_pressed("ui_quit"):
 		get_tree().quit()
-
+	
+	sprite_lock = state_machine.check_sprite_lock()
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_forward", "ui_back")
-	var direction = (cam_pivot_y.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	direction = (cam_pivot_y.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
-		
-		velocity.x = lerp(velocity.x,direction.x*SPEED,ACCELERATION)
-		velocity.z = lerp(velocity.z,direction.z*SPEED,ACCELERATION)
-		
-		# controls the rotation of the sprite
-		sprite.rotation.y=lerp_angle(sprite.rotation.y,atan2(direction.x,direction.z)+PI,SPRITE_TURN_SPEED*delta)
+		if state_machine.check_if_can_move():
+			velocity.x = lerp(velocity.x,direction.x*SPEED,ACCELERATION)
+			velocity.z = lerp(velocity.z,direction.z*SPEED,ACCELERATION)
+			
+		if sprite_lock == false:
+			# controls the rotation of the sprite
+			sprite.rotation.y=lerp_angle(sprite.rotation.y,atan2(direction.x,direction.z)+PI,SPRITE_TURN_SPEED*delta)
+		elif sprite_lock == true:
+			
+			sprite.rotation.y=lerp_angle(sprite.rotation.y,atan2(velocity.x,velocity.z)+PI,SPRITE_TURN_SPEED*delta)
 		
 	else:
 		velocity.x = lerp(velocity.x,0.0,ACCELERATION)
