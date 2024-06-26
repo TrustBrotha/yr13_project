@@ -32,7 +32,8 @@ func state_input(event : InputEvent):
 
 
 func on_exit():
-	pass
+	character.can_dash = false
+	character.dash_cooldown.start()
 
 
 func _on_dash_time_timeout():

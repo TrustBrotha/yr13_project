@@ -22,11 +22,11 @@ size = Vector3(50, 0.5, 50)
 [sub_resource type="BoxMesh" id="BoxMesh_whfrt"]
 size = Vector3(50, 0.5, 50)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_4xgqa"]
-size = Vector3(5, 4, 5)
+[sub_resource type="BoxShape3D" id="BoxShape3D_lqxr3"]
+size = Vector3(50, 3, 4)
 
 [sub_resource type="BoxMesh" id="BoxMesh_de0se"]
-size = Vector3(5, 4, 5)
+size = Vector3(50, 3, 4)
 
 [node name="main" type="Node3D"]
 script = ExtResource("1_caq4c")
@@ -52,10 +52,11 @@ transform = Transform3D(1, 0, 0, 0, -0.615579, 0.788075, 0, -0.788075, -0.615579
 shadow_enabled = true
 
 [node name="StaticBody3D2" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.871202, 0.474261, 8.33826)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
-shape = SubResource("BoxShape3D_4xgqa")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 25)
+shape = SubResource("BoxShape3D_lqxr3")
 
 [node name="CSGMesh3D" type="CSGMesh3D" parent="StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 25)
 mesh = SubResource("BoxMesh_de0se")

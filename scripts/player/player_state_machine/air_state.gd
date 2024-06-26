@@ -22,8 +22,9 @@ func on_enter():
 	pass
 
 func state_input(event : InputEvent):
-	if Input.is_action_pressed("ui_dash"):
-		next_state = dash_state_var
+	pass
+	#if Input.is_action_pressed("ui_dash"):
+		#next_state = dash_state_var
 	
 
 

@@ -18,7 +18,8 @@ func state_input(event : InputEvent):
 	if event.is_action_pressed("ui_jump"):
 		character.velocity.y = JUMP_VELOCITY
 	if Input.is_action_pressed("ui_dash"):
-		next_state = dash_state_var
+		if character.can_dash:
+			next_state = dash_state_var
 
 
 

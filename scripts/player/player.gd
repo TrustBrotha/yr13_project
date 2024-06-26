@@ -12,7 +12,8 @@ const JUMP_VELOCITY = 10
 @onready var cam_pivot_x = $cam_origin_y/cam_origin_x
 @onready var cam_pivot_y = $cam_origin_y
 @onready var sprite = $Node3D
-@onready var dash_timer=$timers/dash_time
+@onready var dash_timer = $timers/dash_time
+@onready var dash_cooldown = $timers/dash_cooldown
 
 @export var sensitivity = 0.5
 @export var vel_tolerance = 1
@@ -21,6 +22,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var direction
 var sprite_lock = false
+var can_dash = true
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -62,3 +64,7 @@ func _physics_process(delta):
 		velocity.z = lerp(velocity.z,0.0,ACCELERATION)
 	
 	move_and_slide()
+
+
+func _on_dash_cooldown_timeout():
+	can_dash = true

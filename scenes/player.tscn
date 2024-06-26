@@ -36,6 +36,10 @@ mesh = SubResource("SphereMesh_pwod1")
 wait_time = 0.2
 one_shot = true
 
+[node name="dash_cooldown" type="Timer" parent="timers"]
+wait_time = 0.4
+one_shot = true
+
 [node name="cam_origin_y" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.864481, 0)
 
@@ -70,3 +74,4 @@ can_move_state = false
 sprite_lock = true
 
 [connection signal="timeout" from="timers/dash_time" to="character_state_machine/dash" method="_on_dash_time_timeout"]
+[connection signal="timeout" from="timers/dash_cooldown" to="." method="_on_dash_cooldown_timeout"]
