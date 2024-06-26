@@ -1,22 +1,23 @@
 extends CharacterBody3D
 
-
 const SPEED = 10.0
 const ACCELERATION = 0.2
 const SPRITE_TURN_SPEED = 8
 const JUMP_VELOCITY = 10
-
+# testing testing
 # defines the state machine to me manipulated as a variable
 @onready var state_machine : CharacterStateMachine = $character_state_machine
 
 @onready var cam_pivot_x = $cam_origin_y/cam_origin_x
 @onready var cam_pivot_y = $cam_origin_y
 @onready var sprite = $Node3D
+
 @onready var dash_timer = $timers/dash_time
 @onready var dash_cooldown = $timers/dash_cooldown
 
 @export var sensitivity = 0.5
 @export var vel_tolerance = 1
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
