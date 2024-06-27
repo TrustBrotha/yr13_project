@@ -14,10 +14,6 @@ config/name="yr13_project"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
-[display]
-
-window/size/mode=2
-
 [input]
 
 ui_accept={

@@ -29,6 +29,7 @@ func _physics_process(delta):
 func check_if_can_move():
 	return current_state.can_move_state
 
+# checks if the player sprite should be following keyboard inputs
 func check_sprite_lock():
 	return current_state.sprite_lock
 

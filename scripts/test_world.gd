@@ -8,4 +8,4 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	hud.state_label.text=str(player.state_machine.current_state)
+	hud.state_label.text=str(player.state_machine.current_state.name)

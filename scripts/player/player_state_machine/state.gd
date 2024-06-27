@@ -8,8 +8,6 @@ var character : CharacterBody3D
 var next_state : State
 
 
-
-# defines states in "state" class
 func state_process(delta):
 	pass
 
