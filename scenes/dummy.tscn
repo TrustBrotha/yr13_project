@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://tyuf3s0xarde"]
+[gd_scene load_steps=11 format=3 uid="uid://tyuf3s0xarde"]
 
 [ext_resource type="Script" path="res://scripts/dummy.gd" id="1_wp0xx"]
 
@@ -10,9 +10,6 @@
 size = Vector3(0.2, 0.2, 1.8)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ckfs7"]
-radius = 0.3
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hxf70"]
 radius = 0.25
 height = 1.8
 
@@ -21,7 +18,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Node3D/weapon_detect:rotation")
+tracks/0/path = NodePath("weapon:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -33,66 +30,75 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Node3D/weapon_damage/weapon_damage_coll:disabled")
+tracks/1/path = NodePath("weapon:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("weapon/weapon_coll:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
 }
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Node3D/weapon_detect:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
+
+[sub_resource type="Animation" id="Animation_8a2jf"]
+resource_name = "hori_swing"
+length = 2.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("weapon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector3(0, 0, 0)]
 }
-
-[sub_resource type="Animation" id="Animation_8a2jf"]
-resource_name = "hori_swing"
-
-[sub_resource type="Animation" id="Animation_w7a7y"]
-resource_name = "vertical_swing"
-length = 1.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Node3D/weapon_detect:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.8, 1, 1.1, 1.4, 1.5),
-"transitions": PackedFloat32Array(0.406126, 1, 0.329877, 0.31864, 0.217638, 0.482968, 3.13834),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(-0.872665, 0, 0), Vector3(-0.872665, 0, 0), Vector3(-1.39626, 0, 0), Vector3(-1.39626, 0, 0), Vector3(0.349066, 0, 0), Vector3(0, 0, 0)]
-}
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Node3D/weapon_damage/weapon_damage_coll:disabled")
+tracks/1/path = NodePath("weapon:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 1.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, true]
+"times": PackedFloat32Array(0, 0.3, 0.9, 1.4, 1.8, 2.2, 2.6),
+"transitions": PackedFloat32Array(1.7411, 8.28211, 2.54912, 6.49801, 0.378929, 0.435276, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.959931, 0), Vector3(0, 0.959931, 0), Vector3(0, 0.959931, 0), Vector3(0, -0.959931, 0), Vector3(0, -0.959931, 0), Vector3(0, 0, 0)]
 }
-tracks/2/type = "method"
+tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath(".")
+tracks/2/path = NodePath("weapon/weapon_coll:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(1.1, 1.5),
+"times": PackedFloat32Array(0, 0.7, 0.9, 1.6, 1.8, 2.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, true]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.5, 2.2),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [],
@@ -103,12 +109,57 @@ tracks/2/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_w7a7y"]
+resource_name = "vertical_swing"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("weapon:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8, 1, 1.1, 1.4, 1.5),
+"transitions": PackedFloat32Array(0.406126, 1, 0.329877, 0.31864, 0.217638, 0.482968, 3.13834),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.872665, 0, 0), Vector3(-0.872665, 0, 0), Vector3(-1.39626, 0, 0), Vector3(-1.39626, 0, 0), Vector3(0.349066, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.2, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"stop_looking"
+}, {
+"args": [],
+"method": &"start_looking"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("weapon/weapon_coll:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.1, 1.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
 [sub_resource type="Animation" id="Animation_3opi0"]
 resource_name = "parried"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Node3D/weapon_detect:position")
+tracks/0/path = NodePath("weapon:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -120,7 +171,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Node3D/weapon_detect:rotation")
+tracks/1/path = NodePath("weapon:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -128,6 +179,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(0.757859, 0.435275, 3.73213, 1),
 "update": 0,
 "values": [Vector3(-0.404916, 0, 0), Vector3(-0.733038, 1.60221, 0), Vector3(0.136136, 0.811578, 0), Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("weapon/weapon_coll:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pmmsx"]
@@ -138,7 +201,7 @@ _data = {
 "vertical_swing": SubResource("Animation_w7a7y")
 }
 
-[node name="dummy" type="CharacterBody3D"]
+[node name="dummy" type="CharacterBody3D" groups=["enemy"]]
 script = ExtResource("1_wp0xx")
 
 [node name="CSGMesh3D" type="CSGMesh3D" parent="."]
@@ -148,27 +211,18 @@ mesh = SubResource("CapsuleMesh_7hfod")
 shape = SubResource("CapsuleShape3D_sm3e5")
 
 [node name="attack_timer" type="Timer" parent="."]
-wait_time = 2.19
+wait_time = 3.5
 autostart = true
 
-[node name="Node3D" type="Node3D" parent="."]
+[node name="weapon" type="Area3D" parent="." groups=["enemy_weapon"]]
 
-[node name="weapon_detect" type="Area3D" parent="Node3D"]
-
-[node name="CSGMesh3D" type="CSGMesh3D" parent="Node3D/weapon_detect"]
+[node name="CSGMesh3D" type="CSGMesh3D" parent="weapon"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.5)
 mesh = SubResource("BoxMesh_unel0")
 
-[node name="weapon_detection_coll" type="CollisionShape3D" parent="Node3D/weapon_detect"]
+[node name="weapon_coll" type="CollisionShape3D" parent="weapon"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 1.5)
 shape = SubResource("CapsuleShape3D_ckfs7")
-
-[node name="weapon_damage" type="Area3D" parent="Node3D" groups=["enemy_weapon"]]
-transform = Transform3D(1, 0, 0, 0, 0.919135, 0.393942, 0, -0.393942, 0.919135, 0, 0, 0)
-
-[node name="weapon_damage_coll" type="CollisionShape3D" parent="Node3D/weapon_damage"]
-transform = Transform3D(1, 0, 0, 0, -2.98023e-08, -1, 0, 1, -2.98023e-08, 0, 0, 1.5)
-shape = SubResource("CapsuleShape3D_hxf70")
 disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -177,9 +231,9 @@ libraries = {
 }
 
 [node name="parry_forgiveness" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.2
 one_shot = true
 
 [connection signal="timeout" from="attack_timer" to="." method="_on_attack_timer_timeout"]
-[connection signal="area_entered" from="Node3D/weapon_detect" to="." method="_on_weapon_detect_area_entered"]
+[connection signal="area_entered" from="weapon" to="." method="_on_weapon_area_entered"]
 [connection signal="timeout" from="parry_forgiveness" to="." method="_on_parry_forgiveness_timeout"]

@@ -22,11 +22,15 @@ func _physics_process(delta):
 		face_player(delta)
 
 func _on_attack_timer_timeout():
-	$AnimationPlayer.play("vertical_swing")
+	var att = randi_range(0,1)
+	if att == 1:
+		$AnimationPlayer.play("vertical_swing")
+	else:
+		$AnimationPlayer.play("hori_swing")
 
 func face_player(delta):
 	var direction = global_position-player.global_position
-	rotation.y=lerp_angle(rotation.y,atan2(direction.x,direction.z)+PI,4*delta)
+	rotation.y=lerp_angle(rotation.y,atan2(direction.x,direction.z)+PI,6*delta)
 	
 	#rotation.y=atan2(direction.x,direction.z)+PI
 	#rotation.y=move_toward(rotation.y,atan2(direction.x,direction.z)+PI,8*delta)
@@ -38,14 +42,6 @@ func stop_looking():
 	looking = false
 
 
-func _on_weapon_detect_area_entered(area):
+func _on_weapon_area_entered(area):
 	if area.is_in_group("parry_collision"):
 		$AnimationPlayer.play("parried")
-		$parry_forgiveness.start()
-
-
-func _on_parry_forgiveness_timeout():
-	$Node3D/weapon_damage/weapon_damage_coll.disabled = false
-
-
-

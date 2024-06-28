@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dt3wnnohrvbua"]
+[gd_scene load_steps=20 format=3 uid="uid://dt3wnnohrvbua"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_lmefh"]
 [ext_resource type="Script" path="res://scripts/player/player_state_machine/character_state_machine.gd" id="2_stxjh"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/player/player_state_machine/air_state.gd" id="4_hopct"]
 [ext_resource type="Script" path="res://scripts/player/player_state_machine/dash_state.gd" id="5_xohg7"]
 [ext_resource type="Script" path="res://scripts/player/player_state_machine/block_state.gd" id="6_rq0am"]
+[ext_resource type="Script" path="res://scripts/player/player_state_machine/staggered_state.gd" id="7_boktp"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ebtdl"]
 
@@ -24,12 +25,12 @@ size = Vector3(1.8, 0.2, 0.2)
 radius = 0.3
 height = 1.9
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yajf7"]
+radius = 0.6
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ftdld"]
 radius = 0.4
 height = 1.9
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_fbv2r"]
-size = Vector3(1.5, 2, 2)
 
 [sub_resource type="Animation" id="Animation_vodre"]
 length = 0.001
@@ -135,8 +136,9 @@ _data = {
 "parry_start": SubResource("Animation_5yo65")
 }
 
-[node name="player" type="CharacterBody3D"]
+[node name="player" type="CharacterBody3D" node_paths=PackedStringArray("staggered_state_var")]
 script = ExtResource("1_lmefh")
+staggered_state_var = NodePath("character_state_machine/staggered")
 
 [node name="player_collision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_ebtdl")
@@ -165,17 +167,17 @@ mesh = SubResource("BoxMesh_ch22u")
 transform = Transform3D(0.422618, -0.906308, 0, 0.906308, 0.422618, 0, 0, 0, 1, 1.4, -0.7, 0)
 shape = SubResource("CapsuleShape3D_fevmy")
 
+[node name="parry_hitbox" type="Area3D" parent="rotated_things" groups=["parry_collision"]]
+
+[node name="parry_collision" type="CollisionShape3D" parent="rotated_things/parry_hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.39941)
+shape = SubResource("CapsuleShape3D_yajf7")
+disabled = true
+
 [node name="hitbox" type="Area3D" parent="."]
 
 [node name="hitbox_collision" type="CollisionShape3D" parent="hitbox"]
 shape = SubResource("CapsuleShape3D_ftdld")
-
-[node name="parry_hitbox" type="Area3D" parent="." groups=["parry_collision"]]
-
-[node name="parry_collision" type="CollisionShape3D" parent="parry_hitbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.694406)
-shape = SubResource("BoxShape3D_fbv2r")
-disabled = true
 
 [node name="timers" type="Node" parent="."]
 
@@ -196,7 +198,11 @@ wait_time = 0.15
 one_shot = true
 
 [node name="parry_timer" type="Timer" parent="timers"]
-wait_time = 0.3
+wait_time = 0.1
+one_shot = true
+
+[node name="parry_forgiveness_timer" type="Timer" parent="timers"]
+wait_time = 0.05
 one_shot = true
 
 [node name="cam_origin_y" type="Node3D" parent="."]
@@ -210,6 +216,14 @@ margin = 1.0
 
 [node name="Camera3D" type="Camera3D" parent="cam_origin_y/cam_origin_x/camera_spring"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+
+[node name="cam_target_finder" type="Area3D" parent="cam_origin_y/cam_origin_x"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.864481, 0)
+
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="cam_origin_y/cam_origin_x/cam_target_finder"]
+transform = Transform3D(3, 0, 0, 0, -1.31134e-07, 3, 0, -3, -1.31134e-07, 0, 0, 0)
+depth = 10.0
+polygon = PackedVector2Array(0, 0, -5, 10, 5, 10)
 
 [node name="character_state_machine" type="Node" parent="." node_paths=PackedStringArray("character", "current_state")]
 script = ExtResource("2_stxjh")
@@ -240,6 +254,13 @@ ground_state_var = NodePath("../ground")
 air_state_var = NodePath("../air")
 can_move_state = false
 
+[node name="staggered" type="Node" parent="character_state_machine" node_paths=PackedStringArray("ground_state_var", "air_state_var")]
+script = ExtResource("7_boktp")
+ground_state_var = NodePath("../ground")
+air_state_var = NodePath("../air")
+can_move_state = false
+sprite_lock = true
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_wnpd4")
@@ -252,3 +273,6 @@ libraries = {
 [connection signal="timeout" from="timers/coyote_timer" to="character_state_machine/air" method="_on_coyote_timer_timeout"]
 [connection signal="timeout" from="timers/input_buffer_time" to="." method="_on_input_buffer_time_timeout"]
 [connection signal="timeout" from="timers/parry_timer" to="." method="_on_parry_timer_timeout"]
+[connection signal="timeout" from="timers/parry_forgiveness_timer" to="." method="_on_parry_forgiveness_timer_timeout"]
+[connection signal="body_entered" from="cam_origin_y/cam_origin_x/cam_target_finder" to="." method="_on_cam_target_finder_body_entered"]
+[connection signal="body_exited" from="cam_origin_y/cam_origin_x/cam_target_finder" to="." method="_on_cam_target_finder_body_exited"]
