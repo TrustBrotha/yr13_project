@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://cii7v3g4w22t3"]
+[gd_scene load_steps=12 format=3 uid="uid://cii7v3g4w22t3"]
 
 [ext_resource type="PackedScene" uid="uid://dt3wnnohrvbua" path="res://scenes/player.tscn" id="1_1nft5"]
 [ext_resource type="Script" path="res://scripts/test_world.gd" id="1_caq4c"]
 [ext_resource type="PackedScene" uid="uid://b1ssecsvg82dl" path="res://scenes/hud.tscn" id="1_senue"]
+[ext_resource type="PackedScene" uid="uid://tyuf3s0xarde" path="res://scenes/dummy.tscn" id="4_1c4tb"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_n27jv"]
 sky_top_color = Color(0.211765, 0.313726, 0.552941, 1)
@@ -36,8 +37,11 @@ script = ExtResource("1_caq4c")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_5jn7y")
 
-[node name="CharacterBody3D" parent="." instance=ExtResource("1_1nft5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.291588, 1.86141, -0.999449)
+[node name="player" parent="." instance=ExtResource("1_1nft5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6776, 0)
+
+[node name="dummy" parent="." instance=ExtResource("4_1c4tb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.69896, -8.92803)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 

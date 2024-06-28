@@ -2,10 +2,14 @@ extends CharacterBody3D
 
 
 # constants
-const SPEED = 10.0
+
 const ACCELERATION = 0.2
-const SPRITE_TURN_SPEED = 8
+const SPRITE_TURN_SPEED = 12
 const JUMP_VELOCITY = 10
+
+
+signal parry_done
+
 
 # defines the state machine to me manipulated as a variable
 @onready var state_machine : CharacterStateMachine = $character_state_machine
@@ -13,14 +17,17 @@ const JUMP_VELOCITY = 10
 # preloaded nodes
 @onready var cam_pivot_x = $cam_origin_y/cam_origin_x
 @onready var cam_pivot_y = $cam_origin_y
-@onready var sprite = $player_asset
+@onready var sprite = $rotated_things
 @onready var timers = $timers
+@onready var hitbox = $hitbox
+@onready var animation_player : AnimationPlayer = $AnimationPlayer
 #@onready var dash_timer = $timers/dash_time
 #@onready var dash_cooldown = $timers/dash_cooldown
 
 
-@export var sensitivity = 0.3
-@export var vel_tolerance = 1
+var sensitivity = 0.2
+
+
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -30,6 +37,11 @@ var direction
 var sprite_lock = false
 var can_dash = true
 var wants_to_jump = false
+var health = 1000
+var speed = 10.0
+
+var parry_up = false
+var block_up = false
 
 
 func _ready():
@@ -62,12 +74,19 @@ func _physics_process(delta):
 	# calculates the direction
 	direction = (cam_pivot_y.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
-	# if buttons are pressed
+	# if a direction in inputted
 	if direction:
+		# controls sprinting
+		if Input.is_action_pressed("sprint") and is_on_floor():
+			speed = 20.0
+		else:
+			speed = 10.0
+		
+		
 		# checks if the player should be able to move in its current state
 		if state_machine.check_if_can_move():
-			velocity.x = lerp(velocity.x,direction.x*SPEED,ACCELERATION)
-			velocity.z = lerp(velocity.z,direction.z*SPEED,ACCELERATION)
+			velocity.x = lerp(velocity.x,direction.x*speed,ACCELERATION)
+			velocity.z = lerp(velocity.z,direction.z*speed,ACCELERATION)
 		
 		# checks whether should rotate the sprite with the inputs or not
 		if sprite_lock == false:
@@ -91,3 +110,28 @@ func _on_dash_cooldown_timeout():
 # clears buffer
 func _on_input_buffer_time_timeout():
 	wants_to_jump = false
+
+
+
+
+func start_parry_frames():
+	parry_up = true
+	$parry_hitbox/parry_collision.disabled = false
+	timers.get_node("parry_timer").start()
+
+func _on_parry_timer_timeout():
+	parry_up = false
+	parry_done.emit()
+	$parry_hitbox/parry_collision.disabled = true
+	block_up = true
+
+func _on_hitbox_area_entered(area):
+	if area.is_in_group("enemy_weapon"):
+		if parry_up == true:
+			pass
+		elif block_up == true:
+			health-=5
+		else:
+			health-=10
+
+

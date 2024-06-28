@@ -1,5 +1,6 @@
 extends CanvasLayer
 @onready var state_label=$state_label
+@onready var health_label=$health_label
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

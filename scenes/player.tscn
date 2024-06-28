@@ -1,30 +1,181 @@
-[gd_scene load_steps=9 format=3 uid="uid://dt3wnnohrvbua"]
+[gd_scene load_steps=19 format=3 uid="uid://dt3wnnohrvbua"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_lmefh"]
 [ext_resource type="Script" path="res://scripts/player/player_state_machine/character_state_machine.gd" id="2_stxjh"]
 [ext_resource type="Script" path="res://scripts/player/player_state_machine/ground_state.gd" id="3_lq7sl"]
 [ext_resource type="Script" path="res://scripts/player/player_state_machine/air_state.gd" id="4_hopct"]
 [ext_resource type="Script" path="res://scripts/player/player_state_machine/dash_state.gd" id="5_xohg7"]
+[ext_resource type="Script" path="res://scripts/player/player_state_machine/block_state.gd" id="6_rq0am"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ebtdl"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_7mgqi"]
 
-[sub_resource type="PrismMesh" id="PrismMesh_kitsk"]
-size = Vector3(1, 2, 0.5)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_opal5"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ebtdl"]
+[sub_resource type="SphereMesh" id="SphereMesh_6r38h"]
+radius = 0.2
+height = 0.4
+
+[sub_resource type="BoxMesh" id="BoxMesh_ch22u"]
+size = Vector3(1.8, 0.2, 0.2)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fevmy"]
+radius = 0.3
+height = 1.9
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ftdld"]
+radius = 0.4
+height = 1.9
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fbv2r"]
+size = Vector3(1.5, 2, 2)
+
+[sub_resource type="Animation" id="Animation_vodre"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("rotated_things/weapon:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("rotated_things/weapon:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_fksre"]
+resource_name = "parry_end"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("rotated_things/weapon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, -1.25, -0.667), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("rotated_things/weapon:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 1.5708, 1.40848), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_5yo65"]
+resource_name = "parry_start"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("rotated_things/weapon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(0.378929, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -1.25022, -0.666955)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("rotated_things/weapon:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(0.420448, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-8.14648e-09, 1.5708, 1.4092)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"start_parry_frames"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wnpd4"]
+_data = {
+"RESET": SubResource("Animation_vodre"),
+"parry_end": SubResource("Animation_fksre"),
+"parry_start": SubResource("Animation_5yo65")
+}
 
 [node name="player" type="CharacterBody3D"]
 script = ExtResource("1_lmefh")
 
-[node name="player_asset" type="CSGMesh3D" parent="."]
-mesh = SubResource("CapsuleMesh_7mgqi")
-
-[node name="show_dir" type="CSGMesh3D" parent="player_asset"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -0.5, -0.5)
-mesh = SubResource("PrismMesh_kitsk")
-
 [node name="player_collision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_ebtdl")
+
+[node name="rotated_things" type="Node3D" parent="."]
+
+[node name="player_asset" type="CSGMesh3D" parent="rotated_things"]
+mesh = SubResource("CapsuleMesh_7mgqi")
+material = SubResource("StandardMaterial3D_opal5")
+
+[node name="show_dir" type="CSGMesh3D" parent="rotated_things/player_asset"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.3, 0.5, -0.5)
+mesh = SubResource("SphereMesh_6r38h")
+
+[node name="show_dir2" type="CSGMesh3D" parent="rotated_things/player_asset"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.3, 0.5, -0.5)
+mesh = SubResource("SphereMesh_6r38h")
+
+[node name="weapon" type="Area3D" parent="rotated_things"]
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="rotated_things/weapon"]
+transform = Transform3D(0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 0, 0, 1, 1.4, -0.7, 0)
+mesh = SubResource("BoxMesh_ch22u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="rotated_things/weapon"]
+transform = Transform3D(0.422618, -0.906308, 0, 0.906308, 0.422618, 0, 0, 0, 1, 1.4, -0.7, 0)
+shape = SubResource("CapsuleShape3D_fevmy")
+
+[node name="hitbox" type="Area3D" parent="."]
+
+[node name="hitbox_collision" type="CollisionShape3D" parent="hitbox"]
+shape = SubResource("CapsuleShape3D_ftdld")
+
+[node name="parry_hitbox" type="Area3D" parent="." groups=["parry_collision"]]
+
+[node name="parry_collision" type="CollisionShape3D" parent="parry_hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.694406)
+shape = SubResource("BoxShape3D_fbv2r")
+disabled = true
 
 [node name="timers" type="Node" parent="."]
 
@@ -44,6 +195,10 @@ one_shot = true
 wait_time = 0.15
 one_shot = true
 
+[node name="parry_timer" type="Timer" parent="timers"]
+wait_time = 0.3
+one_shot = true
+
 [node name="cam_origin_y" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.864481, 0)
 
@@ -61,15 +216,17 @@ script = ExtResource("2_stxjh")
 character = NodePath("..")
 current_state = NodePath("air")
 
-[node name="ground" type="Node" parent="character_state_machine" node_paths=PackedStringArray("air_state_var", "dash_state_var")]
+[node name="ground" type="Node" parent="character_state_machine" node_paths=PackedStringArray("air_state_var", "dash_state_var", "block_state_var")]
 script = ExtResource("3_lq7sl")
 air_state_var = NodePath("../air")
 dash_state_var = NodePath("../dash")
+block_state_var = NodePath("../block")
 
-[node name="air" type="Node" parent="character_state_machine" node_paths=PackedStringArray("ground_state_var", "dash_state_var")]
+[node name="air" type="Node" parent="character_state_machine" node_paths=PackedStringArray("ground_state_var", "dash_state_var", "block_state_var")]
 script = ExtResource("4_hopct")
 ground_state_var = NodePath("../ground")
 dash_state_var = NodePath("../dash")
+block_state_var = NodePath("../block")
 
 [node name="dash" type="Node" parent="character_state_machine" node_paths=PackedStringArray("air_state_var")]
 script = ExtResource("5_xohg7")
@@ -77,7 +234,21 @@ air_state_var = NodePath("../air")
 can_move_state = false
 sprite_lock = true
 
+[node name="block" type="Node" parent="character_state_machine" node_paths=PackedStringArray("ground_state_var", "air_state_var")]
+script = ExtResource("6_rq0am")
+ground_state_var = NodePath("../ground")
+air_state_var = NodePath("../air")
+can_move_state = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_wnpd4")
+}
+
+[connection signal="parry_done" from="." to="character_state_machine/block" method="_on_player_parry_done"]
+[connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="timeout" from="timers/dash_time" to="character_state_machine/dash" method="_on_dash_time_timeout"]
 [connection signal="timeout" from="timers/dash_cooldown" to="." method="_on_dash_cooldown_timeout"]
 [connection signal="timeout" from="timers/coyote_timer" to="character_state_machine/air" method="_on_coyote_timer_timeout"]
 [connection signal="timeout" from="timers/input_buffer_time" to="." method="_on_input_buffer_time_timeout"]
+[connection signal="timeout" from="timers/parry_timer" to="." method="_on_parry_timer_timeout"]

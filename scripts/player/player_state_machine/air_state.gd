@@ -8,6 +8,8 @@ const JUMP_VELOCITY = 10
 #accessed states
 @export var ground_state_var : State
 @export var dash_state_var : State
+@export var block_state_var : State
+
 
 # controls how strong gravity is
 var gravity_scale = 1
@@ -29,11 +31,21 @@ func state_process(delta):
 	if character.velocity.y < 0:
 		if Input.is_action_pressed("ui_dash"):
 			gravity_scale = 0.25
+			character.sprite.rotation.x=-90
 	if Input.is_action_just_released("ui_dash"):
-		gravity_scale = 1
+		release_glide()
 	
+
+
+
+
+func on_enter():
+	# sets can jump to true for coyote jump
+	can_jump = true
+
+func state_input(event : InputEvent):
 	# controls jump cases while in the air
-	if Input.is_action_just_pressed("ui_jump"):
+	if event.is_action_pressed("ui_jump"):
 		# if still in coyote time after falling off edge, player can still jump
 		if can_jump == true:
 			if character.velocity.y < 0:
@@ -46,24 +58,22 @@ func state_process(delta):
 		elif can_jump == false:
 			character.wants_to_jump = true
 			character.timers.get_node("input_buffer_time").start()
-
-
-
-func on_enter():
-	# sets can jump to true for coyote jump
-	can_jump = true
-
-func state_input(event : InputEvent):
-	pass
+	
+	
+	elif event.is_action_pressed("block"):
+		next_state = block_state_var
 
 
 func on_exit():
-	# resets gravity if glide not released before reaching ground
-	gravity_scale = 1
+	# resets before reaching ground
+	release_glide()
 
 
 func _on_coyote_timer_timeout():
 	can_jump=false
 
+func release_glide():
+	gravity_scale = 1
+	character.sprite.rotation.x=0
 
 

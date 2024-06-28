@@ -7,6 +7,7 @@ const JUMP_VELOCITY = 10
 # accessed states
 @export var air_state_var : State
 @export var dash_state_var : State
+@export var block_state_var : State
 
 func state_process(delta):
 	# checks whether or not to switch to the air state
@@ -26,10 +27,15 @@ func state_input(event : InputEvent):
 	if event.is_action_pressed("ui_jump"):
 		character.velocity.y = JUMP_VELOCITY
 	
+	elif event.is_action_pressed("block"):
+		next_state = block_state_var
+	
 	# controls dashing
-	if Input.is_action_just_pressed("ui_dash"):
+	elif event.is_action_pressed("ui_dash"):
 		if character.can_dash:
 			next_state = dash_state_var
+	
+	
 
 
 

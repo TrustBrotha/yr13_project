@@ -8,4 +8,11 @@ script = ExtResource("1_eq1gs")
 [node name="state_label" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0
-scale = Vector2(4, 4)
+scale = Vector2(2, 2)
+
+[node name="health_label" type="Label" parent="."]
+offset_left = 3.0
+offset_top = 66.0
+offset_right = 43.0
+offset_bottom = 89.0
+scale = Vector2(2, 2)
