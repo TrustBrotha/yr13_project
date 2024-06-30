@@ -20,7 +20,7 @@ sky = SubResource("Sky_eoj84")
 [sub_resource type="BoxShape3D" id="BoxShape3D_hp8qt"]
 size = Vector3(50, 0.5, 50)
 
-[sub_resource type="BoxMesh" id="BoxMesh_whfrt"]
+[sub_resource type="BoxMesh" id="BoxMesh_wvcox"]
 size = Vector3(50, 0.5, 50)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lqxr3"]
@@ -49,7 +49,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.69896, -8.92803)
 shape = SubResource("BoxShape3D_hp8qt")
 
 [node name="CSGMesh3D" type="CSGMesh3D" parent="StaticBody3D"]
-mesh = SubResource("BoxMesh_whfrt")
+mesh = SubResource("BoxMesh_wvcox")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.615579, 0.788075, 0, -0.788075, -0.615579, 0, 5.23044, 0)

@@ -9,7 +9,7 @@ const JUMP_VELOCITY = 10
 @export var ground_state_var : State
 @export var dash_state_var : State
 @export var block_state_var : State
-
+@export var attack_state_var : State
 
 # controls how strong gravity is
 var gravity_scale = 1
@@ -62,6 +62,9 @@ func state_input(event : InputEvent):
 	
 	elif event.is_action_pressed("block"):
 		next_state = block_state_var
+	
+	elif event.is_action_pressed("attack"):
+		next_state = attack_state_var
 
 
 func on_exit():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dt3wnnohrvbua"]
+[gd_scene load_steps=23 format=3 uid="uid://dt3wnnohrvbua"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_lmefh"]
 [ext_resource type="Script" path="res://scripts/player/player_state_machine/character_state_machine.gd" id="2_stxjh"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/player/player_state_machine/dash_state.gd" id="5_xohg7"]
 [ext_resource type="Script" path="res://scripts/player/player_state_machine/block_state.gd" id="6_rq0am"]
 [ext_resource type="Script" path="res://scripts/player/player_state_machine/staggered_state.gd" id="7_boktp"]
+[ext_resource type="Script" path="res://scripts/player/player_state_machine/attack_state.gd" id="8_wokvy"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ebtdl"]
 
@@ -57,6 +58,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("rotated_things/weapon/CollisionShape3D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_fksre"]
@@ -129,9 +142,105 @@ tracks/2/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_uscrh"]
+resource_name = "attack_start"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("rotated_things/weapon:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(13.3647, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 2.18166, 1.39626)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("rotated_things/weapon:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("rotated_things/weapon/CollisionShape3D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("character_state_machine/attack")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"end_attack"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_d52qn"]
+resource_name = "attack_end"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("rotated_things/weapon:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 2.18166, 1.39626), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("rotated_things/weapon:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("rotated_things/weapon/CollisionShape3D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, true]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wnpd4"]
 _data = {
 "RESET": SubResource("Animation_vodre"),
+"attack_end": SubResource("Animation_d52qn"),
+"attack_start": SubResource("Animation_uscrh"),
 "parry_end": SubResource("Animation_fksre"),
 "parry_start": SubResource("Animation_5yo65")
 }
@@ -166,6 +275,7 @@ mesh = SubResource("BoxMesh_ch22u")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="rotated_things/weapon"]
 transform = Transform3D(0.422618, -0.906308, 0, 0.906308, 0.422618, 0, 0, 0, 1, 1.4, -0.7, 0)
 shape = SubResource("CapsuleShape3D_fevmy")
+disabled = true
 
 [node name="parry_hitbox" type="Area3D" parent="rotated_things" groups=["parry_collision"]]
 
@@ -202,7 +312,7 @@ wait_time = 0.1
 one_shot = true
 
 [node name="parry_forgiveness_timer" type="Timer" parent="timers"]
-wait_time = 0.05
+wait_time = 0.15
 one_shot = true
 
 [node name="cam_origin_y" type="Node3D" parent="."]
@@ -223,24 +333,26 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.864481, 0)
 [node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="cam_origin_y/cam_origin_x/cam_target_finder"]
 transform = Transform3D(3, 0, 0, 0, -1.31134e-07, 3, 0, -3, -1.31134e-07, 0, 0, 0)
 depth = 10.0
-polygon = PackedVector2Array(0, 0, -5, 10, 5, 10)
+polygon = PackedVector2Array(0, 0, -10, 20, 10, 20)
 
 [node name="character_state_machine" type="Node" parent="." node_paths=PackedStringArray("character", "current_state")]
 script = ExtResource("2_stxjh")
 character = NodePath("..")
 current_state = NodePath("air")
 
-[node name="ground" type="Node" parent="character_state_machine" node_paths=PackedStringArray("air_state_var", "dash_state_var", "block_state_var")]
+[node name="ground" type="Node" parent="character_state_machine" node_paths=PackedStringArray("air_state_var", "dash_state_var", "block_state_var", "attack_state_var")]
 script = ExtResource("3_lq7sl")
 air_state_var = NodePath("../air")
 dash_state_var = NodePath("../dash")
 block_state_var = NodePath("../block")
+attack_state_var = NodePath("../attack")
 
-[node name="air" type="Node" parent="character_state_machine" node_paths=PackedStringArray("ground_state_var", "dash_state_var", "block_state_var")]
+[node name="air" type="Node" parent="character_state_machine" node_paths=PackedStringArray("ground_state_var", "dash_state_var", "block_state_var", "attack_state_var")]
 script = ExtResource("4_hopct")
 ground_state_var = NodePath("../ground")
 dash_state_var = NodePath("../dash")
 block_state_var = NodePath("../block")
+attack_state_var = NodePath("../attack")
 
 [node name="dash" type="Node" parent="character_state_machine" node_paths=PackedStringArray("air_state_var")]
 script = ExtResource("5_xohg7")
@@ -256,6 +368,13 @@ can_move_state = false
 
 [node name="staggered" type="Node" parent="character_state_machine" node_paths=PackedStringArray("ground_state_var", "air_state_var")]
 script = ExtResource("7_boktp")
+ground_state_var = NodePath("../ground")
+air_state_var = NodePath("../air")
+can_move_state = false
+sprite_lock = true
+
+[node name="attack" type="Node" parent="character_state_machine" node_paths=PackedStringArray("ground_state_var", "air_state_var")]
+script = ExtResource("8_wokvy")
 ground_state_var = NodePath("../ground")
 air_state_var = NodePath("../air")
 can_move_state = false

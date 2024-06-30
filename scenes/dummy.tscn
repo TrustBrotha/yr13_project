@@ -75,7 +75,7 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.3, 0.9, 1.4, 1.8, 2.2, 2.6),
-"transitions": PackedFloat32Array(1.7411, 8.28211, 2.54912, 6.49801, 0.378929, 0.435276, 1),
+"transitions": PackedFloat32Array(1.7411, 21.1121, 2.54912, 16.5642, 0.378929, 0.435276, 1),
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(0, -0.959931, 0), Vector3(0, 0.959931, 0), Vector3(0, 0.959931, 0), Vector3(0, -0.959931, 0), Vector3(0, -0.959931, 0), Vector3(0, 0, 0)]
 }
@@ -107,51 +107,6 @@ tracks/3/keys = {
 "args": [],
 "method": &"start_looking"
 }]
-}
-
-[sub_resource type="Animation" id="Animation_w7a7y"]
-resource_name = "vertical_swing"
-length = 1.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("weapon:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.8, 1, 1.1, 1.4, 1.5),
-"transitions": PackedFloat32Array(0.406126, 1, 0.329877, 0.31864, 0.217638, 0.482968, 3.13834),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(-0.872665, 0, 0), Vector3(-0.872665, 0, 0), Vector3(-1.39626, 0, 0), Vector3(-1.39626, 0, 0), Vector3(0.349066, 0, 0), Vector3(0, 0, 0)]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(1.2, 1.5),
-"transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [],
-"method": &"stop_looking"
-}, {
-"args": [],
-"method": &"start_looking"
-}]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("weapon/weapon_coll:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 1.1, 1.3),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [true, false, true]
 }
 
 [sub_resource type="Animation" id="Animation_3opi0"]
@@ -191,6 +146,51 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, true]
+}
+
+[sub_resource type="Animation" id="Animation_w7a7y"]
+resource_name = "vertical_swing"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("weapon:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8, 1, 1.1, 1.4, 1.5),
+"transitions": PackedFloat32Array(0.406126, 1, 0.329877, 0.31864, 0.0915056, 0.482968, 3.13834),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.872665, 0, 0), Vector3(-0.872665, 0, 0), Vector3(-1.39626, 0, 0), Vector3(-1.39626, 0, 0), Vector3(0.349066, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.2, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"stop_looking"
+}, {
+"args": [],
+"method": &"start_looking"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("weapon/weapon_coll:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.1, 1.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pmmsx"]

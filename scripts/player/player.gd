@@ -129,8 +129,9 @@ func _physics_process(delta):
 				# inputs control the rotation of the sprite
 				sprite.rotation.y=lerp_angle(sprite.rotation.y,atan2(direction.x,direction.z)+PI,SPRITE_TURN_SPEED*delta)
 	if sprite_lock == true:
+		pass
 		# velocity control the rotation of the sprite
-		sprite.rotation.y=lerp_angle(sprite.rotation.y,atan2(velocity.x,velocity.z)+PI,SPRITE_TURN_SPEED*delta)
+		# sprite.rotation.y=lerp_angle(sprite.rotation.y,atan2(velocity.x,velocity.z)+PI,SPRITE_TURN_SPEED*delta)
 	
 	# if no buttons are pressed
 	else:

@@ -15,6 +15,7 @@ var dash_direction : Vector3
 var dashing = true
 
 func state_process(delta):
+	character.sprite.rotation.y=lerp_angle(character.sprite.rotation.y,atan2(dash_direction.x,dash_direction.z)+PI,8*delta)
 	# apply gravity
 	character.velocity.y -= gravity * delta
 	
