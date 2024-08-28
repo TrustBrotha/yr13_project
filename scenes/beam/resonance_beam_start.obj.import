@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cwkholorgah3i"
+path="res://.godot/imported/resonance_beam_start.obj-0bd7911f9bbf982223569685f49f538b.mesh"
+
+[deps]
+
+files=["res://.godot/imported/resonance_beam_start.obj-0bd7911f9bbf982223569685f49f538b.mesh"]
+
+source_file="res://scenes/beam/resonance_beam_start.obj"
+dest_files=["res://.godot/imported/resonance_beam_start.obj-0bd7911f9bbf982223569685f49f538b.mesh", "res://.godot/imported/resonance_beam_start.obj-0bd7911f9bbf982223569685f49f538b.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bcu1yny26q5r1"
+path="res://.godot/imported/resonance_beam_inner.obj-674a763c98a2b628e1eba4c4a7c67c24.mesh"
+
+[deps]
+
+files=["res://.godot/imported/resonance_beam_inner.obj-674a763c98a2b628e1eba4c4a7c67c24.mesh"]
+
+source_file="res://scenes/beam/resonance_beam_inner.obj"
+dest_files=["res://.godot/imported/resonance_beam_inner.obj-674a763c98a2b628e1eba4c4a7c67c24.mesh", "res://.godot/imported/resonance_beam_inner.obj-674a763c98a2b628e1eba4c4a7c67c24.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

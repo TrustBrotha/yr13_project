@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://cii7v3g4w22t3"]
+[gd_scene load_steps=14 format=3 uid="uid://cii7v3g4w22t3"]
 
 [ext_resource type="PackedScene" uid="uid://dt3wnnohrvbua" path="res://scenes/player.tscn" id="1_1nft5"]
 [ext_resource type="Script" path="res://scripts/test_world.gd" id="1_caq4c"]
 [ext_resource type="PackedScene" uid="uid://b1ssecsvg82dl" path="res://scenes/hud.tscn" id="1_senue"]
 [ext_resource type="PackedScene" uid="uid://tyuf3s0xarde" path="res://scenes/dummy.tscn" id="4_1c4tb"]
 [ext_resource type="PackedScene" uid="uid://cin0wd6fvta8n" path="res://assets/world/boss_room.glb" id="5_336y8"]
+[ext_resource type="PackedScene" uid="uid://ghl1chlqvir3" path="res://scenes/beam/beam.tscn" id="6_ilmgd"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_n27jv"]
 sky_top_color = Color(0.922993, 0.465944, 0.0148414, 1)
@@ -74,3 +75,6 @@ shape = SubResource("BoxShape3D_lqxr3")
 [node name="CSGMesh3D" type="CSGMesh3D" parent="StaticBody3D2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 25)
 mesh = SubResource("BoxMesh_de0se")
+
+[node name="Node3D" parent="." instance=ExtResource("6_ilmgd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.78913, 4.3198, 11.259)
