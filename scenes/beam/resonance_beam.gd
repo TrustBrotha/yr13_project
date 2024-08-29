@@ -9,6 +9,10 @@ var end = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$mid_beam.process_material.color.a=1.0
+	$inner_beam.process_material.color.a=1.0
+	$outer_beam.process_material.color.a=1.0
+	$start.process_material.color.a=1.0
 	for spine in spines:
 		spine.visible = false
 	$start.emitting=true
@@ -19,7 +23,6 @@ func _ready():
 func _process(delta):
 	if finished_startup==false:
 		for i in range(speed):
-			print(count)
 			spines[count].visible=true
 			count-=1
 			if count<0:
@@ -43,8 +46,7 @@ func _on_end_timeout():
 
 
 func _on_delete_timeout():
-	for spine in spines:
-		spine.visible = false
+	queue_free()
 
 
 func _on_start_main_beam_timeout():
