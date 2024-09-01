@@ -1,0 +1,47 @@
+[gd_scene load_steps=10 format=3 uid="uid://cii7v3g4w22t3"]
+
+[ext_resource type="PackedScene" uid="uid://dt3wnnohrvbua" path="res://scenes/player.tscn" id="1_1nft5"]
+[ext_resource type="Script" path="res://scripts/test_world.gd" id="1_caq4c"]
+[ext_resource type="PackedScene" uid="uid://b1ssecsvg82dl" path="res://scenes/hud.tscn" id="1_senue"]
+[ext_resource type="PackedScene" uid="uid://tyuf3s0xarde" path="res://scenes/dummy.tscn" id="4_1c4tb"]
+[ext_resource type="PackedScene" uid="uid://bao0v5c4durov" path="res://assets/world/boss_room.glb" id="5_vrs2a"]
+[ext_resource type="PackedScene" uid="uid://ghl1chlqvir3" path="res://scenes/beam/beam.tscn" id="6_4xhpx"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_n27jv"]
+sky_top_color = Color(1, 0.647059, 0, 1)
+sky_horizon_color = Color(0.898039, 0.360784, 0, 1)
+sky_curve = 0.130583
+ground_bottom_color = Color(0.621203, 0.240009, 0, 1)
+ground_horizon_color = Color(0.898039, 0.360784, 0, 1)
+
+[sub_resource type="Sky" id="Sky_eoj84"]
+sky_material = SubResource("ProceduralSkyMaterial_n27jv")
+
+[sub_resource type="Environment" id="Environment_5jn7y"]
+background_mode = 2
+sky = SubResource("Sky_eoj84")
+
+[node name="main" type="Node3D"]
+script = ExtResource("1_caq4c")
+beam_scene = ExtResource("6_4xhpx")
+
+[node name="HUD" parent="." instance=ExtResource("1_senue")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5jn7y")
+
+[node name="player" parent="." instance=ExtResource("1_1nft5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85753, 0)
+
+[node name="dummy" parent="." instance=ExtResource("4_1c4tb")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2.06478, 20)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.615579, 0.788075, 0, -0.788075, -0.615579, 0, 5.23044, 0)
+shadow_enabled = true
+
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.13011, 25)
+
+[node name="boss_room" parent="." instance=ExtResource("5_vrs2a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.804085, 0)

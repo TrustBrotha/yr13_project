@@ -14,9 +14,18 @@ func state_process(delta):
 	# checks whether or not to switch to the air state
 	if not character.is_on_floor():
 		next_state = air_state_var
+	if character.moving==true:
+		character.animation_tree.set("parameters/walk_transition/blend_amount",lerp(character.animation_tree.get("parameters/walk_transition/blend_amount"),1.0,0.1))
+		#pass
+		#character.animation_player.play("walk")
+	else:
+		character.animation_tree.set("parameters/walk_transition/blend_amount",lerp(character.animation_tree.get("parameters/walk_transition/blend_amount"),0.0,0.1))
+		#pass
+		#character.animation_player.play("idle_basic")
 
 
 func on_enter():
+	character.animation_tree.set("parameters/state/transition_request","ground")
 	# if there is a jump buffered, execute the jump
 	if character.wants_to_jump == true:
 		character.velocity.y = JUMP_VELOCITY
@@ -24,6 +33,7 @@ func on_enter():
 
 
 func state_input(event : InputEvent):
+	
 	# controls jumping
 	if event.is_action_pressed("ui_jump"):
 		character.velocity.y = JUMP_VELOCITY

@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://tyuf3s0xarde"]
+[gd_scene load_steps=12 format=3 uid="uid://tyuf3s0xarde"]
 
 [ext_resource type="Script" path="res://scripts/dummy.gd" id="1_wp0xx"]
+[ext_resource type="PackedScene" uid="uid://2n3icihac0rr" path="res://scenes/boss_1.tscn" id="2_o0ng2"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_7hfod"]
 
@@ -205,6 +206,7 @@ _data = {
 script = ExtResource("1_wp0xx")
 
 [node name="CSGMesh3D" type="CSGMesh3D" parent="."]
+visible = false
 mesh = SubResource("CapsuleMesh_7hfod")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -233,6 +235,9 @@ libraries = {
 [node name="parry_forgiveness" type="Timer" parent="."]
 wait_time = 0.2
 one_shot = true
+
+[node name="boss_1" parent="." instance=ExtResource("2_o0ng2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.940972, 0)
 
 [connection signal="timeout" from="attack_timer" to="." method="_on_attack_timer_timeout"]
 [connection signal="area_entered" from="weapon" to="." method="_on_weapon_area_entered"]
