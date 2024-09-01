@@ -20,6 +20,8 @@ func _physics_process(delta):
 	
 	if looking == true:
 		face_player(delta)
+	
+	move_and_slide()
 
 func _on_attack_timer_timeout():
 	var att = randi_range(0,1)

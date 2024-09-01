@@ -15,13 +15,14 @@ var dash_direction : Vector3
 var dashing = true
 
 func state_process(delta):
-	
 	character.velocity.x = lerp(character.velocity.x,dash_direction.x*DASH_SPEED,DASH_ACCEL)
 	character.velocity.z = lerp(character.velocity.z,dash_direction.z*DASH_SPEED,DASH_ACCEL)
 
 
 func on_enter():
 	dash_direction = character.last_direction
+	if character.cam_mode=="fixed" and character.direction == Vector3.ZERO:
+		dash_direction = (character.cam_pivot_y.transform.basis * Vector3(0, 0, 1)).normalized()
 	
 	# starts timer to end dash
 	character.timers.get_node("dash_time").start()

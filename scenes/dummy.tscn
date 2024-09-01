@@ -210,6 +210,7 @@ visible = false
 mesh = SubResource("CapsuleMesh_7hfod")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_sm3e5")
 
 [node name="attack_timer" type="Timer" parent="."]
@@ -237,7 +238,6 @@ wait_time = 0.2
 one_shot = true
 
 [node name="boss_1" parent="." instance=ExtResource("2_o0ng2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.940972, 0)
 
 [connection signal="timeout" from="attack_timer" to="." method="_on_attack_timer_timeout"]
 [connection signal="area_entered" from="weapon" to="." method="_on_weapon_area_entered"]

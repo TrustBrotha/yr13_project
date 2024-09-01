@@ -48,6 +48,7 @@ var health = 1000
 var speed = 10.0
 var moving=false
 var target_rotation=0.0
+var input_dir
 
 var cam_mode="free"
 var cam_targets=[]
@@ -77,13 +78,14 @@ func _input(event):
 		if cam_mode=="free" and len(cam_targets)>0:
 			cam_target=cam_targets[0]
 			cam_mode="fixed"
+			animation_tree.set("parameters/cam_lock/transition_request","locked")
 		elif cam_mode=="fixed":
 			cam_mode="free"
+			animation_tree.set("parameters/cam_lock/transition_request","free")
 
 
 
 func _physics_process(delta):
-	
 	
 	animate_cloak_roots()
 	
@@ -92,23 +94,22 @@ func _physics_process(delta):
 		get_tree().quit()
 	
 	# accesses the inputs
-	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_forward", "ui_back")
+	input_dir = Input.get_vector("ui_left", "ui_right", "ui_forward", "ui_back")
+	
 	if input_dir:
 		moving=true
-		
 	else:
 		moving=false
 	
 	# calculates the direction
 	direction = (cam_pivot_y.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	
 	# if a direction is inputted
 	if direction:
 		# controls sprinting
 		if Input.is_action_pressed("sprint") and is_on_floor():
-			speed = 20.0
-		else:
 			speed = 10.0
+		else:
+			speed = 5.0
 		# checks if the player should have control over movement in its current state
 		if state_machine.check_if_can_move():
 			velocity.x = lerp(velocity.x,direction.x*speed,ACCELERATION)
@@ -125,8 +126,12 @@ func _physics_process(delta):
 	
 	
 	if cam_mode == "fixed":
-		var cam_tar_vec=cam_target.global_position-global_position
+		var cam_tar_vec=cam_target.global_position-global_position+Vector3(0,3,0)
 		cam_pivot_y.rotation.y=atan2(cam_tar_vec.x,cam_tar_vec.z)+PI
+		
+		var hori_dist=sqrt((cam_tar_vec.x)**2+(cam_tar_vec.z)**2)+5
+		cam_pivot_x.rotation.x=-atan2(3,hori_dist)
+	
 		target_rotation=atan2(cam_tar_vec.x,cam_tar_vec.z)
 	
 	sprite.rotation.y=lerp_angle(sprite.rotation.y,target_rotation,SPRITE_TURN_SPEED*delta)
@@ -159,7 +164,11 @@ func create_cloak_bones():
 
 
 func animate_cloak_roots():
-	pass
+	var cloak_rot=(0.01*PI*velocity.length())
+	var quat_rot=Quaternion(Vector3(1,0,0),cloak_rot)
+	var bone_idxs=[0,8,83,90,98]
+	for i in range(5):
+		$player_model/Sekiro_like_player_character/Armature/GeneralSkeleton.set_bone_pose_rotation(bone_idxs[i],quat_rot)
 
 
 
