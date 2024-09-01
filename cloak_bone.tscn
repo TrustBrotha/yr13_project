@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://celyp4kd2lpcl"]
+
+[ext_resource type="Script" path="res://addons/jigglebones/jigglebone.gd" id="1_cp03r"]
+
+[node name="Jigglebone" type="Node3D"]
+top_level = true
+script = ExtResource("1_cp03r")
+stiffness = 0.5
+damping = 8.0
+forward_axis = 4

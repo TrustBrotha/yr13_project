@@ -12,6 +12,6 @@ func _ready():
 func _process(delta):
 	if Input.is_action_just_pressed("enter"):
 		var laser = beam_scene.instantiate()
-		$Node3D.add_child(laser)
+		$beams.add_child(laser)
 	hud.state_label.text=str(player.state_machine.current_state.name)
 	hud.health_label.text=str(player.health)

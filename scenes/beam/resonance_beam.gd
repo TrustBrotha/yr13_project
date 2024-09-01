@@ -11,8 +11,10 @@ var start_beam=false
 var spin_speed=0.1
 var time_elapsed=0.0
 var played_sound=false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	global_position=Vector3(randf_range(-15,15),randf_range(3,10),20)
 	var beam_sounds=[beam_sound_1,beam_sound_2]
 	var beam_sound=beam_sounds[randi_range(0,1)]
 	$beam_sound.stream=beam_sound

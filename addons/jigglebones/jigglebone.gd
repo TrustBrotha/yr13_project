@@ -1,4 +1,3 @@
-@tool
 extends Node3D
 enum Axis {
 	X_Plus, Y_Plus, Z_Plus, X_Minus, Y_Minus, Z_Minus

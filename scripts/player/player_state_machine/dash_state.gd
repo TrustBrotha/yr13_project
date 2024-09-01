@@ -21,13 +21,10 @@ func state_process(delta):
 
 
 func on_enter():
-	character.get_last_direction()
 	dash_direction = character.last_direction
+	
 	# starts timer to end dash
 	character.timers.get_node("dash_time").start()
-	# saves the last direction of the player, where direction is the
-	# vector of the inputs
-	
 
 
 func state_input(event : InputEvent):

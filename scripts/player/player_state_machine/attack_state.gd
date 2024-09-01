@@ -16,8 +16,6 @@ func on_enter():
 	timer.wait_time=0.65
 	timer.start()
 	character.animation_tree.set("parameters/state/transition_request","attack")
-	character.get_last_direction()
-	#character.animation_player.play("attack_1")
 
 func on_exit():
 	pass
