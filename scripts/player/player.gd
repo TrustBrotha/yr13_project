@@ -160,6 +160,7 @@ func create_cloak_bones():
 	for i in range(len(cloak_bones)):
 		var cloak_bone=cloak_bone_scene.instantiate()
 		cloak_bone.bone_name=cloak_bones[i]
+		cloak_bone.forward_axis=4
 		$player_model/Sekiro_like_player_character/Armature/GeneralSkeleton.add_child(cloak_bone)
 
 

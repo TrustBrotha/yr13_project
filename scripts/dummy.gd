@@ -13,22 +13,16 @@ var player_pos
 
 
 func _physics_process(delta):
-	
+	velocity+=(get_parent().get_node("player").global_position-global_position).normalized()*0.8
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	
-	if looking == true:
-		face_player(delta)
+	face_player(delta)
 	
 	move_and_slide()
 
-func _on_attack_timer_timeout():
-	var att = randi_range(0,1)
-	if att == 1:
-		$AnimationPlayer.play("vertical_swing")
-	else:
-		$AnimationPlayer.play("hori_swing")
+
 
 func face_player(delta):
 	var direction = global_position-player.global_position
@@ -36,14 +30,3 @@ func face_player(delta):
 	
 	#rotation.y=atan2(direction.x,direction.z)+PI
 	#rotation.y=move_toward(rotation.y,atan2(direction.x,direction.z)+PI,8*delta)
-
-func start_looking():
-	looking = true
-
-func stop_looking():
-	looking = false
-
-
-func _on_weapon_area_entered(area):
-	if area.is_in_group("parry_collision"):
-		$AnimationPlayer.play("parried")
