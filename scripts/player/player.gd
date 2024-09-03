@@ -78,6 +78,7 @@ func _input(event):
 		if cam_mode=="free" and len(cam_targets)>0:
 			cam_target=cam_targets[0]
 			cam_mode="fixed"
+			camera.rotation=Vector3.ZERO
 			animation_tree.set("parameters/cam_lock/transition_request","locked")
 		elif cam_mode=="fixed":
 			cam_mode="free"
@@ -135,7 +136,9 @@ func _physics_process(delta):
 		
 		var hori_dist=sqrt((cam_tar_vec.x)**2+(cam_tar_vec.z)**2)
 		cam_pivot_x.rotation.x=-atan2(3,hori_dist)
-	
+		#cam_pivot_x.rotation.x=-PI/6
+		camera.look_at(cam_target.global_position)
+		
 		target_rotation=atan2(cam_tar_vec.x,cam_tar_vec.z)
 	
 	sprite.rotation.y=lerp_angle(sprite.rotation.y,target_rotation,SPRITE_TURN_SPEED*delta)
