@@ -86,6 +86,7 @@ func _input(event):
 
 
 func _physics_process(delta):
+	
 	#print(animation_tree.get("parameters/cam_lock/current_state"))
 	animate_cloak_roots()
 	
@@ -106,10 +107,13 @@ func _physics_process(delta):
 	# if a direction is inputted
 	if direction:
 		# controls sprinting
-		if Input.is_action_pressed("sprint") and is_on_floor():
-			speed = 10.0
-		else:
-			speed = 5.0
+		if state_machine.current_state.name != "block":
+			if Input.is_action_pressed("sprint"):
+				speed = 10.0
+			else:
+				speed = 5.0
+		
+		
 		# checks if the player should have control over movement in its current state
 		if state_machine.check_if_can_move():
 			velocity.x = lerp(velocity.x,direction.x*speed,ACCELERATION)
@@ -126,10 +130,10 @@ func _physics_process(delta):
 	
 	
 	if cam_mode == "fixed":
-		var cam_tar_vec=cam_target.global_position-global_position+Vector3(0,3,0)
+		var cam_tar_vec=cam_target.global_position-global_position+Vector3(0,2,0)
 		cam_pivot_y.rotation.y=atan2(cam_tar_vec.x,cam_tar_vec.z)+PI
 		
-		var hori_dist=sqrt((cam_tar_vec.x)**2+(cam_tar_vec.z)**2)+5
+		var hori_dist=sqrt((cam_tar_vec.x)**2+(cam_tar_vec.z)**2)
 		cam_pivot_x.rotation.x=-atan2(3,hori_dist)
 	
 		target_rotation=atan2(cam_tar_vec.x,cam_tar_vec.z)

@@ -3086,7 +3086,7 @@ shader_parameter/texture_power = 0.5
 shader_parameter/gradient_power = 0.25
 shader_parameter/beam_texture = ExtResource("5_w04yu")
 
-[node name="Node3D" type="Node3D"]
+[node name="boss_spear" type="Node3D"]
 script = ExtResource("1_k0c6f")
 
 [node name="boss_spear" type="Node3D" parent="."]

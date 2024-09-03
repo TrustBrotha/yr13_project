@@ -1,11 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://cii7v3g4w22t3"]
+[gd_scene load_steps=11 format=3 uid="uid://cii7v3g4w22t3"]
 
 [ext_resource type="PackedScene" uid="uid://dt3wnnohrvbua" path="res://scenes/player.tscn" id="1_1nft5"]
 [ext_resource type="Script" path="res://scripts/test_world.gd" id="1_caq4c"]
 [ext_resource type="PackedScene" uid="uid://b1ssecsvg82dl" path="res://scenes/hud.tscn" id="1_senue"]
-[ext_resource type="PackedScene" uid="uid://tyuf3s0xarde" path="res://scenes/dummy.tscn" id="4_1c4tb"]
+[ext_resource type="PackedScene" uid="uid://tyuf3s0xarde" path="res://scenes/boss_1.tscn" id="4_1c4tb"]
 [ext_resource type="PackedScene" uid="uid://bao0v5c4durov" path="res://assets/world/boss_room.glb" id="5_vrs2a"]
-[ext_resource type="PackedScene" uid="uid://ghl1chlqvir3" path="res://scenes/beam/beam.tscn" id="6_4xhpx"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_n27jv"]
 sky_top_color = Color(1, 0.647059, 0, 1)
@@ -29,7 +28,6 @@ size = Vector3(5, 5, 5)
 
 [node name="main" type="Node3D"]
 script = ExtResource("1_caq4c")
-beam_scene = ExtResource("6_4xhpx")
 
 [node name="HUD" parent="." instance=ExtResource("1_senue")]
 

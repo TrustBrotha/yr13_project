@@ -20,6 +20,7 @@ func state_process(delta):
 
 
 func on_enter():
+	character.sprite.rotation.x=+0.5
 	dash_direction = character.last_direction
 	if character.cam_mode=="fixed" and character.direction == Vector3.ZERO:
 		dash_direction = (character.cam_pivot_y.transform.basis * Vector3(0, 0, 1)).normalized()
@@ -33,6 +34,7 @@ func state_input(event : InputEvent):
 
 
 func on_exit():
+	character.sprite.rotation.x=-0.5
 	# starts dash cooldown
 	character.can_dash = false
 	character.timers.get_node("dash_cooldown").start()

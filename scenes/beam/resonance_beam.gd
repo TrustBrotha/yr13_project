@@ -14,7 +14,6 @@ var played_sound=false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	global_position=Vector3(randf_range(-15,15),randf_range(3,10),20)
 	var beam_sounds=[beam_sound_1,beam_sound_2]
 	var beam_sound=beam_sounds[randi_range(0,1)]
 	$beam_sound.stream=beam_sound
@@ -35,14 +34,16 @@ func _process(delta):
 				if count<121:
 					spines[count].visible=true
 					count+=1
+		
 		animation(delta)
+		
 		if played_sound == false:
 			$beam_sound.play()
 			played_sound=true
 	
 	
 	if following == true:
-		look_at(get_parent().get_parent().get_node("player").global_position+Vector3(0,1,0),Vector3(0,1,0))
+		look_at(get_parent().get_parent().player.global_position+Vector3(0,1,0),Vector3(0,1,0))
 		pass
 	
 	if end == true:
@@ -78,6 +79,7 @@ func _on_delete_timeout():
 
 func _on_start_main_beam_timeout():
 	following = false
+	top_level=true
 	$small_dots.emitting=true
 	$sparks.emitting=true
 	start_beam=true
