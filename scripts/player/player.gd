@@ -86,7 +86,7 @@ func _input(event):
 
 
 func _physics_process(delta):
-	
+	#print(animation_tree.get("parameters/cam_lock/current_state"))
 	animate_cloak_roots()
 	
 	# quits game (as mouse is used cant go to x button)

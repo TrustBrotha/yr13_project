@@ -20,12 +20,22 @@ func state_process(delta):
 	
 	if character.cam_mode=="free":
 		if character.moving==true:
-			character.animation_tree.set("parameters/walk_transition/blend_amount",lerp(character.animation_tree.get("parameters/walk_transition/blend_amount"),1.0,0.1))
+			character.animation_tree.set(
+				"parameters/walk_transition/blend_amount",
+				lerp(character.animation_tree.get("parameters/walk_transition/blend_amount"),
+				1.0,0.1))
+			
 		else:
-			character.animation_tree.set("parameters/walk_transition/blend_amount",lerp(character.animation_tree.get("parameters/walk_transition/blend_amount"),0.0,0.1))
+			character.animation_tree.set(
+				"parameters/walk_transition/blend_amount",
+				lerp(character.animation_tree.get("parameters/walk_transition/blend_amount"),
+				0.0,0.1))
+		
 	elif character.cam_mode=="fixed":
-		character.animation_tree.set("parameters/locked_on_walking/blend_position",lerp(character.animation_tree.get("parameters/locked_on_walking/blend_position"),character.input_dir,0.1))
-
+		character.animation_tree.set(
+			"parameters/locked_on_walking/blend_position",
+			lerp(character.animation_tree.get("parameters/locked_on_walking/blend_position"),
+			character.input_dir,0.1))
 
 func on_enter():
 	character.animation_tree.set("parameters/state/transition_request","ground")

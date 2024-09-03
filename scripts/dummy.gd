@@ -13,7 +13,7 @@ var player_pos
 
 
 func _physics_process(delta):
-	velocity+=(get_parent().get_node("player").global_position-global_position).normalized()*0.8
+	velocity+=(get_parent().get_node("player").global_position-global_position).normalized()*0.7
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -26,7 +26,7 @@ func _physics_process(delta):
 
 func face_player(delta):
 	var direction = global_position-player.global_position
-	rotation.y=lerp_angle(rotation.y,atan2(direction.x,direction.z)+PI,6*delta)
+	rotation.y=lerp_angle(rotation.y,atan2(direction.x,direction.z)+PI,8*delta)
 	
 	#rotation.y=atan2(direction.x,direction.z)+PI
 	#rotation.y=move_toward(rotation.y,atan2(direction.x,direction.z)+PI,8*delta)

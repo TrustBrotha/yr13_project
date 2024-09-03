@@ -30,7 +30,7 @@ func state_process(delta):
 	if character.velocity.y < 0:
 		if Input.is_action_pressed("ui_dash"):
 			gravity_scale = 0.25
-			character.sprite.rotation.x=-90
+			character.sprite.rotation.x=+90
 	if Input.is_action_just_released("ui_dash"):
 		release_glide()
 	
