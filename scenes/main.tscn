@@ -1,30 +1,38 @@
-[gd_scene load_steps=11 format=3 uid="uid://cii7v3g4w22t3"]
+[gd_scene load_steps=12 format=3 uid="uid://cii7v3g4w22t3"]
 
 [ext_resource type="PackedScene" uid="uid://dt3wnnohrvbua" path="res://scenes/player.tscn" id="1_1nft5"]
 [ext_resource type="Script" path="res://scripts/test_world.gd" id="1_caq4c"]
 [ext_resource type="PackedScene" uid="uid://b1ssecsvg82dl" path="res://scenes/hud.tscn" id="1_senue"]
 [ext_resource type="PackedScene" uid="uid://tyuf3s0xarde" path="res://scenes/boss_1.tscn" id="4_1c4tb"]
-[ext_resource type="PackedScene" uid="uid://bao0v5c4durov" path="res://assets/world/boss_room.glb" id="5_vrs2a"]
+[ext_resource type="PackedScene" uid="uid://ee14rnbpi5rb" path="res://assets/world/boss_room.glb" id="5_vrs2a"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_n27jv"]
-sky_top_color = Color(1, 0.647059, 0, 1)
-sky_horizon_color = Color(0.898039, 0.360784, 0, 1)
-sky_curve = 0.130583
-ground_bottom_color = Color(0.621203, 0.240009, 0, 1)
-ground_horizon_color = Color(0.898039, 0.360784, 0, 1)
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0ott5"]
+sky_horizon_color = Color(0.556863, 0.211765, 0, 1)
+ground_bottom_color = Color(0.988235, 0.454902, 0, 1)
+ground_horizon_color = Color(0.556863, 0.211765, 0, 1)
 
 [sub_resource type="Sky" id="Sky_eoj84"]
-sky_material = SubResource("ProceduralSkyMaterial_n27jv")
+sky_material = SubResource("ProceduralSkyMaterial_0ott5")
 
 [sub_resource type="Environment" id="Environment_5jn7y"]
 background_mode = 2
 sky = SubResource("Sky_eoj84")
+ambient_light_source = 3
+sdfgi_enabled = true
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0
+volumetric_fog_length = 300.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8tj2o"]
 size = Vector3(5, 5, 5)
 
 [sub_resource type="BoxMesh" id="BoxMesh_re0yu"]
 size = Vector3(5, 5, 5)
+
+[sub_resource type="FogMaterial" id="FogMaterial_uel5l"]
+albedo = Color(1, 0.4, 0, 1)
+emission = Color(1, 0.4, 0, 1)
+edge_fade = 0.303143
 
 [node name="main" type="Node3D"]
 script = ExtResource("1_caq4c")
@@ -37,8 +45,8 @@ environment = SubResource("Environment_5jn7y")
 [node name="player" parent="." instance=ExtResource("1_1nft5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85753, 0)
 
-[node name="dummy" parent="." instance=ExtResource("4_1c4tb")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2.06478, 20)
+[node name="boss_1" parent="." instance=ExtResource("4_1c4tb")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.93045, 20.8422)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.615579, 0.788075, 0, -0.788075, -0.615579, 0, 5.23044, 0)
@@ -46,28 +54,21 @@ shadow_enabled = true
 
 [node name="beams" type="Node3D" parent="."]
 
-[node name="boss_room" parent="." instance=ExtResource("5_vrs2a")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.804085, 0)
-
-[node name="Cube" parent="boss_room" index="86"]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -25, 7, 25)
-
-[node name="Cube_001" parent="boss_room" index="87"]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -25, 7, -25)
-
-[node name="Cube_002" parent="boss_room" index="88"]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 25, 7, -25)
-
-[node name="Cube_003" parent="boss_room" index="89"]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 25, 7, 25)
-
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9.47304)
+visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("BoxShape3D_8tj2o")
+disabled = true
 
 [node name="CSGMesh3D" type="CSGMesh3D" parent="StaticBody3D"]
 mesh = SubResource("BoxMesh_re0yu")
 
-[editable path="boss_room"]
+[node name="FogVolume" type="FogVolume" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -40.9572, 2.58915)
+size = Vector3(300, 5, 300)
+shape = 2
+material = SubResource("FogMaterial_uel5l")
+
+[node name="boss_room" parent="." instance=ExtResource("5_vrs2a")]

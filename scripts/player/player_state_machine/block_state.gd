@@ -24,6 +24,8 @@ func state_input(event : InputEvent):
 		next_state=air_state_var
 
 func on_enter():
+	character.animation_tree.set("parameters/parry_transition/blend_amount",0.0)
+	character.parrying=true
 	want_to_switch_state=false
 	can_switch_state=false
 	can_move_state=false
@@ -32,10 +34,13 @@ func on_enter():
 	character.animation_tree.set("parameters/state/transition_request","block")
 
 func on_exit():
+	character.blocking=false
 	can_move_state=false
 
 
 func _on_parry_timer_timeout():
+	character.parrying=false
+	character.blocking=true
 	can_switch_state=true
 	can_move_state=true
 	character.speed=2.5

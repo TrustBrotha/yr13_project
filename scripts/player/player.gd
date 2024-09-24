@@ -23,6 +23,7 @@ signal parry_done
 @onready var animation_player = $player_model/Sekiro_like_player_character/AnimationPlayer
 @onready var animation_tree = $player_model/Sekiro_like_player_character/AnimationTree
 
+@export var parry_particle_var : PackedScene
 @export var staggered_state_var : State
 
 var sensitivity = 0.1
@@ -54,6 +55,10 @@ var cam_mode="free"
 var cam_targets=[]
 var cam_target
 
+var parrying=false
+var blocking=false
+var immune=false
+
 func _ready():
 	# gets the mouse actions
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -63,6 +68,7 @@ func _ready():
 	
 	# adds jiggle bones
 	create_cloak_bones()
+
 
 func _input(event):
 	# controls the rotation of the camera and character controls
@@ -87,7 +93,6 @@ func _input(event):
 
 
 func _physics_process(delta):
-	
 	#print(animation_tree.get("parameters/cam_lock/current_state"))
 	animate_cloak_roots()
 	
@@ -135,13 +140,25 @@ func _physics_process(delta):
 		cam_pivot_y.rotation.y=atan2(cam_tar_vec.x,cam_tar_vec.z)+PI
 		
 		var hori_dist=sqrt((cam_tar_vec.x)**2+(cam_tar_vec.z)**2)
-		cam_pivot_x.rotation.x=-atan2(3,hori_dist)
+		cam_pivot_x.rotation.x=-atan2(1.5,hori_dist)
 		#cam_pivot_x.rotation.x=-PI/6
-		camera.look_at(cam_target.global_position)
+		
+		$cam_origin_y/cam_origin_x/camera_spring/cam_rotation_target.look_at(cam_target.global_position)
+		var target_rot=$cam_origin_y/cam_origin_x/camera_spring/cam_rotation_target.rotation
+		camera.rotation = lerp(camera.rotation,target_rot,0.3)
 		
 		target_rotation=atan2(cam_tar_vec.x,cam_tar_vec.z)
 	
 	sprite.rotation.y=lerp_angle(sprite.rotation.y,target_rotation,SPRITE_TURN_SPEED*delta)
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	move_and_slide()
 
@@ -195,3 +212,33 @@ func _on_cam_target_finder_body_entered(body):
 func _on_cam_target_finder_body_exited(body):
 	if body != self and body.is_in_group("enemy"):
 		cam_targets.erase(body)
+
+
+
+# enemy hits player
+func _on_area_3d_area_entered(area):
+	if immune==false:
+		immune=true
+		$timers/immunity_timer.start()
+		if parrying==true:
+			var particles=parry_particle_var.instantiate()
+			particles.emitting=true
+			particles.process_material.color=Color.WHITE
+			$particles.add_child(particles)
+			animation_tree.set("parameters/parry_transition/blend_amount",1.0)
+		elif blocking==true:
+			var particles=parry_particle_var.instantiate()
+			particles.emitting=true
+			particles.process_material.color=Color.YELLOW
+			$particles.add_child(particles)
+			animation_tree.set("parameters/parry_transition/blend_amount",1.0)
+		elif parrying==false and blocking==false:
+			var particles=parry_particle_var.instantiate()
+			particles.emitting=true
+			particles.process_material.color=Color.RED
+			$particles.add_child(particles)
+		print("hit")
+
+
+func _on_immunity_timer_timeout():
+	immune=false
