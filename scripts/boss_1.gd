@@ -24,7 +24,6 @@ func _input(event):
 		smash_attack()
 
 func _physics_process(delta):
-	print(can_attack)
 	
 	var direction = global_position-player.global_position
 	rotation.y=lerp_angle(rotation.y,atan2(direction.x,direction.z)+PI,8*delta)
@@ -42,7 +41,7 @@ func _physics_process(delta):
 	target.y=player.global_position.y
 	
 	if attacking==false && can_attack==true:
-		if (player.global_position-global_position).length()<3:
+		if (player.global_position-global_position).length()<2.5:
 			attacking=true
 			can_attack=false
 			move_to_player=false
