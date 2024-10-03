@@ -1,7 +1,6 @@
 extends State
 
 # constants
-const JUMP_VELOCITY = 10
 
 # accessed states
 @export var air_state_var : State
@@ -44,7 +43,7 @@ func state_input(event : InputEvent):
 				combo=1
 		
 		elif event.is_action_pressed("ui_jump"):
-			character.velocity.y = JUMP_VELOCITY
+			character.jump()
 		
 		elif event.is_action_pressed("ui_dash"):
 			if character.can_dash:

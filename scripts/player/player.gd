@@ -5,7 +5,7 @@ extends CharacterBody3D
 
 const ACCELERATION = 0.2
 const SPRITE_TURN_SPEED = 12
-const JUMP_VELOCITY = 10
+const JUMP_VELOCITY = 8
 
 
 signal parry_done
@@ -22,6 +22,8 @@ signal parry_done
 @onready var timers = $timers
 @onready var animation_player = $player_model/Sekiro_like_player_character/AnimationPlayer
 @onready var animation_tree = $player_model/Sekiro_like_player_character/AnimationTree
+
+
 
 @export var parry_particle_var : PackedScene
 @export var staggered_state_var : State
@@ -50,7 +52,7 @@ var speed = 10.0
 var moving=false
 var target_rotation=0.0
 var input_dir
-
+var running=false
 var cam_mode="free"
 var cam_targets=[]
 var cam_target
@@ -58,6 +60,12 @@ var cam_target
 var parrying=false
 var blocking=false
 var immune=false
+
+var bone_idxs=[0,8,83,90,98]
+var outer_cloak=[0,8]
+var inner_cloak=[83,90,98]
+
+var jump_spam_fix=false
 
 func _ready():
 	# gets the mouse actions
@@ -93,7 +101,6 @@ func _input(event):
 
 
 func _physics_process(delta):
-	#print(animation_tree.get("parameters/cam_lock/current_state"))
 	animate_cloak_roots()
 	
 	# quits game (as mouse is used cant go to x button)
@@ -115,9 +122,13 @@ func _physics_process(delta):
 		# controls sprinting
 		if state_machine.current_state.name != "block":
 			if Input.is_action_pressed("sprint"):
+				animation_tree.set("parameters/walk_or_run/transition_request","run")
 				speed = 10.0
+				
 			else:
+				animation_tree.set("parameters/walk_or_run/transition_request","walk")
 				speed = 5.0
+			
 		
 		
 		# checks if the player should have control over movement in its current state
@@ -147,25 +158,35 @@ func _physics_process(delta):
 		var target_rot=$cam_origin_y/cam_origin_x/camera_spring/cam_rotation_target.rotation
 		camera.rotation = lerp(camera.rotation,target_rot,0.3)
 		
-		target_rotation=atan2(cam_tar_vec.x,cam_tar_vec.z)
+		if state_machine.current_state.name !="dash":
+			target_rotation=atan2(cam_tar_vec.x,cam_tar_vec.z)
+			
 	
 	sprite.rotation.y=lerp_angle(sprite.rotation.y,target_rotation,SPRITE_TURN_SPEED*delta)
 	
 	
+	if Input.is_action_pressed("sprint"):
+		running=true
+	else:
+		running=false
 	
 	
 	
-	
-	
-	
-	
+
 	
 	move_and_slide()
 
 
+func jump():
+	if jump_spam_fix==false:
+		jump_spam_fix=true
+		animation_tree.set("parameters/state/transition_request","air")
+		animation_tree.set("parameters/jump_and_fall/transition_request","jump")
+		$timers/jump_delay.start()
 
-
-
+func _on_jump_delay_timeout():
+	velocity.y = JUMP_VELOCITY
+	jump_spam_fix=false
 
 # once dash cooldown finishes, can dash again
 func _on_dash_cooldown_timeout():
@@ -181,6 +202,7 @@ func _on_input_buffer_time_timeout():
 
 
 func create_cloak_bones():
+	
 	for i in range(len(cloak_bones)):
 		var cloak_bone=cloak_bone_scene.instantiate()
 		cloak_bone.bone_name=cloak_bones[i]
@@ -190,10 +212,23 @@ func create_cloak_bones():
 
 func animate_cloak_roots():
 	var cloak_rot=(0.01*PI*velocity.length())
-	var quat_rot=Quaternion(Vector3(1,0,0),cloak_rot)
-	var bone_idxs=[0,8,83,90,98]
-	for i in range(5):
-		$player_model/Sekiro_like_player_character/Armature/GeneralSkeleton.set_bone_pose_rotation(bone_idxs[i],quat_rot)
+	var options=[[3,-0.7],[2,-0.25],[1,1]]
+	var fix
+	if (running==true and state_machine.current_state.name == "ground"):
+		fix=options[0]
+	elif state_machine.current_state.name == "dash":
+		fix=options[1]
+	else:
+		fix=options[2]
+	
+	
+	var quat_rot=Quaternion(Vector3(1,0,0),fix[0]*cloak_rot)
+	var cloak_fix=Quaternion(Vector3(1,0,0),fix[1]*cloak_rot)
+	for i in range(2):
+		$player_model/Sekiro_like_player_character/Armature/GeneralSkeleton.set_bone_pose_rotation(outer_cloak[i],quat_rot)
+	for i in range(3):
+		$player_model/Sekiro_like_player_character/Armature/GeneralSkeleton.set_bone_pose_rotation(inner_cloak[i],cloak_fix)
+	
 
 
 
@@ -237,8 +272,10 @@ func _on_area_3d_area_entered(area):
 			particles.emitting=true
 			particles.process_material.color=Color.RED
 			$particles.add_child(particles)
-		print("hit")
 
 
 func _on_immunity_timer_timeout():
 	immune=false
+
+
+

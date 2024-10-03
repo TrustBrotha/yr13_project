@@ -2,7 +2,6 @@ extends State
 
 class_name ground_state
 # constants
-const JUMP_VELOCITY = 10
 
 # accessed states
 @export var air_state_var : State
@@ -32,16 +31,24 @@ func state_process(delta):
 				0.0,0.1))
 		
 	elif character.cam_mode=="fixed":
-		character.animation_tree.set(
-			"parameters/locked_on_walking/blend_position",
-			lerp(character.animation_tree.get("parameters/locked_on_walking/blend_position"),
-			character.input_dir,0.1))
+		if character.running==true:
+			character.animation_tree.set("parameters/walk_or_run_locked_on/transition_request","run")
+			character.animation_tree.set(
+				"parameters/locked_on_running/blend_position",
+				lerp(character.animation_tree.get("parameters/locked_on_running/blend_position"),
+				character.input_dir,0.1))
+		else:
+			character.animation_tree.set("parameters/walk_or_run_locked_on/transition_request","walk")
+			character.animation_tree.set(
+				"parameters/locked_on_walking/blend_position",
+				lerp(character.animation_tree.get("parameters/locked_on_walking/blend_position"),
+				character.input_dir,0.1))
 
 func on_enter():
 	character.animation_tree.set("parameters/state/transition_request","ground")
 	# if there is a jump buffered, execute the jump
 	if character.wants_to_jump == true:
-		character.velocity.y = JUMP_VELOCITY
+		character.jump()
 		character.wants_to_jump = false
 
 
@@ -49,7 +56,7 @@ func state_input(event : InputEvent):
 	
 	# controls jumping
 	if event.is_action_pressed("ui_jump"):
-		character.velocity.y = JUMP_VELOCITY
+		character.jump()
 	
 	elif event.is_action_pressed("block"):
 		next_state = block_state_var

@@ -3,7 +3,6 @@ extends State
 class_name air_state
 
 # constants
-const JUMP_VELOCITY = 10
 
 #accessed states
 @export var ground_state_var : State
@@ -18,6 +17,11 @@ var can_jump = true
 
 
 func state_process(delta):
+	if character.velocity.y<0:
+		character.animation_tree.set("parameters/jump_and_fall/transition_request","fall")
+	
+	
+	
 	# apply gravity
 	character.velocity.y -= gravity_scale*gravity * delta
 	
@@ -39,6 +43,7 @@ func state_process(delta):
 
 
 func on_enter():
+	character.animation_tree.set("parameters/state/transition_request","air")
 	# sets can jump to true for coyote jump
 	can_jump = true
 
@@ -48,7 +53,7 @@ func state_input(event : InputEvent):
 		# if still in coyote time after falling off edge, player can still jump
 		if can_jump == true:
 			if character.velocity.y < 0:
-				character.velocity.y = JUMP_VELOCITY
+				character.jump()
 				can_jump=false
 		
 		# if not in coyote time, buffers jump
