@@ -152,6 +152,7 @@ func _physics_process(delta):
 		
 		var hori_dist=sqrt((cam_tar_vec.x)**2+(cam_tar_vec.z)**2)
 		cam_pivot_x.rotation.x=-atan2(1.5,hori_dist)
+		cam_pivot_x.rotation.x=clamp(cam_pivot_x.rotation.x,-0.7,-0.2)
 		#cam_pivot_x.rotation.x=-PI/6
 		
 		$cam_origin_y/cam_origin_x/camera_spring/cam_rotation_target.look_at(cam_target.global_position)

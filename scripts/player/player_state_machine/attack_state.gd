@@ -52,7 +52,7 @@ func state_input(event : InputEvent):
 		
 
 func on_enter():
-	print(combo)
+	
 	character.get_node("timers/combo_timer").stop()
 	
 	character.get_node("timers/exit_attack_timer").wait_time=attack_times[combo-1]

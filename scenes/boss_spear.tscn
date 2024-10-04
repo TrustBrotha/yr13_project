@@ -1,6 +1,6 @@
 [gd_scene load_steps=280 format=3 uid="uid://cq12x3g524xb8"]
 
-[ext_resource type="Script" path="res://scripts/boss_spear.gd" id="1_k0c6f"]
+[ext_resource type="Script" path="res://scripts/boss_1/boss_spear.gd" id="1_d27f0"]
 [ext_resource type="Shader" uid="uid://58gwau7s3e4m" path="res://assets/boss_1/boss_spear_resonance_shader.tres" id="2_kh8qv"]
 [ext_resource type="Texture2D" uid="uid://wsnbsgiyag6b" path="res://scenes/beam/T_VFX_Noise_4.PNG" id="3_3rpyt"]
 [ext_resource type="ArrayMesh" uid="uid://dy1icwrs4o5lq" path="res://assets/boss_1/boss_spear_resonance.mtl.obj" id="4_86wj8"]
@@ -3087,7 +3087,7 @@ shader_parameter/gradient_power = 0.25
 shader_parameter/beam_texture = ExtResource("5_w04yu")
 
 [node name="boss_spear" type="Node3D"]
-script = ExtResource("1_k0c6f")
+script = ExtResource("1_d27f0")
 
 [node name="boss_spear" type="Node3D" parent="."]
 

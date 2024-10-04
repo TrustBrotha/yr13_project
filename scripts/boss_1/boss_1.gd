@@ -8,7 +8,7 @@ const SPEED = 5.0
 @export var animation_tree : AnimationTree
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
-var attack_range=3.0
+var attack_range=2.0
 #var target : Vector3
 @onready var player = get_parent().get_node("player")
 
@@ -30,13 +30,12 @@ func _ready():
 		#smash_attack()
 
 func _physics_process(delta):
+	
 	player_relative_location=player.global_position-global_position
 	
 	var direction = global_position-player.global_position
 	rotation.y=atan2(direction.x,direction.z)+PI
 	
-	
-	#
 	#if move_to_player == true && (player.global_position-global_position).length()>2.0:
 		#var vel=(player.global_position-global_position).normalized()*2
 		#velocity.x=vel.x

@@ -7,7 +7,6 @@ var patrol_dir=1
 var attack=0
 
 func state_process(delta):
-	#print([patrol_dist,patrol_dir,attack])
 	if character.player_relative_location.length() < character.attack_range:
 		next_state=attack_state_var
 	

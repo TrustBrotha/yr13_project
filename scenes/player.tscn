@@ -21,7 +21,7 @@ radius = 0.1
 height = 0.6
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gen7j"]
-radius = 0.15
+radius = 0.2
 height = 0.7
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2x3ib"]
@@ -11744,6 +11744,7 @@ input_1/reset = true
 animation = &"jump"
 
 [sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_uiugc"]
+xfade_time = 0.1
 input_0/name = "jump"
 input_0/auto_advance = false
 input_0/reset = true
@@ -11849,7 +11850,7 @@ input_1/reset = true
 [sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_vp2d1"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_lh0ip"]
-graph_offset = Vector2(-289.365, 277.906)
+graph_offset = Vector2(-305.163, -47.0051)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_ptl2e")
 nodes/Animation/position = Vector2(-40, -560)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_uwfjy")
@@ -11940,18 +11941,18 @@ cloak_bone_scene = ExtResource("2_vx7al")
 [node name="Sekiro_like_player_character" parent="player_model" instance=ExtResource("4_rjt21")]
 
 [node name="GeneralSkeleton" parent="player_model/Sekiro_like_player_character/Armature" index="0"]
-bones/0/position = Vector3(-0.228354, 1.16862, -0.0989086)
-bones/0/rotation = Quaternion(2.51194e-08, -0.17709, 1.29444e-08, 0.984195)
-bones/7/position = Vector3(0.000114861, 0.83959, 0.00472995)
-bones/7/rotation = Quaternion(-0.0551577, -0.00226194, 0.00150858, 0.998474)
-bones/7/scale = Vector3(0.996866, 0.982126, 0.984821)
-bones/8/position = Vector3(0.25437, 1.1711, -0.0203739)
-bones/8/rotation = Quaternion(5.65946e-08, 0.0962476, -1.01101e-08, 0.995357)
-bones/15/position = Vector3(-9.81646e-19, 0.844333, -0.0426108)
+bones/0/position = Vector3(-0.220727, 1.17306, -0.115952)
+bones/0/rotation = Quaternion(-3.89813e-08, -0.176511, -8.16058e-09, 0.984299)
+bones/7/position = Vector3(0.000175056, 0.846081, 0.0030872)
+bones/7/rotation = Quaternion(-0.0455386, -0.00248846, 0.00179461, 0.998958)
+bones/7/scale = Vector3(0.997301, 0.983287, 0.985629)
+bones/8/position = Vector3(0.253324, 1.17726, -0.0305901)
+bones/8/rotation = Quaternion(5.62826e-08, 0.0840062, -2.42217e-09, 0.996465)
+bones/15/position = Vector3(-8.23847e-19, 0.850683, -0.0426108)
 bones/15/rotation = Quaternion(-7.45058e-09, 8.27181e-25, 8.27181e-25, 1)
-bones/16/rotation = Quaternion(0.0419485, -9.93649e-16, -2.55069e-09, 0.99912)
+bones/16/rotation = Quaternion(0.0314313, -1.39191e-14, -4.31922e-11, 0.999506)
 bones/17/rotation = Quaternion(3.72529e-09, 1.32349e-23, 2.22044e-16, 1)
-bones/18/rotation = Quaternion(0.376483, 0.600846, 0.587557, -0.389899)
+bones/18/rotation = Quaternion(0.386288, 0.594265, 0.582152, -0.398409)
 bones/19/rotation = Quaternion(-0.0533134, 0.778674, -0.625078, -0.0101626)
 bones/20/rotation = Quaternion(0.0585533, -0.704651, 0.0572877, 0.70481)
 bones/21/rotation = Quaternion(3.60706e-09, 0.707107, 3.60706e-09, 0.707107)
@@ -11978,9 +11979,9 @@ bones/43/rotation = Quaternion(-0.0715874, -0.00409171, -0.00876786, 0.997387)
 bones/44/rotation = Quaternion(0.0276347, 0.00223067, 0.0122721, 0.99954)
 bones/45/rotation = Quaternion(0.0704304, 0.00816524, 0.0125993, 0.997404)
 bones/46/rotation = Quaternion(0.0560872, 0.00450647, 0.0205545, 0.998204)
-bones/48/rotation = Quaternion(0.0286096, -2.6817e-11, 4.2338e-10, 0.999591)
+bones/48/rotation = Quaternion(0.00161521, 1.36833e-10, -3.59967e-10, 0.999999)
 bones/49/rotation = Quaternion(2.11758e-22, -4.44089e-16, 1.77636e-15, 1)
-bones/50/rotation = Quaternion(0.480574, -0.518798, -0.515919, -0.483452)
+bones/50/rotation = Quaternion(0.498954, -0.501044, -0.500886, -0.499112)
 bones/51/rotation = Quaternion(0.0403586, 0.776187, -0.629208, 0.00164791)
 bones/52/rotation = Quaternion(0.154286, 0.690228, -0.150951, 0.690648)
 bones/53/rotation = Quaternion(2.6476e-08, -0.707107, 1.56708e-08, 0.707107)
@@ -12008,26 +12009,26 @@ bones/76/rotation = Quaternion(0.0276347, -0.00223064, -0.0122721, 0.99954)
 bones/77/rotation = Quaternion(0.0704304, -0.00816527, -0.0125993, 0.997404)
 bones/78/rotation = Quaternion(0.0560872, -0.00450632, -0.0205546, 0.998204)
 bones/83/position = Vector3(0.137658, 0.0879207, -0.114242)
-bones/83/rotation = Quaternion(-0.0125206, 0.0367048, -0.00183582, 0.999246)
-bones/90/position = Vector3(-0.134019, 0.0874964, -0.113288)
-bones/90/rotation = Quaternion(-0.0124377, -0.061226, 0.00227182, 0.998044)
-bones/105/rotation = Quaternion(-0.0140855, 0.17775, 0.982713, -0.0498252)
-bones/106/rotation = Quaternion(0.0208882, 0.99121, -0.130623, 0.00189609)
-bones/107/rotation = Quaternion(0.0612715, -0.0014659, 0.0252515, 0.997801)
-bones/108/rotation = Quaternion(0.0013181, 0.696572, -0.717433, 0.00873872)
+bones/83/rotation = Quaternion(-0.00948966, 0.0331575, -0.00127755, 0.999404)
+bones/90/position = Vector3(-0.133361, 0.0872856, -0.114344)
+bones/90/rotation = Quaternion(-0.00936563, -0.060879, 0.00169835, 0.9981)
+bones/105/rotation = Quaternion(-0.0136363, 0.163123, 0.98542, -0.0463845)
+bones/106/rotation = Quaternion(0.0177081, 0.99338, -0.113488, 0.00172585)
+bones/107/rotation = Quaternion(0.0504197, -0.00128641, 0.0217345, 0.998491)
+bones/108/rotation = Quaternion(-0.000602468, 0.707052, -0.707067, 0.0115647)
 bones/110/rotation = Quaternion(1.11953e-08, 1, 0, -3.29272e-09)
-bones/111/rotation = Quaternion(-0.0918706, -0.00473157, -0.0262694, 0.995413)
-bones/111/scale = Vector3(0.999951, 0.979721, 0.999995)
-bones/112/rotation = Quaternion(0.00724972, -0.0100297, 0.998928, 0.0446089)
-bones/113/rotation = Quaternion(-0.0161609, 0.994354, -0.104867, -0.00162866)
-bones/114/rotation = Quaternion(0.0449598, 0.001187, -0.0198811, 0.99879)
-bones/115/rotation = Quaternion(-0.0864841, 0.578915, -0.79922, -0.136477)
+bones/111/rotation = Quaternion(-0.084378, -0.00434584, -0.0244915, 0.996123)
+bones/111/scale = Vector3(0.999957, 0.981742, 0.999996)
+bones/112/rotation = Quaternion(0.00609442, -0.0267073, 0.998808, 0.0404043)
+bones/113/rotation = Quaternion(-0.0124053, 0.996427, -0.0835312, -0.00137216)
+bones/114/rotation = Quaternion(0.0322814, 0.000942906, -0.0154468, 0.999359)
+bones/115/rotation = Quaternion(-0.0871495, 0.593745, -0.787825, -0.138576)
 bones/117/rotation = Quaternion(-1.11953e-08, 1, 0, 3.29272e-09)
-bones/118/rotation = Quaternion(0.00516449, -0.00026603, 0.022978, 0.999723)
+bones/118/rotation = Quaternion(0.0134842, -0.000694507, 0.0208129, 0.999692)
 bones/118/scale = Vector3(1, 0.999966, 0.999995)
 
 [node name="scarf_collision_L_1" type="BoneAttachment3D" parent="player_model/Sekiro_like_player_character/Armature/GeneralSkeleton" index="4"]
-transform = Transform3D(-0.230817, -0.0816921, 0.969562, 0.106529, -0.9926, -0.0582725, 0.967148, 0.0898365, 0.237812, 0.366271, 0.989808, -0.0674615)
+transform = Transform3D(-0.200685, -0.0787817, 0.976483, 0.126985, -0.990444, -0.0538105, 0.971391, 0.113199, 0.208771, 0.363738, 0.994835, -0.0771764)
 bone_name = "scarf_weap_5.L"
 bone_idx = 43
 
@@ -12038,7 +12039,7 @@ transform = Transform3D(0.984808, -0.173648, 0, 0.17101, 0.969846, -0.173648, 0.
 shape = SubResource("CapsuleShape3D_kguq2")
 
 [node name="scarf_collision_L_2" type="BoneAttachment3D" parent="player_model/Sekiro_like_player_character/Armature/GeneralSkeleton" index="5"]
-transform = Transform3D(-0.252211, 0.237322, 0.938119, 0.0140022, -0.968463, 0.248763, 0.967571, 0.0758764, 0.240934, 0.466546, 0.543811, -0.0861358)
+transform = Transform3D(-0.222048, 0.239643, 0.945128, 0.0344991, -0.966788, 0.253241, 0.974425, 0.0888376, 0.206406, 0.463421, 0.548487, -0.0895642)
 bone_name = "scarf_weap_8.L"
 bone_idx = 46
 
@@ -12049,7 +12050,7 @@ transform = Transform3D(0.984808, -0.173648, 0, 0.17101, 0.969846, -0.173648, 0.
 shape = SubResource("CapsuleShape3D_kguq2")
 
 [node name="scarf_collision_R_1" type="BoneAttachment3D" parent="player_model/Sekiro_like_player_character/Armature/GeneralSkeleton" index="6"]
-transform = Transform3D(0.118892, 0.0369211, -0.99222, -0.106436, -0.993076, -0.0497067, -0.987186, 0.111518, -0.114139, -0.32085, 0.992743, -0.190539)
+transform = Transform3D(0.18476, 0.0291875, -0.98235, -0.127003, -0.990468, -0.0533153, -0.974543, 0.134612, -0.179292, -0.306796, 0.995002, -0.210005)
 bone_name = "scarf_weap_5.R"
 bone_idx = 75
 
@@ -12060,7 +12061,7 @@ transform = Transform3D(0.984808, 0.173648, 0, -0.17101, 0.969846, -0.173648, -0
 shape = SubResource("CapsuleShape3D_dcat3")
 
 [node name="scarf_collision_R_2" type="BoneAttachment3D" parent="player_model/Sekiro_like_player_character/Armature/GeneralSkeleton" index="7"]
-transform = Transform3D(0.0997683, -0.257126, -0.961214, -0.0137342, -0.966298, 0.25706, -0.994916, -0.012445, -0.0999372, -0.412169, 0.547566, -0.243408)
+transform = Transform3D(0.166213, -0.255887, -0.95231, -0.0345073, -0.966662, 0.25372, -0.985486, -0.00931007, -0.169502, -0.394446, 0.5487, -0.259495)
 bone_name = "scarf_weap_8.R"
 bone_idx = 78
 
@@ -12071,7 +12072,7 @@ transform = Transform3D(0.984808, 0.173648, 0, -0.17101, 0.969846, -0.173648, -0
 shape = SubResource("CapsuleShape3D_dcat3")
 
 [node name="spine_collision" type="BoneAttachment3D" parent="player_model/Sekiro_like_player_character/Armature/GeneralSkeleton" index="8"]
-transform = Transform3D(1, 5.09689e-09, -2.13997e-10, -5.09689e-09, 0.996481, -0.0838232, -2.13993e-10, 0.0838232, 0.996481, 3.90171e-18, 1.06617, -0.0137454)
+transform = Transform3D(1, 8.63409e-11, -2.743e-12, -8.63426e-11, 0.998024, -0.0628315, -2.68735e-12, 0.0628315, 0.998024, 4.05951e-18, 1.07252, -0.0137454)
 bone_name = "Spine"
 bone_idx = 16
 
@@ -12083,7 +12084,7 @@ transform = Transform3D(1, 1.83228e-08, -8.21882e-10, -1.83338e-08, 0.999869, -0
 shape = SubResource("CapsuleShape3D_gen7j")
 
 [node name="head_collision" type="BoneAttachment3D" parent="player_model/Sekiro_like_player_character/Armature/GeneralSkeleton" index="9"]
-transform = Transform3D(1, 4.22835e-09, -5.34555e-10, -4.2615e-09, 0.990055, -0.14068, -6.56076e-11, 0.14068, 0.990055, 2.5689e-09, 1.58333, 0.0595276)
+transform = Transform3D(1, 8.06703e-10, 2.69479e-10, -7.87141e-10, 0.997816, -0.0660552, -3.22177e-10, 0.0660552, 0.997816, 1.24449e-10, 1.59356, 0.0436362)
 bone_name = "Head"
 bone_idx = 49
 
@@ -12094,7 +12095,7 @@ collision_mask = 8
 shape = SubResource("CapsuleShape3D_2x3ib")
 
 [node name="left_leg_low_collision" type="BoneAttachment3D" parent="player_model/Sekiro_like_player_character/Armature/GeneralSkeleton" index="10"]
-transform = Transform3D(0.999835, 0.0113694, 0.0141656, 0.0109729, -0.999554, 0.0277636, 0.014475, -0.0276035, -0.999514, 0.138042, 0.436191, 0.153976)
+transform = Transform3D(0.999733, 0.0171368, 0.0154938, 0.0171205, -0.999853, 0.00118565, 0.0155118, -0.000920087, -0.999879, 0.135431, 0.436919, 0.142267)
 bone_name = "leg2.L"
 bone_idx = 107
 
@@ -12106,7 +12107,7 @@ transform = Transform3D(1, 5.47152e-09, 4.47035e-08, -8.59145e-08, 1, -5.58794e-
 shape = SubResource("CapsuleShape3D_vt7ys")
 
 [node name="right_leg_low_collision" type="BoneAttachment3D" parent="player_model/Sekiro_like_player_character/Armature/GeneralSkeleton" index="11"]
-transform = Transform3D(0.999792, -0.0172446, 0.0109314, -0.0198073, -0.949098, 0.314356, 0.00495408, -0.314507, -0.949242, -0.136335, 0.409153, -0.0344643)
+transform = Transform3D(0.999639, -0.0253754, 0.00881203, -0.0268295, -0.959294, 0.281133, 0.00131946, -0.281268, -0.959628, -0.13273, 0.414317, -0.0486294)
 bone_name = "leg2.R"
 bone_idx = 114
 
@@ -12118,7 +12119,7 @@ transform = Transform3D(1, 5.47152e-09, 4.47035e-08, -8.59145e-08, 1, -5.58794e-
 shape = SubResource("CapsuleShape3D_vt7ys")
 
 [node name="left_leg_high_collision" type="BoneAttachment3D" parent="player_model/Sekiro_like_player_character/Armature/GeneralSkeleton" index="12"]
-transform = Transform3D(-0.994638, 0.0929203, -0.0453968, -0.102935, -0.931845, 0.34795, -0.00997122, 0.350757, 0.936413, 0.0764884, 0.923388, -0.00522453)
+transform = Transform3D(-0.995325, 0.0869676, -0.0420077, -0.0958651, -0.942479, 0.320225, -0.0117422, 0.322755, 0.94641, 0.0764884, 0.929737, -0.00522453)
 bone_name = "LeftUpperLeg"
 bone_idx = 105
 
@@ -12130,7 +12131,7 @@ transform = Transform3D(1, -3.72529e-09, 7.82311e-08, -5.96046e-08, 1, -1.49012e
 shape = SubResource("CapsuleShape3D_moaxf")
 
 [node name="right_leg_high_collision" type="BoneAttachment3D" parent="player_model/Sekiro_like_player_character/Armature/GeneralSkeleton" index="13"]
-transform = Transform3D(-0.995915, -0.0892676, 0.0135891, 0.0889768, -0.995819, -0.0206847, 0.0153787, -0.019391, 0.999694, -0.0764884, 0.923388, -0.00522453)
+transform = Transform3D(-0.996661, -0.0810378, 0.0100161, 0.0803867, -0.995309, -0.0538433, 0.0143325, -0.0528583, 0.998499, -0.0764884, 0.929737, -0.00522453)
 bone_name = "RightUpperLeg"
 bone_idx = 112
 
@@ -12226,7 +12227,7 @@ wait_time = 0.4
 one_shot = true
 
 [node name="immunity_timer" type="Timer" parent="timers"]
-wait_time = 0.2
+wait_time = 0.1
 one_shot = true
 
 [node name="jump_delay" type="Timer" parent="timers"]
