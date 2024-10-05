@@ -41,11 +41,6 @@ func _process(delta):
 			$beam_sound.play()
 			played_sound=true
 	
-	
-	if following == true:
-		look_at(get_parent().get_parent().player.global_position+Vector3(offset,1,0),Vector3(0,1,0))
-		pass
-	
 	if end == true:
 		$mid_beam.process_material.color.a=lerp($mid_beam.process_material.color.a,0.0,0.1)
 		$inner_beam.process_material.color.a=lerp($inner_beam.process_material.color.a,0.0,0.1)

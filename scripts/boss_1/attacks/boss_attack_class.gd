@@ -20,6 +20,12 @@ func finish_attack(attack_length,follow_up_prob,follow_up_attack):
 	
 	if r>0:
 		if follow_up_attack!=null:
-			get_parent().next_attack=follow_up_attack
+			
+			if boss.player_relative_location.length() > boss.attack_range:
+				get_parent().next_state=get_parent().idle_state_var
+			
+			else:
+				get_parent().current_attack=follow_up_attack
+				get_parent().attack()
 	else:
 		get_parent().attack_finished()

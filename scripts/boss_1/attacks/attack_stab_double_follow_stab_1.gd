@@ -9,3 +9,4 @@ func control_attack():
 	animation_tree.set("parameters/attacks/transition_request","attack_stab_double_follow_stab_1")
 	control_collision(collision_times)
 	finish_attack(attack_length,follow_up_prob,null)
+

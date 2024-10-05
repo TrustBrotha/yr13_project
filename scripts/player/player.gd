@@ -8,7 +8,6 @@ const SPRITE_TURN_SPEED = 12
 const JUMP_VELOCITY = 8
 
 
-signal parry_done
 
 
 # defines the state machine to me manipulated as a variable
@@ -67,6 +66,7 @@ var inner_cloak=[83,90,98]
 
 var jump_spam_fix=false
 
+
 func _ready():
 	# gets the mouse actions
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -101,6 +101,8 @@ func _input(event):
 
 
 func _physics_process(delta):
+	
+	
 	animate_cloak_roots()
 	
 	# quits game (as mouse is used cant go to x button)
@@ -256,6 +258,9 @@ func _on_area_3d_area_entered(area):
 	if immune==false:
 		immune=true
 		$timers/immunity_timer.start()
+		var vel = (sprite.transform.basis * Vector3(0, 0, -1)).normalized()*3
+		var t=get_tree().create_tween()
+		t.tween_property(self,"velocity",vel,0.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 		if parrying==true:
 			var particles=parry_particle_var.instantiate()
 			particles.emitting=true
@@ -277,6 +282,7 @@ func _on_area_3d_area_entered(area):
 
 func _on_immunity_timer_timeout():
 	immune=false
+
 
 
 

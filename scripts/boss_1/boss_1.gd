@@ -1,14 +1,18 @@
 extends CharacterBody3D
 
-const SPEED = 5.0
+const SPEED = 5
 #const JUMP_VELOCITY = 4.5
 
 #var move_to_player=true
-@export var beam_scene : PackedScene
 @export var animation_tree : AnimationTree
+@export var state_machine : Node
+@export var blank_state_var : State
+@export var attack_state_var : State
+@export var parry_particle_var : PackedScene
+@export var weapon_coll : CollisionShape3D
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
-var attack_range=2.0
+var attack_range=4
 #var target : Vector3
 @onready var player = get_parent().get_node("player")
 
@@ -18,16 +22,20 @@ var attack_range=2.0
 var player_relative_location
 
 
+var immune=false
+var blocking=false
+var block_prepared=false
+var block_recov=false
+
+var wants_to_chase=false
+
+
 func _ready():
 	pass
-	#$boss_1_model/AnimationPlayer.play("test_pose")
 
-#func _input(event):
-	#if event.is_action_pressed("enter"):
-		#move_to_player=false
-		#can_attack=false
-		#velocity=Vector3.ZERO
-		#smash_attack()
+func _input(event):
+	if event.is_action_pressed("enter"):
+		laser_attack()
 
 func _physics_process(delta):
 	
@@ -36,24 +44,11 @@ func _physics_process(delta):
 	var direction = global_position-player.global_position
 	rotation.y=atan2(direction.x,direction.z)+PI
 	
-	#if move_to_player == true && (player.global_position-global_position).length()>2.0:
-		#var vel=(player.global_position-global_position).normalized()*2
-		#velocity.x=vel.x
-		#velocity.z=vel.z
-		#if not is_on_floor():
-			#velocity.y -= gravity * delta
-	#else:
-		#velocity=lerp(velocity,Vector3.ZERO,0.3)
-	#
-	#target=player.global_position+(global_position-player.global_position).normalized()*2.5
-	#target.y=player.global_position.y
-	
-	#if attacking==false && can_attack==true:
-		#if (player.global_position-global_position).length()<2.5:
-			#attacking=true
-			#can_attack=false
-			#move_to_player=false
-			#basic_attack()
+
+	animation_tree.set(
+		"parameters/block_blend/blend_amount",
+		lerp(animation_tree.get("parameters/block_blend/blend_amount"),
+		0.0,0.1))
 	
 	
 	move_and_slide()
@@ -72,50 +67,28 @@ func animate_cloak_roots():
 
 
 
-#func basic_attack():
-	#velocity=(player.global_position-global_position).normalized()*1.0
-	##var t=get_tree().create_tween()
-	##t.tween_property(self,"velocity",(player.global_position-global_position).normalized()*6.0,0.6).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_IN)
-	#var r =randi_range(0,1)
-	#if r==1:
-		#$boss_1_model/AnimationTree.set("parameters/state/transition_request","attack_1")
-	#else:
-		#$boss_1_model/AnimationTree.set("parameters/state/transition_request","attack_2")
-
-
-
-
-#func smash_attack():
-	#var beam_pos =[Vector3(7,7,-15),Vector3(-7,7,-15)]
-	#var offset_options = [-1.2,1.2]
-	#for i in range(2):
-		#var laser = beam_scene.instantiate()
-		#laser.position=beam_pos[i]
-		#laser.offset=offset_options[i]
-		#$beams.add_child(laser)
-	#
-	#$boss_1_model/AnimationTree.set("parameters/state/transition_request","smash_attack")
-#
-#
-#
-#func fly():
-	#var t=get_tree().create_tween()
-	#t.tween_property(self,"global_position",global_position+Vector3(0,6,0),0.45).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
-#
-#func smash():
-	#var t=get_tree().create_tween()
-	#t.tween_property(self,"global_position",target,0.45).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_IN)
-#
-#
-#
-#
-#
-#func attack_finished():
-	#print("hi")
-	#$boss_1_model/AnimationTree.set("parameters/state/transition_request","walk")
-	#attacking=false
-	#move_to_player=true
-	#$timers/attack_cooldown.start()
+func laser_attack():
+	state_machine.current_state.next_state=blank_state_var
+	animation_tree.set("parameters/state/transition_request","attack")
+	animation_tree.set("parameters/attacks/transition_request","attack_fly_up")
+	await get_tree().create_timer(0.25).timeout 
+	var t=get_tree().create_tween()
+	t.tween_property(self,"global_position",global_position+Vector3(0,6,0),0.45).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+	get_parent().spawn_beams()
+	
+	await get_tree().create_timer(2).timeout
+	animation_tree.set("parameters/attacks/transition_request","attack_fly_slam")
+	weapon_coll.disabled=false
+	await get_tree().create_timer(0.4).timeout 
+	var target=player.global_position+(global_position-player.global_position).normalized()*2.5
+	target.y=player.global_position.y
+	var t2=get_tree().create_tween()
+	t2.tween_property(self,"global_position",target,0.45).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_IN)
+	await get_tree().create_timer(0.5).timeout
+	weapon_coll.disabled=true
+	await get_tree().create_timer(0.2).timeout
+	state_machine.current_state.next_state=attack_state_var
+	
 
 
 
@@ -123,5 +96,29 @@ func animate_cloak_roots():
 
 
 
-#func _on_attack_cooldown_timeout():
-	#can_attack=true
+
+
+
+
+func _on_area_3d_area_entered(area):
+	if immune==false:
+		immune=true
+		$timers/immunity_timer.start()
+		var vel = (transform.basis * Vector3(0, 0, -1)).normalized()*3
+		var t=get_tree().create_tween()
+		t.tween_property(self,"velocity",vel,0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		if blocking==true:
+			var particles=parry_particle_var.instantiate()
+			particles.emitting=true
+			particles.process_material.color=Color.YELLOW
+			$particles.add_child(particles)
+			animation_tree.set("parameters/block_blend/blend_amount",1.0)
+		elif blocking==false:
+			var particles=parry_particle_var.instantiate()
+			particles.emitting=true
+			particles.process_material.color=Color.RED
+			$particles.add_child(particles)
+
+
+func _on_immunity_timer_timeout():
+	immune=false
