@@ -12,7 +12,7 @@ const SPEED = 5
 @export var weapon_coll : CollisionShape3D
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
-var attack_range=4
+var attack_range=3.5
 #var target : Vector3
 @onready var player = get_parent().get_node("player")
 

@@ -1,9 +1,15 @@
 [gd_scene load_steps=2 format=3 uid="uid://b1ssecsvg82dl"]
 
-[ext_resource type="Script" path="res://scripts/hud.gd" id="1_eq1gs"]
+[ext_resource type="Script" path="res://scripts/UI/hud.gd" id="1_xk3g0"]
 
 [node name="HUD" type="CanvasLayer"]
-script = ExtResource("1_eq1gs")
+script = ExtResource("1_xk3g0")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="state_label" type="Label" parent="."]
 offset_right = 40.0

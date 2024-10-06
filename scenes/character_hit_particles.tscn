@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://b7kae7qcc86x6"]
+[gd_scene load_steps=6 format=3 uid="uid://b7kae7qcc86x6"]
 
-[ext_resource type="Shader" uid="uid://bkmt3g22l6h6p" path="res://scenes/beam/spark_shader.tres" id="1_0tt08"]
+[ext_resource type="Shader" uid="uid://bkmt3g22l6h6p" path="res://scenes/beam/spark_shader.tres" id="1_qiuki"]
+[ext_resource type="Script" path="res://scripts/hit_particles.gd" id="2_3eojl"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4hosf"]
 spread = 180.0
@@ -9,7 +10,7 @@ initial_velocity_max = 5.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iurnr"]
 render_priority = 0
-shader = ExtResource("1_0tt08")
+shader = ExtResource("1_qiuki")
 
 [sub_resource type="QuadMesh" id="QuadMesh_5qwc8"]
 material = SubResource("ShaderMaterial_iurnr")
@@ -22,3 +23,4 @@ one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_4hosf")
 draw_pass_1 = SubResource("QuadMesh_5qwc8")
+script = ExtResource("2_3eojl")

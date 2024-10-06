@@ -34,7 +34,8 @@ var sensitivity = 0.1
 	"cloak_2_O.L","cloak_3_O.L","cloak_4_O.L","cloak_5_O.L","cloak_6_O.L","cloak_7_O.L",
 	"cloak_2_I.R","cloak_3_I.R","cloak_4_I.R","cloak_5_I.R","cloak_6_I.R","cloak_7_I.R",
 	"cloak_2_I.L","cloak_3_I.L","cloak_4_I.L","cloak_5_I.L","cloak_6_I.L","cloak_7_I.L",
-	"cloak_mid_2","cloak_mid_3","cloak_mid_4","cloak_mid_5","cloak_mid_6","cloak_mid_7"]
+	"cloak_mid_2","cloak_mid_3","cloak_mid_4","cloak_mid_5","cloak_mid_6","cloak_mid_7",
+	]
 @export var cloak_bone_scene : PackedScene
 
 
@@ -68,6 +69,7 @@ var jump_spam_fix=false
 
 
 func _ready():
+	
 	# gets the mouse actions
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
@@ -101,8 +103,6 @@ func _input(event):
 
 
 func _physics_process(delta):
-	
-	
 	animate_cloak_roots()
 	
 	# quits game (as mouse is used cant go to x button)
@@ -172,11 +172,6 @@ func _physics_process(delta):
 		running=true
 	else:
 		running=false
-	
-	
-	
-
-	
 	move_and_slide()
 
 
@@ -205,7 +200,6 @@ func _on_input_buffer_time_timeout():
 
 
 func create_cloak_bones():
-	
 	for i in range(len(cloak_bones)):
 		var cloak_bone=cloak_bone_scene.instantiate()
 		cloak_bone.bone_name=cloak_bones[i]
