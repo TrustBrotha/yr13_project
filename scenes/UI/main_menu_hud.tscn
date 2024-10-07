@@ -1,0 +1,471 @@
+[gd_scene load_steps=16 format=3 uid="uid://docshgc7ugibe"]
+
+[ext_resource type="Script" path="res://scripts/UI/main_menu_hud.gd" id="1_ahi42"]
+[ext_resource type="PackedScene" uid="uid://o8npypnga12n" path="res://scenes/UI/menu_button.tscn" id="2_tfxew"]
+[ext_resource type="Theme" uid="uid://dookxj2jcfvdp" path="res://assets/UI/UI_text.tres" id="3_ya8t4"]
+[ext_resource type="Texture2D" uid="uid://0um5j3clrr8y" path="res://assets/UI/small_button_hover.png" id="4_rsttd"]
+[ext_resource type="Texture2D" uid="uid://bqxq4niru8bm3" path="res://assets/UI/small_button_press.png" id="5_5im87"]
+[ext_resource type="PackedScene" uid="uid://by8l5pkd8bt4n" path="res://scenes/UI/remap_button.tscn" id="6_p487m"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fq6m5"]
+texture_margin_left = 12.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t8u8p"]
+texture = ExtResource("4_rsttd")
+texture_margin_left = 12.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oivvm"]
+texture = ExtResource("5_5im87")
+texture_margin_left = 12.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8lqjb"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_812e5"]
+texture = ExtResource("4_rsttd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i0ixm"]
+texture = ExtResource("5_5im87")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0wbk0"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f72yv"]
+texture = ExtResource("4_rsttd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jqcr7"]
+texture = ExtResource("5_5im87")
+
+[node name="main_menu_hud" type="CanvasLayer" node_paths=PackedStringArray("current_screen", "music_label", "sfx_label", "screen_type_text", "border_type_text", "resolution_type_text")]
+script = ExtResource("1_ahi42")
+current_screen = NodePath("screens/title")
+music_label = NodePath("screens/audio_settings/GridContainer/music_volume_value")
+sfx_label = NodePath("screens/audio_settings/GridContainer/sfx_volume_value")
+screen_type_text = NodePath("screens/visual_settings/GridContainer/change_display_type")
+border_type_text = NodePath("screens/visual_settings/GridContainer/change_border_mode")
+resolution_type_text = NodePath("screens/visual_settings/GridContainer/resolution_mode")
+
+[node name="screens" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 1
+
+[node name="title" type="Node2D" parent="screens"]
+position = Vector2(-1000, 0)
+
+[node name="title" type="Sprite2D" parent="screens/title"]
+
+[node name="Polygon2D" type="Polygon2D" parent="screens/title"]
+color = Color(0, 0, 0, 0.67451)
+polygon = PackedVector2Array(0, 0, 758, 0, 406, 1080, 0, 1080)
+
+[node name="GridContainer" type="GridContainer" parent="screens/title"]
+offset_left = 50.0
+offset_top = 381.0
+offset_right = 401.0
+offset_bottom = 907.0
+theme_override_constants/v_separation = 50
+
+[node name="play" parent="screens/title/GridContainer" instance=ExtResource("2_tfxew")]
+layout_mode = 2
+text = " PLAY"
+
+[node name="settings" parent="screens/title/GridContainer" instance=ExtResource("2_tfxew")]
+layout_mode = 2
+text = " SETTINGS"
+
+[node name="credits" parent="screens/title/GridContainer" instance=ExtResource("2_tfxew")]
+layout_mode = 2
+text = " CREDITS"
+
+[node name="quit" parent="screens/title/GridContainer" instance=ExtResource("2_tfxew")]
+layout_mode = 2
+text = " QUIT"
+
+[node name="settings" type="Node2D" parent="screens"]
+position = Vector2(-1000, 0)
+
+[node name="Polygon2D" type="Polygon2D" parent="screens/settings"]
+color = Color(0, 0, 0, 0.67451)
+polygon = PackedVector2Array(0, 0, 758, 0, 406, 1080, 0, 1080)
+
+[node name="GridContainer" type="GridContainer" parent="screens/settings"]
+offset_left = 50.0
+offset_top = 381.0
+offset_right = 401.0
+offset_bottom = 907.0
+theme_override_constants/v_separation = 50
+
+[node name="audio" parent="screens/settings/GridContainer" instance=ExtResource("2_tfxew")]
+layout_mode = 2
+text = " AUDIO"
+
+[node name="visual" parent="screens/settings/GridContainer" instance=ExtResource("2_tfxew")]
+layout_mode = 2
+text = " ‎VISUAL"
+
+[node name="key_binds" parent="screens/settings/GridContainer" instance=ExtResource("2_tfxew")]
+layout_mode = 2
+text = " KEY BINDS"
+
+[node name="settings_back" parent="screens/settings/GridContainer" instance=ExtResource("2_tfxew")]
+layout_mode = 2
+text = " BACK"
+
+[node name="audio_settings" type="Node2D" parent="screens"]
+position = Vector2(-1000, 0)
+
+[node name="Polygon2D" type="Polygon2D" parent="screens/audio_settings"]
+color = Color(0, 0, 0, 0.67451)
+polygon = PackedVector2Array(0, 0, 758, 0, 406, 1080, 0, 1080)
+
+[node name="GridContainer" type="GridContainer" parent="screens/audio_settings"]
+offset_left = 35.0
+offset_top = 380.0
+offset_right = 562.0
+offset_bottom = 572.0
+columns = 4
+
+[node name="music_volume" type="Label" parent="screens/audio_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+text = "MUSIC VOLUME:"
+horizontal_alignment = 1
+
+[node name="music_down" type="Button" parent="screens/audio_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_styles/normal = SubResource("StyleBoxTexture_fq6m5")
+theme_override_styles/hover = SubResource("StyleBoxTexture_t8u8p")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_oivvm")
+text = "-"
+
+[node name="music_volume_value" type="Label" parent="screens/audio_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+text = "15"
+
+[node name="music_up" type="Button" parent="screens/audio_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_styles/normal = SubResource("StyleBoxTexture_fq6m5")
+theme_override_styles/hover = SubResource("StyleBoxTexture_t8u8p")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_oivvm")
+text = "+"
+
+[node name="sfx_volume" type="Label" parent="screens/audio_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+text = "SFX VOLUME:"
+horizontal_alignment = 1
+
+[node name="sfx_down" type="Button" parent="screens/audio_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_styles/normal = SubResource("StyleBoxTexture_fq6m5")
+theme_override_styles/hover = SubResource("StyleBoxTexture_t8u8p")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_oivvm")
+text = "-"
+
+[node name="sfx_volume_value" type="Label" parent="screens/audio_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+text = "15"
+
+[node name="sfx_up" type="Button" parent="screens/audio_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_styles/normal = SubResource("StyleBoxTexture_fq6m5")
+theme_override_styles/hover = SubResource("StyleBoxTexture_t8u8p")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_oivvm")
+text = "+"
+
+[node name="audio_settings_back" parent="screens/audio_settings" instance=ExtResource("2_tfxew")]
+offset_left = 50.0
+offset_top = 813.0
+offset_right = 247.0
+offset_bottom = 907.0
+text = " BACK"
+
+[node name="visual_settings" type="Node2D" parent="screens"]
+position = Vector2(-1000, 0)
+
+[node name="Polygon2D" type="Polygon2D" parent="screens/visual_settings"]
+color = Color(0, 0, 0, 0.67451)
+polygon = PackedVector2Array(0, 0, 958, 0, 606, 1080, 0, 1080)
+
+[node name="GridContainer" type="GridContainer" parent="screens/visual_settings"]
+offset_left = 35.0
+offset_top = 380.0
+offset_right = 855.0
+offset_bottom = 500.0
+theme_override_constants/v_separation = 30
+columns = 4
+
+[node name="display_mode" type="Label" parent="screens/visual_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+text = "DISPLAY MODE: "
+horizontal_alignment = 1
+
+[node name="change_display_type" type="Button" parent="screens/visual_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxTexture_8lqjb")
+theme_override_styles/hover = SubResource("StyleBoxTexture_812e5")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_i0ixm")
+text = "WINDOWED"
+
+[node name="break_between_buttons" type="Label" parent="screens/visual_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+text = " | "
+horizontal_alignment = 1
+
+[node name="apply_display_type" type="Button" parent="screens/visual_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxTexture_0wbk0")
+theme_override_styles/hover = SubResource("StyleBoxTexture_f72yv")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_jqcr7")
+text = "APPLY"
+
+[node name="border_mode" type="Label" parent="screens/visual_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+text = "DISPLAY MODE: "
+horizontal_alignment = 1
+
+[node name="change_border_mode" type="Button" parent="screens/visual_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxTexture_8lqjb")
+theme_override_styles/hover = SubResource("StyleBoxTexture_812e5")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_i0ixm")
+text = "DISABLED"
+
+[node name="break_between_buttons2" type="Label" parent="screens/visual_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+text = " | "
+horizontal_alignment = 1
+
+[node name="apply_border_mode" type="Button" parent="screens/visual_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxTexture_0wbk0")
+theme_override_styles/hover = SubResource("StyleBoxTexture_f72yv")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_jqcr7")
+text = "APPLY"
+
+[node name="resolution" type="Label" parent="screens/visual_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+text = "RESOLUTION:"
+horizontal_alignment = 1
+
+[node name="resolution_mode" type="Button" parent="screens/visual_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxTexture_8lqjb")
+theme_override_styles/hover = SubResource("StyleBoxTexture_812e5")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_i0ixm")
+text = "1920 x 1080"
+
+[node name="break_between_buttons3" type="Label" parent="screens/visual_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+text = " | "
+horizontal_alignment = 1
+
+[node name="apply_resolution" type="Button" parent="screens/visual_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxTexture_0wbk0")
+theme_override_styles/hover = SubResource("StyleBoxTexture_f72yv")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_jqcr7")
+text = "APPLY"
+
+[node name="visual_settings_back" parent="screens/visual_settings" instance=ExtResource("2_tfxew")]
+offset_left = 50.0
+offset_top = 813.0
+offset_right = 247.0
+offset_bottom = 907.0
+text = " BACK"
+
+[node name="key_binds" type="Node2D" parent="screens"]
+position = Vector2(-1000, 0)
+
+[node name="Polygon2D2" type="Polygon2D" parent="screens/key_binds"]
+color = Color(0, 0, 0, 0.67451)
+polygon = PackedVector2Array(0, 0, 958, 0, 606, 1080, 0, 1080)
+
+[node name="GridContainer" type="GridContainer" parent="screens/key_binds"]
+offset_left = 35.0
+offset_top = 50.0
+offset_right = 297.0
+offset_bottom = 850.0
+theme_override_constants/v_separation = 15
+columns = 2
+
+[node name="forwards" type="Label" parent="screens/key_binds/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+text = "FORWARDS:"
+horizontal_alignment = 1
+
+[node name="remap_forwards" parent="screens/key_binds/GridContainer" instance=ExtResource("6_p487m")]
+layout_mode = 2
+action = "ui_forward"
+
+[node name="back" type="Label" parent="screens/key_binds/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+text = "BACK:"
+horizontal_alignment = 1
+
+[node name="remap_back" parent="screens/key_binds/GridContainer" instance=ExtResource("6_p487m")]
+layout_mode = 2
+action = "ui_back"
+
+[node name="left" type="Label" parent="screens/key_binds/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+text = "LEFT:"
+horizontal_alignment = 1
+
+[node name="remap_left" parent="screens/key_binds/GridContainer" instance=ExtResource("6_p487m")]
+layout_mode = 2
+action = "left"
+
+[node name="right" type="Label" parent="screens/key_binds/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+text = "RIGHT:"
+horizontal_alignment = 1
+
+[node name="remap_right" parent="screens/key_binds/GridContainer" instance=ExtResource("6_p487m")]
+layout_mode = 2
+action = "right"
+
+[node name="jump" type="Label" parent="screens/key_binds/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+text = "JUMP:"
+horizontal_alignment = 1
+
+[node name="remap_jump" parent="screens/key_binds/GridContainer" instance=ExtResource("6_p487m")]
+layout_mode = 2
+action = "ui_jump"
+
+[node name="dash" type="Label" parent="screens/key_binds/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+text = "DASH:"
+horizontal_alignment = 1
+
+[node name="remap_dash" parent="screens/key_binds/GridContainer" instance=ExtResource("6_p487m")]
+layout_mode = 2
+action = "ui_dash"
+
+[node name="sprint" type="Label" parent="screens/key_binds/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+text = "SPRINT:"
+horizontal_alignment = 1
+
+[node name="remap_sprint" parent="screens/key_binds/GridContainer" instance=ExtResource("6_p487m")]
+layout_mode = 2
+action = "sprint"
+
+[node name="attack" type="Label" parent="screens/key_binds/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+text = "ATTACK:"
+horizontal_alignment = 1
+
+[node name="remap_attack" parent="screens/key_binds/GridContainer" instance=ExtResource("6_p487m")]
+layout_mode = 2
+action = "attack"
+
+[node name="block" type="Label" parent="screens/key_binds/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+text = "BLOCK:"
+horizontal_alignment = 1
+
+[node name="remap_block" parent="screens/key_binds/GridContainer" instance=ExtResource("6_p487m")]
+layout_mode = 2
+action = "block"
+
+[node name="camera_lock" type="Label" parent="screens/key_binds/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+text = "CAMERA LOCK:"
+horizontal_alignment = 1
+
+[node name="remap_camera_lock" parent="screens/key_binds/GridContainer" instance=ExtResource("6_p487m")]
+layout_mode = 2
+action = "camera_lock"
+
+[node name="menu" type="Label" parent="screens/key_binds/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+text = "MENU:"
+horizontal_alignment = 1
+
+[node name="remap_menu" parent="screens/key_binds/GridContainer" instance=ExtResource("6_p487m")]
+layout_mode = 2
+action = "ui_quit"
+
+[node name="key_binds_back" parent="screens/key_binds" instance=ExtResource("2_tfxew")]
+offset_left = 50.0
+offset_top = 813.0
+offset_right = 247.0
+offset_bottom = 907.0
+text = " BACK"
+
+[connection signal="pressed" from="screens/title/GridContainer/play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="screens/title/GridContainer/settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="screens/title/GridContainer/credits" to="." method="_on_credits_pressed"]
+[connection signal="pressed" from="screens/title/GridContainer/quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="screens/settings/GridContainer/audio" to="." method="_on_audio_pressed"]
+[connection signal="pressed" from="screens/settings/GridContainer/visual" to="." method="_on_visual_pressed"]
+[connection signal="pressed" from="screens/settings/GridContainer/key_binds" to="." method="_on_key_binds_pressed"]
+[connection signal="pressed" from="screens/settings/GridContainer/settings_back" to="." method="_on_settings_back_pressed"]
+[connection signal="pressed" from="screens/audio_settings/GridContainer/music_down" to="." method="_on_music_down_pressed"]
+[connection signal="pressed" from="screens/audio_settings/GridContainer/music_up" to="." method="_on_music_up_pressed"]
+[connection signal="pressed" from="screens/audio_settings/GridContainer/sfx_down" to="." method="_on_sfx_down_pressed"]
+[connection signal="pressed" from="screens/audio_settings/GridContainer/sfx_up" to="." method="_on_sfx_up_pressed"]
+[connection signal="pressed" from="screens/audio_settings/audio_settings_back" to="." method="_on_audio_settings_back_pressed"]
+[connection signal="pressed" from="screens/visual_settings/GridContainer/change_display_type" to="." method="_on_change_display_type_pressed"]
+[connection signal="pressed" from="screens/visual_settings/GridContainer/apply_display_type" to="." method="_on_apply_display_type_pressed"]
+[connection signal="pressed" from="screens/visual_settings/GridContainer/change_border_mode" to="." method="_on_change_border_mode_pressed"]
+[connection signal="pressed" from="screens/visual_settings/GridContainer/apply_border_mode" to="." method="_on_apply_border_mode_pressed"]
+[connection signal="pressed" from="screens/visual_settings/GridContainer/resolution_mode" to="." method="_on_resolution_mode_pressed"]
+[connection signal="pressed" from="screens/visual_settings/GridContainer/apply_resolution" to="." method="_on_apply_resolution_pressed"]
+[connection signal="pressed" from="screens/visual_settings/visual_settings_back" to="." method="_on_visual_settings_back_pressed"]
+[connection signal="pressed" from="screens/key_binds/key_binds_back" to="." method="_on_key_binds_back_pressed"]

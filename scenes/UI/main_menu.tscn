@@ -1,11 +1,11 @@
 [gd_scene load_steps=11 format=3 uid="uid://bnhxhb7in5rom"]
 
-[ext_resource type="PackedScene" uid="uid://ee14rnbpi5rb" path="res://assets/world/boss_room.glb" id="1_7ow1p"]
-[ext_resource type="Script" path="res://scripts/UI/main_menu.gd" id="1_lwuew"]
-[ext_resource type="PackedScene" uid="uid://njalfnfk7d15" path="res://assets/player/Sekiro_like_player_character.glb" id="2_lmcot"]
-[ext_resource type="PackedScene" uid="uid://bc65ydjyf0eai" path="res://assets/boss_1/boss_1.glb" id="3_fgidu"]
-[ext_resource type="PackedScene" uid="uid://cq12x3g524xb8" path="res://scenes/boss_spear.tscn" id="4_25a3f"]
-[ext_resource type="PackedScene" uid="uid://docshgc7ugibe" path="res://scenes/main_menu_hud.tscn" id="6_h6f1m"]
+[ext_resource type="Script" path="res://scripts/UI/main_menu.gd" id="1_o1aiu"]
+[ext_resource type="PackedScene" uid="uid://ee14rnbpi5rb" path="res://assets/world/boss_room.glb" id="2_r1gps"]
+[ext_resource type="PackedScene" uid="uid://njalfnfk7d15" path="res://assets/player/Sekiro_like_player_character.glb" id="3_r4u4m"]
+[ext_resource type="PackedScene" uid="uid://bc65ydjyf0eai" path="res://assets/boss_1/boss_1.glb" id="4_jlqip"]
+[ext_resource type="PackedScene" uid="uid://cq12x3g524xb8" path="res://scenes/boss_spear.tscn" id="5_8wr27"]
+[ext_resource type="PackedScene" uid="uid://docshgc7ugibe" path="res://scenes/UI/main_menu_hud.tscn" id="6_o2ggl"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_t8dki"]
 sky_horizon_color = Color(0.556863, 0.211765, 0, 1)
@@ -30,9 +30,9 @@ emission = Color(1, 0.4, 0, 1)
 edge_fade = 0.303143
 
 [node name="main_menu" type="Node3D"]
-script = ExtResource("1_lwuew")
+script = ExtResource("1_o1aiu")
 
-[node name="boss_room" parent="." instance=ExtResource("1_7ow1p")]
+[node name="boss_room" parent="." instance=ExtResource("2_r1gps")]
 
 [node name="Cube" parent="boss_room" index="93"]
 visible = false
@@ -46,7 +46,7 @@ visible = false
 [node name="Cube_003" parent="boss_room" index="96"]
 visible = false
 
-[node name="Sekiro_like_player_character" parent="." instance=ExtResource("2_lmcot")]
+[node name="Sekiro_like_player_character" parent="." instance=ExtResource("3_r4u4m")]
 
 [node name="GeneralSkeleton" parent="Sekiro_like_player_character/Armature" index="0"]
 bones/0/position = Vector3(-0.220234, 1.1732, -0.1169)
@@ -134,7 +134,7 @@ bones/117/rotation = Quaternion(-1.11953e-08, 1, 0, 3.29272e-09)
 bones/118/rotation = Quaternion(0.0140618, -0.000724226, 0.0206646, 0.999687)
 bones/118/scale = Vector3(1, 0.999966, 0.999995)
 
-[node name="boss_1" parent="." instance=ExtResource("3_fgidu")]
+[node name="boss_1" parent="." instance=ExtResource("4_jlqip")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0.3, 21)
 
 [node name="GeneralSkeleton" parent="boss_1/Armature" index="0"]
@@ -206,7 +206,7 @@ transform = Transform3D(-0.020548, -0.999726, 0.0112246, -0.223234, -0.0063558, 
 bone_name = "spear_hand_right"
 bone_idx = 39
 
-[node name="boss_spear" parent="boss_1/Armature/GeneralSkeleton/BoneAttachment3D" instance=ExtResource("4_25a3f")]
+[node name="boss_spear" parent="boss_1/Armature/GeneralSkeleton/BoneAttachment3D" instance=ExtResource("5_8wr27")]
 transform = Transform3D(0.901375, 0.344001, -0.263029, -0.430101, 0.640588, -0.636128, -0.0503354, 0.68652, 0.725366, 0, 0, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -225,7 +225,7 @@ material = SubResource("FogMaterial_fabvp")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-0.509761, -0.199346, 0.836902, 0, 0.972784, 0.231712, -0.860316, 0.118118, -0.495888, 35.1541, 10.4251, 4.1698)
 
-[node name="main_menu_hud" parent="." instance=ExtResource("6_h6f1m")]
+[node name="main_menu_hud" parent="." instance=ExtResource("6_o2ggl")]
 
 [editable path="boss_room"]
 [editable path="Sekiro_like_player_character"]

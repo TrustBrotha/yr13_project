@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dt3wnnohrvbua" path="res://scenes/player.tscn" id="1_1nft5"]
 [ext_resource type="Script" path="res://scripts/test_world.gd" id="1_caq4c"]
-[ext_resource type="PackedScene" uid="uid://b1ssecsvg82dl" path="res://scenes/hud.tscn" id="1_senue"]
+[ext_resource type="PackedScene" uid="uid://b1ssecsvg82dl" path="res://scenes/UI/hud.tscn" id="1_senue"]
 [ext_resource type="PackedScene" uid="uid://ghl1chlqvir3" path="res://scenes/beam/beam.tscn" id="2_itec1"]
 [ext_resource type="PackedScene" uid="uid://tyuf3s0xarde" path="res://scenes/boss_1.tscn" id="4_1c4tb"]
 [ext_resource type="PackedScene" uid="uid://ee14rnbpi5rb" path="res://assets/world/boss_room.glb" id="5_vrs2a"]

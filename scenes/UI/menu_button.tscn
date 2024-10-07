@@ -1,11 +1,11 @@
 [gd_scene load_steps=4 format=3 uid="uid://o8npypnga12n"]
 
-[ext_resource type="Theme" uid="uid://dookxj2jcfvdp" path="res://assets/UI/UI_text.tres" id="1_dnoyw"]
-[ext_resource type="Texture2D" uid="uid://d2abfh3vpch1c" path="res://assets/UI/game_highlight_button_fade.png" id="2_evadd"]
-[ext_resource type="Script" path="res://scripts/UI/button_fade.gd" id="3_jvfs8"]
+[ext_resource type="Theme" uid="uid://dookxj2jcfvdp" path="res://assets/UI/UI_text.tres" id="1_5g852"]
+[ext_resource type="Texture2D" uid="uid://d2abfh3vpch1c" path="res://assets/UI/game_highlight_button_fade.png" id="2_rikky"]
+[ext_resource type="Script" path="res://scripts/UI/button_fade.gd" id="3_moaak"]
 
 [node name="play" type="Button"]
-theme = ExtResource("1_dnoyw")
+theme = ExtResource("1_5g852")
 text = "PLAY"
 alignment = 0
 
@@ -13,8 +13,8 @@ alignment = 0
 show_behind_parent = true
 position = Vector2(0, 47)
 scale = Vector2(1e-05, 1.428)
-texture = ExtResource("2_evadd")
-script = ExtResource("3_jvfs8")
+texture = ExtResource("2_rikky")
+script = ExtResource("3_moaak")
 
 [connection signal="mouse_entered" from="." to="Sprite2D" method="_on_play_mouse_entered"]
 [connection signal="mouse_exited" from="." to="Sprite2D" method="_on_play_mouse_exited"]

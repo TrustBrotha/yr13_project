@@ -37,8 +37,8 @@ func state_process(delta):
 	if can_leave_attack==true:
 		if Input.is_action_pressed("block"):
 			next_state=block_state_var
-		elif (Input.is_action_pressed("ui_left") or
-			Input.is_action_pressed("ui_right") or
+		elif (Input.is_action_pressed("left") or
+			Input.is_action_pressed("right") or
 			Input.is_action_pressed("ui_forward") or
 			Input.is_action_pressed("ui_back")
 			):

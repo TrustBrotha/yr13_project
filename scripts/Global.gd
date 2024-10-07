@@ -14,4 +14,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	music_volume = clamp(music_volume,-80,0)
+	sound_effect_volume = clamp(sound_effect_volume,-80,15)
+	font_size = clamp(font_size,7,27)

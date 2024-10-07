@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=9 format=3 uid="uid://dookxj2jcfvdp"]
+[gd_resource type="Theme" load_steps=10 format=3 uid="uid://dookxj2jcfvdp"]
 
 [ext_resource type="FontFile" uid="uid://bwmjvij1wlq43" path="res://assets/UI/KhazadDum-0WXEr.ttf" id="1_f544h"]
 [ext_resource type="Texture2D" uid="uid://ci6jygljerxbl" path="res://assets/UI/game_highlight_button.png" id="1_np22i"]
@@ -28,6 +28,8 @@ texture = ExtResource("2_i686g")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kgqlo"]
 texture = ExtResource("1_np22i")
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lkk57"]
+
 [resource]
 Button/colors/font_color = Color(0.92737, 0.609499, 7.70092e-07, 1)
 Button/colors/font_disabled_color = Color(0.875, 0.875, 0.875, 0.5)
@@ -52,3 +54,14 @@ Button/styles/focus = SubResource("StyleBoxTexture_72ygx")
 Button/styles/hover = SubResource("StyleBoxTexture_txxhx")
 Button/styles/normal = SubResource("StyleBoxTexture_jbaji")
 Button/styles/pressed = SubResource("StyleBoxTexture_kgqlo")
+Label/colors/font_color = Color(0.92549, 0.607843, 0, 1)
+Label/colors/font_outline_color = Color(0.92549, 0.607843, 0, 1)
+Label/colors/font_shadow_color = Color(0, 0, 0, 0)
+Label/constants/line_spacing = 3
+Label/constants/outline_size = 0
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/constants/shadow_outline_size = 1
+Label/font_sizes/font_size = 60
+Label/fonts/font = ExtResource("1_f544h")
+Label/styles/normal = SubResource("StyleBoxEmpty_lkk57")

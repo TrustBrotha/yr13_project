@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://by8l5pkd8bt4n"]
+
+[ext_resource type="Script" path="res://scripts/UI/remap_button.gd" id="1_hdu25"]
+[ext_resource type="Theme" uid="uid://dookxj2jcfvdp" path="res://assets/UI/UI_text.tres" id="1_ljgn7"]
+
+[node name="remap_button" type="Button"]
+offset_right = 8.0
+offset_bottom = 8.0
+focus_mode = 0
+mouse_filter = 1
+theme = ExtResource("1_ljgn7")
+theme_override_font_sizes/font_size = 50
+toggle_mode = true
+action_mode = 0
+script = ExtResource("1_hdu25")
+
+[connection signal="toggled" from="." to="." method="_on_toggled"]

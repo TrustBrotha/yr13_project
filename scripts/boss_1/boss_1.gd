@@ -106,7 +106,7 @@ func _on_area_3d_area_entered(area):
 		$timers/immunity_timer.start()
 		var vel = (transform.basis * Vector3(0, 0, -1)).normalized()*3
 		var t=get_tree().create_tween()
-		t.tween_property(self,"velocity",vel,0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		t.tween_property(self,"velocity",vel,0.1).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 		if blocking==true:
 			var particles=parry_particle_var.instantiate()
 			particles.emitting=true

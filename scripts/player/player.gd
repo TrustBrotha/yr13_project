@@ -110,7 +110,7 @@ func _physics_process(delta):
 		get_tree().quit()
 	
 	# accesses the inputs
-	input_dir = Input.get_vector("ui_left", "ui_right", "ui_forward", "ui_back")
+	input_dir = Input.get_vector("left", "right", "ui_forward", "ui_back")
 	
 	if input_dir:
 		moving=true
@@ -172,6 +172,10 @@ func _physics_process(delta):
 		running=true
 	else:
 		running=false
+	
+	
+	print(input_dir)
+	
 	move_and_slide()
 
 
@@ -213,6 +217,8 @@ func animate_cloak_roots():
 	var fix
 	if (running==true and state_machine.current_state.name == "ground"):
 		fix=options[0]
+		if cam_mode=="fixed" and input_dir.y>0:
+			fix=options[2]
 	elif state_machine.current_state.name == "dash":
 		fix=options[1]
 	else:
@@ -254,7 +260,7 @@ func _on_area_3d_area_entered(area):
 		$timers/immunity_timer.start()
 		var vel = (sprite.transform.basis * Vector3(0, 0, -1)).normalized()*3
 		var t=get_tree().create_tween()
-		t.tween_property(self,"velocity",vel,0.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		t.tween_property(self,"velocity",vel,0.2).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 		if parrying==true:
 			var particles=parry_particle_var.instantiate()
 			particles.emitting=true
