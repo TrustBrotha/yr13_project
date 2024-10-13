@@ -29,14 +29,17 @@ func _ready():
 
 
 
+
 func state_process(delta):
-	
-	character.velocity=Vector3.ZERO
+	character.velocity.x=lerp(character.velocity.x,0.0,0.3)
+	character.velocity.z=lerp(character.velocity.z,0.0,0.3)
 	
 	
 	if block_prepared==true:
-		if character.player_relative_location.length() < character.attack_range and character.player.state_machine.current_state.name=="attack":
-			next_state=block_state_var
+		if (character.player_relative_location.length() < character.attack_range and 
+		character.player.state_machine.current_state.name=="attack"):
+			if Global.player_combo==1:
+				next_state=block_state_var
 	
 	
 	
@@ -58,6 +61,8 @@ func state_process(delta):
 
 
 func on_enter():
+	next_attack_timer.stop()
+	character.velocity=Vector3.ZERO
 	character.wants_to_chase=true
 	character.animation_tree.set("parameters/state/transition_request","attack")
 	choose_start_attack()

@@ -7,6 +7,8 @@ extends CanvasLayer
 @export var screen_type_text:Button
 @export var border_type_text:Button
 @export var resolution_type_text:Button
+@export var fog_type_text:Button
+@export var sdfgi_type_text:Button
 
 var screen_switch_time=0.3
 
@@ -18,6 +20,14 @@ var saved_window_mode=0
 var border_modes=["DISABLED","ENABLED",]
 var highlighted_border_mode=0
 var saved_border_mode=0
+
+var fog_modes=["ENABLED","DISABLED",]
+var highlighted_fog_mode=0
+var saved_fog_mode=0
+
+var sdfgi_modes=["ENABLED","DISABLED",]
+var highlighted_sdfgi_mode=0
+var saved_sdfgi_mode=0
 
 var resolution_modes=["1920 x 1080","2560 x 1440","3840 x 2160",]
 var screen_sizes=[Vector2i(1920,1080),Vector2i(2560,1440),Vector2i(3840,2160)]
@@ -104,6 +114,8 @@ func _on_sfx_up_pressed():
 	update_audio_labels()
 
 func update_audio_labels():
+	Global.music_volume = clamp(Global.music_volume,-80,0)
+	Global.sound_effect_volume = clamp(Global.sound_effect_volume,-80,0)
 	music_label.text=str(Global.music_volume+80)
 	sfx_label.text=str(Global.sound_effect_volume+80)
 
@@ -145,16 +157,47 @@ func _on_apply_resolution_pressed():
 	saved_resolution_mode=highlighted_resolution_mode
 	DisplayServer.window_set_size(screen_sizes[highlighted_resolution_mode])
 
+func _on_change_fog_mode_pressed():
+	highlighted_fog_mode+=1
+	highlighted_fog_mode%=2
+	fog_type_text.text=fog_modes[highlighted_fog_mode]
+
+func _on_apply_fog_pressed():
+	saved_fog_mode=highlighted_fog_mode
+	if highlighted_fog_mode==0: #enabled
+		Global.fog=true
+	elif highlighted_fog_mode==1: #enabled
+		Global.fog=false
+	get_parent().change_visuals()
+
+func _on_change_sdfgi_mode_pressed():
+	highlighted_sdfgi_mode+=1
+	highlighted_sdfgi_mode%=2
+	sdfgi_type_text.text=sdfgi_modes[highlighted_sdfgi_mode]
+
+
+func _on_apply_sdfgi_pressed():
+	saved_sdfgi_mode=highlighted_sdfgi_mode
+	if highlighted_sdfgi_mode==0: #enabled
+		Global.sdfgi=true
+	elif highlighted_sdfgi_mode==1: #enabled
+		Global.sdfgi=false
+	get_parent().change_visuals()
+	
+
+
+
+
 func _on_visual_settings_back_pressed():
-	if highlighted_window_mode!=saved_window_mode:
-		screen_type_text.text=window_modes[saved_window_mode]
-		highlighted_window_mode=saved_window_mode
-	if highlighted_border_mode!=saved_border_mode:
-		border_type_text.text=border_modes[saved_border_mode]
-		highlighted_border_mode=saved_border_mode
-	if highlighted_resolution_mode!=saved_resolution_mode:
-		resolution_type_text.text=resolution_modes[saved_resolution_mode]
-		highlighted_resolution_mode=saved_resolution_mode
+	
+	screen_type_text.text=window_modes[saved_window_mode]
+	highlighted_window_mode=saved_window_mode
+	
+	border_type_text.text=border_modes[saved_border_mode]
+	highlighted_border_mode=saved_border_mode
+	
+	resolution_type_text.text=resolution_modes[saved_resolution_mode]
+	highlighted_resolution_mode=saved_resolution_mode
 	
 	change_screen(screens[1])
 
@@ -164,3 +207,9 @@ func _on_visual_settings_back_pressed():
 
 func _on_key_binds_back_pressed():
 	change_screen(screens[1])
+
+
+
+
+
+

@@ -34,7 +34,7 @@ texture = ExtResource("4_rsttd")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jqcr7"]
 texture = ExtResource("5_5im87")
 
-[node name="main_menu_hud" type="CanvasLayer" node_paths=PackedStringArray("current_screen", "music_label", "sfx_label", "screen_type_text", "border_type_text", "resolution_type_text")]
+[node name="main_menu_hud" type="CanvasLayer" node_paths=PackedStringArray("current_screen", "music_label", "sfx_label", "screen_type_text", "border_type_text", "resolution_type_text", "fog_type_text", "sdfgi_type_text")]
 script = ExtResource("1_ahi42")
 current_screen = NodePath("screens/title")
 music_label = NodePath("screens/audio_settings/GridContainer/music_volume_value")
@@ -42,6 +42,8 @@ sfx_label = NodePath("screens/audio_settings/GridContainer/sfx_volume_value")
 screen_type_text = NodePath("screens/visual_settings/GridContainer/change_display_type")
 border_type_text = NodePath("screens/visual_settings/GridContainer/change_border_mode")
 resolution_type_text = NodePath("screens/visual_settings/GridContainer/resolution_mode")
+fog_type_text = NodePath("screens/visual_settings/GridContainer/change_fog_mode")
+sdfgi_type_text = NodePath("screens/visual_settings/GridContainer/change_sdfgi_mode")
 
 [node name="screens" type="Control" parent="."]
 layout_mode = 3
@@ -238,7 +240,7 @@ text = "APPLY"
 layout_mode = 2
 theme = ExtResource("3_ya8t4")
 theme_override_font_sizes/font_size = 50
-text = "DISPLAY MODE: "
+text = "BORDERLESS:"
 horizontal_alignment = 1
 
 [node name="change_border_mode" type="Button" parent="screens/visual_settings/GridContainer"]
@@ -290,6 +292,70 @@ text = " | "
 horizontal_alignment = 1
 
 [node name="apply_resolution" type="Button" parent="screens/visual_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxTexture_0wbk0")
+theme_override_styles/hover = SubResource("StyleBoxTexture_f72yv")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_jqcr7")
+text = "APPLY"
+
+[node name="fog" type="Label" parent="screens/visual_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+text = "FOG:"
+horizontal_alignment = 1
+
+[node name="change_fog_mode" type="Button" parent="screens/visual_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxTexture_0wbk0")
+theme_override_styles/hover = SubResource("StyleBoxTexture_f72yv")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_jqcr7")
+text = "ENABLED"
+
+[node name="break_between_buttons4" type="Label" parent="screens/visual_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+text = " | "
+horizontal_alignment = 1
+
+[node name="apply_fog" type="Button" parent="screens/visual_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxTexture_0wbk0")
+theme_override_styles/hover = SubResource("StyleBoxTexture_f72yv")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_jqcr7")
+text = "APPLY"
+
+[node name="sdfgi" type="Label" parent="screens/visual_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+text = "SDFGI:"
+horizontal_alignment = 1
+
+[node name="change_sdfgi_mode" type="Button" parent="screens/visual_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxTexture_0wbk0")
+theme_override_styles/hover = SubResource("StyleBoxTexture_f72yv")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_jqcr7")
+text = "ENABLED"
+
+[node name="break_between_buttons5" type="Label" parent="screens/visual_settings/GridContainer"]
+layout_mode = 2
+theme = ExtResource("3_ya8t4")
+theme_override_font_sizes/font_size = 50
+text = " | "
+horizontal_alignment = 1
+
+[node name="apply_sdfgi" type="Button" parent="screens/visual_settings/GridContainer"]
 layout_mode = 2
 theme = ExtResource("3_ya8t4")
 theme_override_font_sizes/font_size = 50
@@ -467,5 +533,9 @@ text = " BACK"
 [connection signal="pressed" from="screens/visual_settings/GridContainer/apply_border_mode" to="." method="_on_apply_border_mode_pressed"]
 [connection signal="pressed" from="screens/visual_settings/GridContainer/resolution_mode" to="." method="_on_resolution_mode_pressed"]
 [connection signal="pressed" from="screens/visual_settings/GridContainer/apply_resolution" to="." method="_on_apply_resolution_pressed"]
+[connection signal="pressed" from="screens/visual_settings/GridContainer/change_fog_mode" to="." method="_on_change_fog_mode_pressed"]
+[connection signal="pressed" from="screens/visual_settings/GridContainer/apply_fog" to="." method="_on_apply_fog_pressed"]
+[connection signal="pressed" from="screens/visual_settings/GridContainer/change_sdfgi_mode" to="." method="_on_change_sdfgi_mode_pressed"]
+[connection signal="pressed" from="screens/visual_settings/GridContainer/apply_sdfgi" to="." method="_on_apply_sdfgi_pressed"]
 [connection signal="pressed" from="screens/visual_settings/visual_settings_back" to="." method="_on_visual_settings_back_pressed"]
 [connection signal="pressed" from="screens/key_binds/key_binds_back" to="." method="_on_key_binds_back_pressed"]

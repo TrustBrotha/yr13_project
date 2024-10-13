@@ -73,6 +73,8 @@ func _on_delete_timeout():
 
 
 func _on_start_main_beam_timeout():
+	Global.boss_current_attack_damage=60
+	collision_off()
 	following = false
 	top_level=true
 	$small_dots.emitting=true
@@ -80,3 +82,10 @@ func _on_start_main_beam_timeout():
 	start_beam=true
 	$mid_beam.emitting=true
 	$outer_beam.emitting=true
+	var t=get_tree().create_tween()
+	t.tween_property($Area3D/CollisionShape3D,"position",Vector3(0,0,-30),0.6).set_trans(Tween.TRANS_LINEAR)
+
+func collision_off():
+	await get_tree().create_timer(1.7).timeout
+	$Area3D/CollisionShape3D.disabled=true
+

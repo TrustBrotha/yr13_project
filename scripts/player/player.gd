@@ -21,11 +21,12 @@ const JUMP_VELOCITY = 8
 @onready var timers = $timers
 @onready var animation_player = $player_model/Sekiro_like_player_character/AnimationPlayer
 @onready var animation_tree = $player_model/Sekiro_like_player_character/AnimationTree
-
+@onready var boss=get_parent().get_node("boss_1")
 
 
 @export var parry_particle_var : PackedScene
 @export var staggered_state_var : State
+@export var dead_state_var : State
 
 var sensitivity = 0.1
 
@@ -47,7 +48,6 @@ var direction=Vector3.ZERO
 var last_direction=Vector3.ZERO
 var can_dash = true
 var wants_to_jump = false
-var health = 1000
 var speed = 10.0
 var moving=false
 var target_rotation=0.0
@@ -60,17 +60,16 @@ var cam_target
 var parrying=false
 var blocking=false
 var immune=false
+var parry_time=0
 
 var bone_idxs=[0,8,83,90,98]
 var outer_cloak=[0,8]
 var inner_cloak=[83,90,98]
 
 var jump_spam_fix=false
-
+var menu_open=false
 
 func _ready():
-	
-	# gets the mouse actions
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 	# makes sure the spring arm for the camera doesn't collide with the player
@@ -80,9 +79,17 @@ func _ready():
 	create_cloak_bones()
 
 
+
+
 func _input(event):
+	if event.is_action_pressed("ui_quit"):
+		menu_open=not menu_open
+		if menu_open==false:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	# controls the rotation of the camera and character controls
-	if cam_mode == "free":
+	if cam_mode == "free" and menu_open==false:
 		if event is InputEventMouseMotion:
 			cam_pivot_y.rotate_y(deg_to_rad(-event.relative.x * sensitivity))
 			cam_pivot_x.rotate_x(deg_to_rad(-event.relative.y * sensitivity))
@@ -105,9 +112,6 @@ func _input(event):
 func _physics_process(delta):
 	animate_cloak_roots()
 	
-	# quits game (as mouse is used cant go to x button)
-	if Input.is_action_just_pressed("ui_quit"):
-		get_tree().quit()
 	
 	# accesses the inputs
 	input_dir = Input.get_vector("left", "right", "ui_forward", "ui_back")
@@ -174,7 +178,6 @@ func _physics_process(delta):
 		running=false
 	
 	
-	print(input_dir)
 	
 	move_and_slide()
 
@@ -257,8 +260,9 @@ func _on_cam_target_finder_body_exited(body):
 func _on_area_3d_area_entered(area):
 	if immune==false:
 		immune=true
+		parry_time=0
 		$timers/immunity_timer.start()
-		var vel = (sprite.transform.basis * Vector3(0, 0, -1)).normalized()*3
+		var vel = (global_position-boss.global_position).normalized()*3
 		var t=get_tree().create_tween()
 		t.tween_property(self,"velocity",vel,0.2).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 		if parrying==true:
@@ -273,11 +277,17 @@ func _on_area_3d_area_entered(area):
 			particles.process_material.color=Color.YELLOW
 			$particles.add_child(particles)
 			animation_tree.set("parameters/parry_transition/blend_amount",1.0)
+			Global.player_health-=Global.boss_current_attack_damage*0.5
 		elif parrying==false and blocking==false:
 			var particles=parry_particle_var.instantiate()
 			particles.emitting=true
 			particles.process_material.color=Color.RED
 			$particles.add_child(particles)
+			Global.player_health-=Global.boss_current_attack_damage*1.0
+	
+	if Global.player_health<=0:
+		state_machine.current_state.next_state=dead_state_var
+	
 
 
 func _on_immunity_timer_timeout():

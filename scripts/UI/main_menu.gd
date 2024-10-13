@@ -36,3 +36,7 @@ func switch_scenes(switch_scene_delay):
 	get_tree().change_scene_to_file("res://scenes/main.tscn")
 
 
+func change_visuals():
+	$WorldEnvironment.environment.volumetric_fog_enabled=Global.fog
+	$WorldEnvironment.environment.sdfgi_enabled=Global.sdfgi
+

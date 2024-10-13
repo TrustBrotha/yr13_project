@@ -5,6 +5,9 @@ extends State
 var want_to_switch_state=false
 var can_switch_state=false
 
+var parry_times=[0.2,0.15,0.1,0.05,0.01]
+
+
 func state_process(delta):
 	character.velocity.y -= gravity * delta
 	if character.is_on_floor():
@@ -31,8 +34,11 @@ func on_enter():
 	want_to_switch_state=false
 	can_switch_state=false
 	can_move_state=false
-	character.get_node("timers/parry_timer").wait_time=0.2
+	character.get_node("timers/parry_timer").wait_time=parry_times[character.parry_time]
 	character.get_node("timers/parry_timer").start()
+	character.parry_time+=1
+	character.parry_time=clamp(character.parry_time,0,4)
+	character.get_node("timers/parry_spam_timer").start()
 	character.animation_tree.set("parameters/state/transition_request","block")
 
 func on_exit():
@@ -46,3 +52,7 @@ func _on_parry_timer_timeout():
 	can_switch_state=true
 	can_move_state=true
 	character.speed=2.5
+
+
+func _on_parry_spam_timer_timeout():
+	character.parry_time=0

@@ -11,3 +11,5 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	fps_label.text=str(Engine.get_frames_per_second())
+	$Control/player_health.value=Global.player_health
+	$Control2/boss_health.value=Global.boss_health

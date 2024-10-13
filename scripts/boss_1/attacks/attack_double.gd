@@ -6,8 +6,10 @@ extends Boss_attack
 var collision_times=[0.5,0.2,0.2,0.2]
 var attack_length=1.4
 var follow_up_prob=2
+var damage=20.0
 
 func control_attack():
+	Global.boss_current_attack_damage=damage
 	animation_tree.set("parameters/attacks/transition_request","attack_double")
 	control_collision(collision_times)
 	finish_attack(attack_length,follow_up_prob,attack_spin_follow_double_var)

@@ -19,17 +19,19 @@ var all_left_collision_times=[[0.2,0.2],[0.3,0.2],[0.2,0.3]]
 var all_right_collision_times=[[0.3,0.2],[0.4,0.2],[0.2,0.3]]
 var attack_move_speeds=[0.4,0.5,0.5]
 var attack_vels=[8,8,15]
+
 var can_leave_attack=false
 var attack_times=[0.65,0.65,0.65]
 var combo=1
+
 
 func _ready():
 	left_weapon_collision=[weapon_collision1,weapon_collision2]
 	right_weapon_collision=[weapon_collision3,weapon_collision4]
 
 func state_process(delta):
-	if not character.is_on_floor():
-		next_state = air_state_var
+	#if not character.is_on_floor():
+		#next_state = air_state_var
 	
 	character.velocity.x = lerp(character.velocity.x,0.0,0.3)
 	character.velocity.z = lerp(character.velocity.z,0.0,0.3)
@@ -46,8 +48,8 @@ func state_process(delta):
 			combo+=1
 			if combo>3:
 				combo=1
-		
-			
+	
+	Global.player_combo=combo
 
 func state_input(event : InputEvent):
 	if can_leave_attack==true:

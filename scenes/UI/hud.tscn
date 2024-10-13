@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://b1ssecsvg82dl"]
+[gd_scene load_steps=8 format=3 uid="uid://b1ssecsvg82dl"]
 
 [ext_resource type="Script" path="res://scripts/UI/hud.gd" id="1_xk3g0"]
+[ext_resource type="Texture2D" uid="uid://cm7mm83ayktyb" path="res://assets/UI/player_health_back_temp.png" id="2_2n0wa"]
+[ext_resource type="Texture2D" uid="uid://w7cdk7h8y0nl" path="res://assets/UI/player_health_temp.png" id="2_2q8af"]
+[ext_resource type="Texture2D" uid="uid://beu1a00cignu8" path="res://assets/UI/boss_health_temp.png" id="2_imhd7"]
+[ext_resource type="Texture2D" uid="uid://cg0rn0a6bxeit" path="res://assets/UI/player_health_full_temp.png" id="3_imltw"]
+[ext_resource type="Texture2D" uid="uid://fb6xqk6qym0l" path="res://assets/UI/boss_health_full_temp.png" id="3_w0rho"]
+[ext_resource type="Texture2D" uid="uid://d2tpuuw2yi8k4" path="res://assets/UI/boss_health_back_temp.png" id="5_sygp0"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_xk3g0")
@@ -10,6 +16,17 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="player_health" type="TextureProgressBar" parent="Control"]
+texture_filter = 1
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 40.0
+scale = Vector2(8, 8)
+value = 100.0
+texture_under = ExtResource("2_2n0wa")
+texture_over = ExtResource("2_2q8af")
+texture_progress = ExtResource("3_imltw")
 
 [node name="state_label" type="Label" parent="."]
 offset_right = 40.0
@@ -28,3 +45,30 @@ offset_top = 114.0
 offset_right = 118.0
 offset_bottom = 166.0
 scale = Vector2(2, 2)
+
+[node name="Control2" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="boss_health" type="TextureProgressBar" parent="Control2"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -217.0
+offset_top = -90.0
+offset_right = -153.0
+offset_bottom = -74.0
+scale = Vector2(7, 7)
+max_value = 1000.0
+value = 1000.0
+texture_under = ExtResource("5_sygp0")
+texture_over = ExtResource("2_imhd7")
+texture_progress = ExtResource("3_w0rho")

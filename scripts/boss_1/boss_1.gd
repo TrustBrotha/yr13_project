@@ -16,7 +16,7 @@ var attack_range=3.5
 #var target : Vector3
 @onready var player = get_parent().get_node("player")
 
-#var attacking=false
+var attacking=false
 #var can_attack=true
 
 var player_relative_location
@@ -38,7 +38,8 @@ func _input(event):
 		laser_attack()
 
 func _physics_process(delta):
-	
+	print(state_machine.current_state.name)
+	#print(state_machine.current_state.name)
 	player_relative_location=player.global_position-global_position
 	
 	var direction = global_position-player.global_position
@@ -88,7 +89,7 @@ func laser_attack():
 	weapon_coll.disabled=true
 	await get_tree().create_timer(0.2).timeout
 	state_machine.current_state.next_state=attack_state_var
-	
+
 
 
 
@@ -104,20 +105,28 @@ func _on_area_3d_area_entered(area):
 	if immune==false:
 		immune=true
 		$timers/immunity_timer.start()
-		var vel = (transform.basis * Vector3(0, 0, -1)).normalized()*3
-		var t=get_tree().create_tween()
-		t.tween_property(self,"velocity",vel,0.1).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+		
+		if attacking==false:
+			var vel = (transform.basis * Vector3(0, 0, -1)).normalized()*3
+			var t=get_tree().create_tween()
+			t.tween_property(self,"velocity",vel,0.1).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+		
 		if blocking==true:
-			var particles=parry_particle_var.instantiate()
-			particles.emitting=true
-			particles.process_material.color=Color.YELLOW
-			$particles.add_child(particles)
+			#var particles=parry_particle_var.instantiate()
+			#particles.emitting=true
+			#particles.process_material.color=Color.YELLOW
+			#$particles.add_child(particles)
 			animation_tree.set("parameters/block_blend/blend_amount",1.0)
+			Global.boss_health-=Global.player_attack_damage*0.5
 		elif blocking==false:
 			var particles=parry_particle_var.instantiate()
 			particles.emitting=true
 			particles.process_material.color=Color.RED
 			$particles.add_child(particles)
+			Global.boss_health-=Global.player_attack_damage*1.0
+	
+	if Global.boss_health <=0:
+		state_machine.current_state.next_state=blank_state_var
 
 
 func _on_immunity_timer_timeout():
