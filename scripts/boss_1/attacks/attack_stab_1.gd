@@ -3,7 +3,7 @@ extends Boss_attack
 
 @export var attack_stab_double_follow_stab_1 : Boss_attack
 
-var collision_times=[0.4,0.3]
+var collision_times=[0.4,0.2]
 var attack_length=0.8
 var follow_up_prob=3
 var damage=30.0

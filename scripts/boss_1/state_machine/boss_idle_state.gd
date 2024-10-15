@@ -72,9 +72,9 @@ func on_exit():
 
 
 func _on_find_idle_pos_timeout():
-	var laser=[0,0,0,0,1].pick_random()
+	var laser=[0,0,1].pick_random()
 	if laser==1:
-		character.laser_attack()
+		character.laser_attack(2,1)
 	patrol_dist=float(randi_range(6,18))/2
 	patrol_dir*=-1
 	character.get_node("timers/find_idle_pos").start()

@@ -1,4 +1,5 @@
 extends Node3D
+@export var ui : CanvasLayer
 #(-0, 3.356783, -4.330125)
 #(0, 0, 0)
 #(-0.523599, 0, 0)
@@ -9,7 +10,9 @@ extends Node3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	$boss_1/AnimationPlayer.play("walk_forward")
+	$Sekiro_like_player_character/AnimationPlayer.play("idle_basic")
+	ui.change_screen(ui.screens[0])
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -22,7 +25,7 @@ func switch_scenes_animation():
 	var rot_delay=1
 	switch_scenes(animation_time)
 	
-	var cam_pos=Vector3(-0, 3.356783, -4.330125)
+	var cam_pos=Vector3(-0, 2.606783, -3.031087)
 	var p=get_tree().create_tween()
 	p.tween_property($Camera3D,"global_position",cam_pos,animation_time).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
 	

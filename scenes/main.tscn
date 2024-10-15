@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cii7v3g4w22t3"]
+[gd_scene load_steps=12 format=3 uid="uid://cii7v3g4w22t3"]
 
 [ext_resource type="PackedScene" uid="uid://dt3wnnohrvbua" path="res://scenes/player.tscn" id="1_1nft5"]
 [ext_resource type="Script" path="res://scripts/test_world.gd" id="1_caq4c"]
@@ -25,21 +25,15 @@ volumetric_fog_enabled = true
 volumetric_fog_density = 0.0
 volumetric_fog_length = 300.0
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_8tj2o"]
-size = Vector3(5, 5, 5)
-
-[sub_resource type="BoxMesh" id="BoxMesh_re0yu"]
-size = Vector3(5, 5, 5)
-
 [sub_resource type="FogMaterial" id="FogMaterial_uel5l"]
 albedo = Color(1, 0.4, 0, 1)
 emission = Color(1, 0.4, 0, 1)
 edge_fade = 0.303143
 
-[node name="main" type="Node3D"]
+[node name="main" type="Node3D" node_paths=PackedStringArray("menu")]
 script = ExtResource("1_caq4c")
-menu_scene = ExtResource("2_sxyvx")
 beam_scene = ExtResource("2_itec1")
+menu = NodePath("main_menu_hud")
 
 [node name="HUD" parent="." instance=ExtResource("1_senue")]
 
@@ -57,17 +51,6 @@ transform = Transform3D(1, 0, 0, 0, -0.615579, 0.788075, 0, -0.788075, -0.615579
 shadow_enabled = true
 
 [node name="beams" type="Node3D" parent="."]
-
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9.47304)
-visible = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-shape = SubResource("BoxShape3D_8tj2o")
-disabled = true
-
-[node name="CSGMesh3D" type="CSGMesh3D" parent="StaticBody3D"]
-mesh = SubResource("BoxMesh_re0yu")
 
 [node name="FogVolume" type="FogVolume" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -40.9572, 2.58915)
@@ -89,18 +72,34 @@ visible = false
 [node name="Cube_003" parent="boss_room" index="96"]
 visible = false
 
-[node name="beam_spawns" type="Node" parent="."]
+[node name="beam_spawns1" type="Node" parent="."]
 
-[node name="spawn_1" type="Node3D" parent="beam_spawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.7, 30)
+[node name="spawn_1" type="Node3D" parent="beam_spawns1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.7, 30)
 
-[node name="spawn_2" type="Node3D" parent="beam_spawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0.7, 30)
+[node name="spawn_2" type="Node3D" parent="beam_spawns1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.7, 30)
 
-[node name="spawn_3" type="Node3D" parent="beam_spawns"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -30, 0.7, 7)
+[node name="spawn_3" type="Node3D" parent="beam_spawns1"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -30, 0.7, 4)
 
-[node name="spawn_4" type="Node3D" parent="beam_spawns"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -30, 0.7, -7)
+[node name="spawn_4" type="Node3D" parent="beam_spawns1"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -30, 0.7, -4)
+
+[node name="beam_spawns2" type="Node" parent="."]
+
+[node name="spawn_1" type="Node3D" parent="beam_spawns2"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.7, -30)
+
+[node name="spawn_2" type="Node3D" parent="beam_spawns2"]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 21, 0.7, -21)
+
+[node name="spawn_3" type="Node3D" parent="beam_spawns2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 30, 0.7, 0)
+
+[node name="spawn_4" type="Node3D" parent="beam_spawns2"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 21, 0.7, 21)
+
+[node name="main_menu_hud" parent="." instance=ExtResource("2_sxyvx")]
 
 [editable path="boss_room"]

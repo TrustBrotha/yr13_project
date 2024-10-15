@@ -1,0 +1,53 @@
+[gd_scene load_steps=11 format=3 uid="uid://blsqgemtdw5i0"]
+
+[ext_resource type="Shader" uid="uid://cxlbxk54hro6x" path="res://scenes/beam/beam_shader_dyn.tres" id="1_yecml"]
+[ext_resource type="Texture2D" uid="uid://c6aokpi8pakry" path="res://scenes/beam/Noise1_tiled.png" id="2_j8lko"]
+[ext_resource type="ArrayMesh" uid="uid://cwkholorgah3i" path="res://scenes/beam/resonance_beam_start.obj" id="3_dd04p"]
+[ext_resource type="Script" path="res://scripts/player/shield.gd" id="4_0uyu4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j8i3o"]
+render_priority = 0
+shader = ExtResource("1_yecml")
+shader_parameter/speed = Vector2(1.5, 2)
+shader_parameter/texture_power = 1.5
+shader_parameter/gradient_power = 0.2
+shader_parameter/beam_texture = ExtResource("2_j8lko")
+
+[sub_resource type="Curve" id="Curve_kanka"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.102439, 1), 0.0, 0.0, 0, 0, Vector2(0.507042, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_pncc5"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.102439, 1), 0.0, 0.0, 0, 0, Vector2(0.514085, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_wkrx5"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_c1os4"]
+curve_x = SubResource("Curve_kanka")
+curve_y = SubResource("Curve_pncc5")
+curve_z = SubResource("Curve_wkrx5")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_05p8r"]
+resource_local_to_scene = true
+gravity = Vector3(0, 0, 0)
+scale_min = 0.25
+scale_max = 0.25
+scale_curve = SubResource("CurveXYZTexture_c1os4")
+color = Color(1, 0.843137, 0, 1)
+
+[node name="shield" type="GPUParticles3D"]
+transform = Transform3D(0.3, 0, 0, 0, -0.3, 2.62268e-08, 0, -2.62268e-08, -0.3, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_j8i3o")
+emitting = false
+amount = 1
+lifetime = 0.3
+one_shot = true
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_05p8r")
+draw_pass_1 = ExtResource("3_dd04p")
+script = ExtResource("4_0uyu4")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

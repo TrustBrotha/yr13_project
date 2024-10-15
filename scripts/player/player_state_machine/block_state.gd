@@ -2,6 +2,7 @@ extends State
 
 @export var ground_state_var : State
 @export var air_state_var : State
+@export var parry_timer : Timer
 var want_to_switch_state=false
 var can_switch_state=false
 
@@ -13,6 +14,7 @@ func state_process(delta):
 	if character.is_on_floor():
 		character.velocity.x = lerp(character.velocity.x,0.0,character.ACCELERATION)
 		character.velocity.z = lerp(character.velocity.z,0.0,character.ACCELERATION)
+	
 	
 	if want_to_switch_state and can_switch_state:
 		if character.is_on_floor():
@@ -29,17 +31,20 @@ func state_input(event : InputEvent):
 		next_state=air_state_var
 
 func on_enter():
-	character.animation_tree.set("parameters/parry_transition/blend_amount",0.0)
+	print("-----")
+	character.shield_up()
+	character.animation_tree.set("parameters/state/transition_request","block")
+	character.animation_tree.set("parameters/parry_transition/transition_request","block_start")
 	character.parrying=true
 	want_to_switch_state=false
 	can_switch_state=false
 	can_move_state=false
-	character.get_node("timers/parry_timer").wait_time=parry_times[character.parry_time]
-	character.get_node("timers/parry_timer").start()
+	parry_timer.wait_time=parry_times[character.parry_time]
+	parry_timer.start()
 	character.parry_time+=1
 	character.parry_time=clamp(character.parry_time,0,4)
 	character.get_node("timers/parry_spam_timer").start()
-	character.animation_tree.set("parameters/state/transition_request","block")
+	
 
 func on_exit():
 	character.blocking=false
@@ -56,3 +61,8 @@ func _on_parry_timer_timeout():
 
 func _on_parry_spam_timer_timeout():
 	character.parry_time=0
+
+func succ_parry():
+	parry_timer.stop()
+	parry_timer.wait_time=0.15
+	parry_timer.start()

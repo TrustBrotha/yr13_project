@@ -2,6 +2,7 @@
 
 [sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_5vl6r"]
 output_port_for_preview = 0
+expanded_output_ports = [0]
 input_name = "color"
 
 [sub_resource type="VisualShaderNodeBillboard" id="VisualShaderNodeBillboard_3uevj"]
@@ -35,18 +36,21 @@ void vertex() {
 void fragment() {
 // Input:2
 	vec4 n_out2p0 = COLOR;
+	float n_out2p4 = n_out2p0.a;
 
 
 // Output:0
 	ALBEDO = vec3(n_out2p0.xyz);
+	ALPHA = n_out2p4;
 
 
 }
 "
+graph_offset = Vector2(-562, -31.3333)
 flags/unshaded = true
 nodes/vertex/2/node = SubResource("VisualShaderNodeBillboard_3uevj")
 nodes/vertex/2/position = Vector2(-260, 380)
 nodes/vertex/connections = PackedInt32Array(2, 0, 0, 10)
 nodes/fragment/2/node = SubResource("VisualShaderNodeInput_5vl6r")
-nodes/fragment/2/position = Vector2(-296.12, 360.92)
-nodes/fragment/connections = PackedInt32Array(2, 0, 0, 0)
+nodes/fragment/2/position = Vector2(-360, 80)
+nodes/fragment/connections = PackedInt32Array(2, 0, 0, 0, 2, 4, 0, 1)

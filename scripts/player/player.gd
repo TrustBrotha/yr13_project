@@ -27,7 +27,7 @@ const JUMP_VELOCITY = 8
 @export var parry_particle_var : PackedScene
 @export var staggered_state_var : State
 @export var dead_state_var : State
-
+@export var shield_scene : PackedScene
 var sensitivity = 0.1
 
 @onready var cloak_bones = [
@@ -70,6 +70,7 @@ var jump_spam_fix=false
 var menu_open=false
 
 func _ready():
+	
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 	# makes sure the spring arm for the camera doesn't collide with the player
@@ -107,12 +108,15 @@ func _input(event):
 			cam_mode="free"
 			animation_tree.set("parameters/cam_lock/transition_request","free")
 
+func force_remove_cam_lock():
+	if cam_mode=="fixed":
+		cam_mode="free"
+		animation_tree.set("parameters/cam_lock/transition_request","free")
+
 
 
 func _physics_process(delta):
 	animate_cloak_roots()
-	
-	
 	# accesses the inputs
 	input_dir = Input.get_vector("left", "right", "ui_forward", "ui_back")
 	
@@ -259,26 +263,31 @@ func _on_cam_target_finder_body_exited(body):
 # enemy hits player
 func _on_area_3d_area_entered(area):
 	if immune==false:
+		camera.add_trauma(0.3)
 		immune=true
 		parry_time=0
 		$timers/immunity_timer.start()
 		var vel = (global_position-boss.global_position).normalized()*3
+		vel.y=-10
 		var t=get_tree().create_tween()
 		t.tween_property(self,"velocity",vel,0.2).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 		if parrying==true:
+			var parry_effects=sprite.get_node("shield_spawn").get_children()
+			for effect in parry_effects:
+				effect.parry()
+			state_machine.current_state.succ_parry()
 			var particles=parry_particle_var.instantiate()
 			particles.emitting=true
-			particles.process_material.color=Color.WHITE
-			$particles.add_child(particles)
-			animation_tree.set("parameters/parry_transition/blend_amount",1.0)
+			particles.process_material.color=Color.GOLD
+			particles.process_material.color.a=0.2
+			sprite.get_node("shield_spawn").add_child(particles)
+			animation_tree.set("parameters/parry_transition/transition_request","parry")
 		elif blocking==true:
-			var particles=parry_particle_var.instantiate()
-			particles.emitting=true
-			particles.process_material.color=Color.YELLOW
-			$particles.add_child(particles)
-			animation_tree.set("parameters/parry_transition/blend_amount",1.0)
+			print("block")
+			animation_tree.set("parameters/parry_transition/transition_request","block_hit")
 			Global.player_health-=Global.boss_current_attack_damage*0.5
 		elif parrying==false and blocking==false:
+			print("hit")
 			var particles=parry_particle_var.instantiate()
 			particles.emitting=true
 			particles.process_material.color=Color.RED
@@ -294,5 +303,16 @@ func _on_immunity_timer_timeout():
 	immune=false
 
 
+func shield_up():
+	var shield=shield_scene.instantiate()
+	sprite.get_node("shield_spawn").add_child(shield)
+
+
+
+
+
+func _on_animation_tree_animation_finished(anim_name):
+	if anim_name=="block_hit":
+		animation_tree.set("parameters/parry_transition/transition_request","block_loop")
 
 

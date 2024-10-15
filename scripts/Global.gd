@@ -4,7 +4,7 @@ var music_volume = -15
 var sound_effect_volume = 0
 var font_size = 17
 
-var player_health=1000
+var player_health=100
 var boss_health=1000
 
 var boss_current_attack_damage=10
@@ -13,6 +13,15 @@ var player_combo=1
 
 var sdfgi=true
 var fog=true
+
+var saved_window_mode=0
+var saved_border_mode=0
+var saved_fog_mode=0
+var saved_sdfgi_mode=0
+var saved_resolution_mode=0
+
+
+
 
 ## Called when the node enters the scene tree for the first time.
 #func _ready():
