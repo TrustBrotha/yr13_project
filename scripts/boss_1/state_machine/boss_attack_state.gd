@@ -74,7 +74,7 @@ func attack():
 
 func attack_finished():
 	current_attack=null
-	next_attack_timer.wait_time=0.6
+	next_attack_timer.wait_time=0.5*Global.boss_speed
 	next_attack_timer.start()
 
 

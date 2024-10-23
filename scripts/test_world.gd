@@ -33,7 +33,7 @@ func _process(delta):
 
 
 func switch_scenes_animation():
-	Global.player_health=500
+	Global.player_health=100
 	Global.boss_health=1000
 	get_tree().change_scene_to_file("res://scenes/main.tscn")
 

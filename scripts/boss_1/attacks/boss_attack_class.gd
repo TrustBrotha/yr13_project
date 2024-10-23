@@ -12,17 +12,19 @@ func control_collision(collision_times):
 	var adjusted_times=[]
 	for i in len(collision_times):
 		adjusted_times.append(collision_times[i]*Global.boss_speed)
-	
+	adjusted_times[0]+=Global.boss_attack_delay
 	boss.attacking=true
 	weapon_collision.disabled=true
 	for i in range(len(adjusted_times)):
 		await get_tree().create_timer(adjusted_times[i]).timeout
 		weapon_collision.disabled=not weapon_collision.disabled
+		if weapon_collision.disabled==false:
+			boss.play_attack_noise()
 
 
 func finish_attack(attack_length,follow_up_prob,follow_up_attack):
 	var adjusted_length
-	adjusted_length=attack_length*Global.boss_speed
+	adjusted_length=attack_length*Global.boss_speed+Global.boss_attack_delay
 	await get_tree().create_timer(adjusted_length).timeout
 	boss.attacking=false
 	var r=randi_range(0,follow_up_prob)

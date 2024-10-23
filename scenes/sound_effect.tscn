@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwryk6srao4ro"]
+
+[ext_resource type="Script" path="res://scripts/sound_effect.gd" id="1_rp0xm"]
+
+[node name="sound" type="AudioStreamPlayer3D"]
+script = ExtResource("1_rp0xm")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

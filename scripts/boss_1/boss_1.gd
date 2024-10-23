@@ -11,13 +11,7 @@ const SPEED = 5
 @export var parry_particle_var : PackedScene
 @export var weapon_coll : CollisionShape3D
 @export var cloak_bone_scene : PackedScene
-#@onready var cloak_bones = [
-	#"cloak_outer_2.L","cloak_outer_3.L","cloak_outer_4.L","cloak_outer_5.L","cloak_outer_6.L","cloak_outer_7.L",
-	#"cloak_inner_2.L","cloak_inner_3.L","cloak_inner_4.L","cloak_inner_5.L","cloak_inner_6.L","cloak_inner_7.L",
-	#"cloak_outer_2.R","cloak_outer_3.R","cloak_outer_4.R","cloak_outer_5.R","cloak_outer_6.R","cloak_outer_7.R",
-	#"cloak_inner_2.R","cloak_inner_3.R","cloak_inner_4.R","cloak_inner_5.R","cloak_inner_6.R","cloak_inner_7.R",
-	#"cloak_front_1","cloak_front_2","cloak_front_3","cloak_back_1","cloak_back_2",
-	#]
+@export var sound_effect_scene : PackedScene
 @onready var cloak_bones = [
 	"cloak_outer_2.L","cloak_outer_3.L","cloak_outer_5.L","cloak_outer_7.L",
 	"cloak_inner_2.L","cloak_inner_3.L","cloak_inner_5.L","cloak_inner_7.L",
@@ -25,6 +19,12 @@ const SPEED = 5
 	"cloak_inner_2.R","cloak_inner_3.R","cloak_inner_5.R","cloak_inner_7.R",
 	"cloak_front_2","cloak_front_3","cloak_back_2",
 	]
+
+var swing_sounds=[
+	load("res://sfx/boss_1/boss_swing_1.wav"),
+	load("res://sfx/boss_1/boss_swing_2.wav"),
+]
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var attack_range=3.5
@@ -137,3 +137,9 @@ func _on_area_3d_area_entered(area):
 
 func _on_immunity_timer_timeout():
 	immune=false
+
+
+func play_attack_noise():
+	var sfx=sound_effect_scene.instantiate()
+	sfx.play_sound(swing_sounds.pick_random(),0)
+	$sounds.add_child(sfx)

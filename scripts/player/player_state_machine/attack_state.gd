@@ -24,6 +24,13 @@ var can_leave_attack=false
 var attack_times=[0.65,0.65,0.65]
 var combo=1
 
+var swing_sounds=[
+	load("res://sfx/player/player_swing_1.wav"),
+	load("res://sfx/player/player_swing_2.wav"),
+	load("res://sfx/player/player_swing_3.wav"),
+]
+
+
 
 func _ready():
 	left_weapon_collision=[weapon_collision1,weapon_collision2]
@@ -70,7 +77,6 @@ func state_input(event : InputEvent):
 
 
 func on_enter():
-	
 	character.get_node("timers/combo_timer").stop()
 	
 	character.get_node("timers/exit_attack_timer").wait_time=attack_times[combo-1]
@@ -95,6 +101,8 @@ func collisions(side_collisions,side_collision_times):
 	for i in range(len(collision_times)):
 		await get_tree().create_timer(collision_times[i]).timeout
 		state=not state
+		if state==false:
+			character.play_attack_sound()
 		change_collision(side_collisions,state)
 
 
