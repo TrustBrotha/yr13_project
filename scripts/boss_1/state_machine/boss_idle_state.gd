@@ -17,9 +17,6 @@ func state_process(delta):
 		if character.player_relative_location.length() < character.attack_range and character.player.state_machine.current_state.name=="attack":
 			next_state=block_state_var
 	
-	
-	
-	
 	if attack==0:
 		
 		character.animation_tree.set("parameters/walk_type/transition_request","walk_else")
@@ -56,8 +53,10 @@ func state_process(delta):
 	if not character.is_on_floor():
 		character.velocity.y -= gravity * delta
 
+
 func state_input(event : InputEvent):
 	pass
+
 
 func on_enter():
 	if character.wants_to_chase==true:
@@ -65,6 +64,7 @@ func on_enter():
 	block_prepared=true
 	character.animation_tree.set("parameters/state/transition_request","idle")
 	character.get_node("timers/find_idle_pos").start()
+
 
 func on_exit():
 	block_prepared=false

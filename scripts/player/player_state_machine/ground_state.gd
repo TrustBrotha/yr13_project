@@ -9,8 +9,8 @@ class_name ground_state
 @export var block_state_var : State
 @export var attack_state_var : State
 
+
 func state_process(delta):
-	
 	# checks whether or not to switch to the air state
 	if not character.is_on_floor():
 		next_state = air_state_var
@@ -44,6 +44,7 @@ func state_process(delta):
 				lerp(character.animation_tree.get("parameters/locked_on_walking/blend_position"),
 				character.input_dir,0.1))
 
+
 func on_enter():
 	character.animation_tree.set("parameters/state/transition_request","ground")
 	# if there is a jump buffered, execute the jump
@@ -68,9 +69,6 @@ func state_input(event : InputEvent):
 	
 	elif event.is_action_pressed("attack"):
 		next_state = attack_state_var
-	
-	
-
 
 
 func on_exit():
@@ -78,4 +76,3 @@ func on_exit():
 	if next_state == air_state_var:
 		# input is length of coyote time
 		character.timers.get_node("coyote_timer").start()
-	

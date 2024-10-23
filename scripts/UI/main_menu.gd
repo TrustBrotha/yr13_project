@@ -14,10 +14,10 @@ func _ready():
 	$Sekiro_like_player_character/AnimationPlayer.play("idle_basic")
 	ui.change_screen(ui.screens[0])
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
-
 
 
 func switch_scenes_animation():
@@ -34,6 +34,7 @@ func switch_scenes_animation():
 	var r=get_tree().create_tween()
 	r.tween_property($Camera3D,"rotation",cam_rot,animation_time-rot_delay).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
 
+
 func switch_scenes(switch_scene_delay):
 	await get_tree().create_timer(switch_scene_delay+0.1).timeout
 	get_tree().change_scene_to_file("res://scenes/main.tscn")
@@ -42,4 +43,3 @@ func switch_scenes(switch_scene_delay):
 func change_visuals():
 	$WorldEnvironment.environment.volumetric_fog_enabled=Global.fog
 	$WorldEnvironment.environment.sdfgi_enabled=Global.sdfgi
-

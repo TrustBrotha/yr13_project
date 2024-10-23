@@ -69,17 +69,16 @@ var inner_cloak=[83,90,98]
 var jump_spam_fix=false
 var menu_open=false
 
+
 func _ready():
-	
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 	# makes sure the spring arm for the camera doesn't collide with the player
 	$cam_origin_y/cam_origin_x/camera_spring.add_excluded_object(self)
 	
 	# adds jiggle bones
-	create_cloak_bones()
-
-
+	if Global.cloth:
+		create_cloak_bones()
 
 
 func _input(event):
@@ -108,11 +107,11 @@ func _input(event):
 			cam_mode="free"
 			animation_tree.set("parameters/cam_lock/transition_request","free")
 
+
 func force_remove_cam_lock():
 	if cam_mode=="fixed":
 		cam_mode="free"
 		animation_tree.set("parameters/cam_lock/transition_request","free")
-
 
 
 func _physics_process(delta):
@@ -193,21 +192,20 @@ func jump():
 		animation_tree.set("parameters/jump_and_fall/transition_request","jump")
 		$timers/jump_delay.start()
 
+
 func _on_jump_delay_timeout():
 	velocity.y = JUMP_VELOCITY
 	jump_spam_fix=false
+
 
 # once dash cooldown finishes, can dash again
 func _on_dash_cooldown_timeout():
 	can_dash = true
 
+
 # clears buffer
 func _on_input_buffer_time_timeout():
 	wants_to_jump = false
-
-
-
-
 
 
 func create_cloak_bones():
@@ -238,15 +236,6 @@ func animate_cloak_roots():
 		$player_model/Sekiro_like_player_character/Armature/GeneralSkeleton.set_bone_pose_rotation(outer_cloak[i],quat_rot)
 	for i in range(3):
 		$player_model/Sekiro_like_player_character/Armature/GeneralSkeleton.set_bone_pose_rotation(inner_cloak[i],cloak_fix)
-	
-
-
-
-
-
-
-
-
 
 
 func _on_cam_target_finder_body_entered(body):
@@ -257,7 +246,6 @@ func _on_cam_target_finder_body_entered(body):
 func _on_cam_target_finder_body_exited(body):
 	if body != self and body.is_in_group("enemy"):
 		cam_targets.erase(body)
-
 
 
 # enemy hits player
@@ -283,11 +271,9 @@ func _on_area_3d_area_entered(area):
 			sprite.get_node("shield_spawn").add_child(particles)
 			animation_tree.set("parameters/parry_transition/transition_request","parry")
 		elif blocking==true:
-			print("block")
 			animation_tree.set("parameters/parry_transition/transition_request","block_hit")
 			Global.player_health-=Global.boss_current_attack_damage*0.5
 		elif parrying==false and blocking==false:
-			print("hit")
 			var particles=parry_particle_var.instantiate()
 			particles.emitting=true
 			particles.process_material.color=Color.RED
@@ -296,7 +282,6 @@ func _on_area_3d_area_entered(area):
 	
 	if Global.player_health<=0:
 		state_machine.current_state.next_state=dead_state_var
-	
 
 
 func _on_immunity_timer_timeout():
@@ -308,11 +293,6 @@ func shield_up():
 	sprite.get_node("shield_spawn").add_child(shield)
 
 
-
-
-
 func _on_animation_tree_animation_finished(anim_name):
 	if anim_name=="block_hit":
 		animation_tree.set("parameters/parry_transition/transition_request","block_loop")
-
-

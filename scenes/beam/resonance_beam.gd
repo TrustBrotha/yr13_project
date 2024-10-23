@@ -12,6 +12,8 @@ var spin_speed=0.1
 var time_elapsed=0.0
 var played_sound=false
 var offset=0
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var beam_sounds=[beam_sound_1,beam_sound_2]
@@ -51,6 +53,7 @@ func _process(delta):
 		$resonance_beam_main.scale.x=lerp($resonance_beam_main.scale.x,0.0,0.1)
 		$resonance_beam_main.scale.y=lerp($resonance_beam_main.scale.y,0.0,0.1)
 
+
 func animation(delta):
 	time_elapsed+=1.0*delta
 	
@@ -60,8 +63,6 @@ func animation(delta):
 	for spine in spines:
 		spine.rotation.z=rot+spine_offset
 		spine_offset+=0.4*spin_speed
-
-
 
 
 func _on_end_timeout():
@@ -84,6 +85,7 @@ func _on_start_main_beam_timeout():
 	$outer_beam.emitting=true
 	var t=get_tree().create_tween()
 	t.tween_property($Area3D/CollisionShape3D,"position",Vector3(0,0,-30),0.6).set_trans(Tween.TRANS_LINEAR)
+
 
 func collision_off():
 	await get_tree().create_timer(1.7).timeout

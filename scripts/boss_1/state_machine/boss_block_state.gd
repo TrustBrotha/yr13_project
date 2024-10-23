@@ -5,6 +5,7 @@ extends State
 
 var decision=randi_range(0,2)
 
+
 func state_process(delta):
 	character.velocity.x=lerp(character.velocity.x,0.0,0.3)
 	character.velocity.z=lerp(character.velocity.z,0.0,0.3)
@@ -35,13 +36,12 @@ func state_process(delta):
 func state_input(event : InputEvent):
 	pass
 
+
 func on_enter():
 	decision=randi_range(0,2)
 	character.blocking=true
 	character.animation_tree.set("parameters/state/transition_request","block")
 
+
 func on_exit():
 	character.blocking=false
-
-
-

@@ -14,6 +14,7 @@ var dash_direction : Vector3
 # controls the timing for when to start slowing down
 var dashing = true
 
+
 func state_process(delta):
 	character.velocity.x = lerp(character.velocity.x,dash_direction.x*DASH_SPEED,DASH_ACCEL)
 	character.velocity.z = lerp(character.velocity.z,dash_direction.z*DASH_SPEED,DASH_ACCEL)

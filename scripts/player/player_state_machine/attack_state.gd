@@ -29,6 +29,7 @@ func _ready():
 	left_weapon_collision=[weapon_collision1,weapon_collision2]
 	right_weapon_collision=[weapon_collision3,weapon_collision4]
 
+
 func state_process(delta):
 	#if not character.is_on_floor():
 		#next_state = air_state_var
@@ -51,6 +52,7 @@ func state_process(delta):
 	
 	Global.player_combo=combo
 
+
 func state_input(event : InputEvent):
 	if can_leave_attack==true:
 		if event.is_action_pressed("attack"):
@@ -65,8 +67,7 @@ func state_input(event : InputEvent):
 		elif event.is_action_pressed("ui_dash"):
 			if character.can_dash:
 				next_state = dash_state_var
-		
-		
+
 
 func on_enter():
 	
@@ -82,12 +83,10 @@ func on_enter():
 	move()
 
 
-
-
-
 func control_collision():
 	collisions(left_weapon_collision,all_left_collision_times)
 	collisions(right_weapon_collision,all_right_collision_times)
+
 
 func collisions(side_collisions,side_collision_times):
 	var state=true
@@ -103,11 +102,11 @@ func change_collision(collisions,state):
 	for weapon in collisions:
 		weapon.disabled=state
 
+
 func move():
 	var vel = (character.sprite.transform.basis * Vector3(0, 0, 1)).normalized()*attack_vels[combo-1]
 	var t=get_tree().create_tween()
 	t.tween_property(character,"velocity",vel,attack_move_speeds[combo-1]).set_trans(Tween.TRANS_LINEAR)
-
 
 
 func on_exit():
@@ -118,7 +117,6 @@ func on_exit():
 
 func _on_exit_attack_timer_timeout():
 	can_leave_attack=true
-	
 	character.get_node("timers/force_exit_attack_timer").wait_time=0.3
 	character.get_node("timers/force_exit_attack_timer").start()
 	character.get_node("timers/combo_timer").wait_time=0.4

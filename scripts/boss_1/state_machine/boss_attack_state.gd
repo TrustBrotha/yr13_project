@@ -11,8 +11,6 @@ extends State
 @export var next_attack_timer : Timer
 @onready var attacks=get_children()
 
-
-
 var current_attack
 
 var last_start_attack=0
@@ -26,9 +24,6 @@ func _ready():
 		attack.boss=boss
 		attack.animation_tree=animation_tree
 		attack.weapon_collision=weapon_collision
-
-
-
 
 func state_process(delta):
 	character.velocity.x=lerp(character.velocity.x,0.0,0.3)
@@ -56,16 +51,13 @@ func state_process(delta):
 		character.velocity.y -= gravity * delta
 
 
-
-
-
-
 func on_enter():
 	next_attack_timer.stop()
 	character.velocity=Vector3.ZERO
 	character.wants_to_chase=true
 	character.animation_tree.set("parameters/state/transition_request","attack")
 	choose_start_attack()
+
 
 func choose_start_attack():
 	var r=randi_range(0,num_of_start_attacks-1)
@@ -80,11 +72,9 @@ func attack():
 	current_attack.control_attack()
 
 
-
-
 func attack_finished():
 	current_attack=null
-	next_attack_timer.wait_time=0.3
+	next_attack_timer.wait_time=0.6
 	next_attack_timer.start()
 
 
@@ -93,16 +83,12 @@ func check_distance():
 		next_state=idle_state_var
 
 
-
 func on_exit():
 	next_attack_timer.stop()
 
+
 func state_input(event : InputEvent):
 	pass
-
-
-
-
 
 
 func _on_next_attack_timer_timeout():

@@ -36,7 +36,6 @@ var attacking=false
 
 var player_relative_location
 
-
 var immune=false
 var blocking=false
 var block_prepared=false
@@ -45,8 +44,11 @@ var block_recov=false
 var wants_to_chase=false
 
 var half_health_attack_done=false
+
+
 func _ready():
-	create_cloak_bones()
+	if Global.cloth:
+		create_cloak_bones()
 
 
 func create_cloak_bones():
@@ -57,6 +59,7 @@ func create_cloak_bones():
 		cloak_bone.forward_axis=4
 		$boss_1_model/Armature/GeneralSkeleton.add_child(cloak_bone)
 
+
 func _physics_process(delta):
 	animate_cloak_roots()
 	player_relative_location=player.global_position-global_position
@@ -64,7 +67,6 @@ func _physics_process(delta):
 	var direction = global_position-player.global_position
 	rotation.y=atan2(direction.x,direction.z)+PI
 	
-
 	animation_tree.set(
 		"parameters/block_blend/blend_amount",
 		lerp(animation_tree.get("parameters/block_blend/blend_amount"),
@@ -83,11 +85,6 @@ func animate_cloak_roots():
 	var bone_idxs=[42,49,56,63]
 	for i in range(4):
 		$boss_1_model/Armature/GeneralSkeleton.set_bone_pose_rotation(bone_idxs[i],quat_rot)
-
-
-
-
-
 
 
 func laser_attack(gap_time,beam_type):
@@ -113,15 +110,6 @@ func laser_attack(gap_time,beam_type):
 	state_machine.current_state.next_state=attack_state_var
 
 
-
-
-
-
-
-
-
-
-
 func _on_area_3d_area_entered(area):
 	if immune==false:
 		player.camera.add_trauma(0.1)
@@ -130,7 +118,8 @@ func _on_area_3d_area_entered(area):
 		if attacking==false:
 			var vel = (transform.basis * Vector3(0, 0, -1)).normalized()*3
 			var t=get_tree().create_tween()
-			t.tween_property(self,"velocity",vel,0.1).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+			t.tween_property(self,"velocity",
+					vel,0.1).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 		
 		if blocking==true:
 			animation_tree.set("parameters/block_blend/blend_amount",1.0)

@@ -22,6 +22,7 @@ func state_process(delta):
 		else:
 			next_state=air_state_var
 
+
 func state_input(event : InputEvent):
 	if event.is_action_released("block"):
 		want_to_switch_state = true
@@ -29,6 +30,7 @@ func state_input(event : InputEvent):
 	if event.is_action_pressed("ui_jump"):
 		character.jump()
 		next_state=air_state_var
+
 
 func on_enter():
 	print("-----")
@@ -44,7 +46,7 @@ func on_enter():
 	character.parry_time+=1
 	character.parry_time=clamp(character.parry_time,0,4)
 	character.get_node("timers/parry_spam_timer").start()
-	
+
 
 func on_exit():
 	character.blocking=false
@@ -61,6 +63,7 @@ func _on_parry_timer_timeout():
 
 func _on_parry_spam_timer_timeout():
 	character.parry_time=0
+
 
 func succ_parry():
 	parry_timer.stop()

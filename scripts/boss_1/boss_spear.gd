@@ -6,6 +6,8 @@ var spear_guard = []
 var spear_pommel = []
 var spear_rot=0.0
 var spin_speed = 0.05
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	for part in all_spear_parts:
@@ -24,7 +26,6 @@ func _process(delta):
 	for spear in spear_blade:
 		offset+=0.1
 		spear.rotation.y=spear_rot+offset
-	
 	
 	offset=0.0
 	for spear in spear_guard:

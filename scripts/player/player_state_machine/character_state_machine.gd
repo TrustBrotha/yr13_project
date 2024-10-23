@@ -17,6 +17,7 @@ func _ready():
 		else:
 			push_warning("child" + child.name + "not a state for character state machine")
 
+
 # controls which state is being accessed, runs its process
 func _physics_process(delta):
 	if(current_state.next_state != null):

@@ -14,8 +14,8 @@ var menu_open=false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
 	change_visuals()
+
 
 func _input(event):
 	if event.is_action_pressed("ui_quit"):
@@ -26,14 +26,17 @@ func _input(event):
 			menu_open=false
 			menu.change_screen(null)
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
 
+
 func switch_scenes_animation():
-	Global.player_health=100
+	Global.player_health=500
 	Global.boss_health=1000
 	get_tree().change_scene_to_file("res://scenes/main.tscn")
+
 
 func spawn_beams(mode):
 	player.force_remove_cam_lock()
@@ -49,6 +52,7 @@ func spawn_beams(mode):
 		for spawn in beam_spawns2:
 			var beam=beam_scene.instantiate()
 			spawn.add_child(beam)
+
 
 func change_visuals():
 	$WorldEnvironment.environment.volumetric_fog_enabled=Global.fog

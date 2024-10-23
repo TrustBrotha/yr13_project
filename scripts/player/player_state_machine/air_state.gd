@@ -15,7 +15,6 @@ var gravity_scale = 1
 var can_jump = true
 
 
-
 func state_process(delta):
 	if character.velocity.y<0:
 		character.animation_tree.set("parameters/jump_and_fall/transition_request","fall")
@@ -37,15 +36,13 @@ func state_process(delta):
 			character.sprite.rotation.x=+90
 	if Input.is_action_just_released("ui_dash"):
 		release_glide()
-	
-
-
 
 
 func on_enter():
 	character.animation_tree.set("parameters/state/transition_request","air")
 	# sets can jump to true for coyote jump
 	can_jump = true
+
 
 func state_input(event : InputEvent):
 	# controls jump cases while in the air
@@ -76,8 +73,7 @@ func on_exit():
 func _on_coyote_timer_timeout():
 	can_jump=false
 
+
 func release_glide():
 	gravity_scale = 1
 	character.sprite.rotation.x=0
-
-
