@@ -17,6 +17,6 @@ func _process(delta):
 		loc_data.remove_at(0)
 	while len(rot_data)>floor(Global.boss_attack_delay/delta):
 		rot_data.remove_at(0)
-	
-	global_position=loc_data[0]
-	global_rotation=rot_data[len(rot_data)-1]
+	if len(loc_data)>0 and len(rot_data)>0:
+		global_position=loc_data[0]
+		global_rotation=rot_data[len(rot_data)-1]
