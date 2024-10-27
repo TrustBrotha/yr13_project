@@ -1,15 +1,6 @@
 extends GPUParticles3D
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	await get_tree().create_timer(1.5).timeout
+# Culls node once particles die
+func _on_finished():
 	queue_free()
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-func parry():
-	pass

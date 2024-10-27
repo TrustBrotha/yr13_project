@@ -1,11 +1,11 @@
 extends CharacterBody3D
 
 # Constants
-const ACCELERATION = 0.2
+const ACCELERATION = 12
 const SPRITE_TURN_SPEED = 12
 const JUMP_VELOCITY = 8
 const SENSITIVITY=0.1
-
+const MAX_SPEED=10.0
 # Preloaded nodes to be accessed easier (sometimes not done because too lazy)
 @onready var cam_pivot_x = $cam_origin_y/cam_origin_x
 @onready var cam_pivot_y = $cam_origin_y
@@ -22,7 +22,6 @@ const SENSITIVITY=0.1
 @onready var state_machine : CharacterStateMachine = $character_state_machine
 # Defines some states so that the state machine can be forced into these states from this file
 @export var parry_particle_var : PackedScene
-@export var staggered_state_var : State
 @export var dead_state_var : State
 
 # Loads the spinning shield effect scene used to show when the player is parrying
@@ -139,6 +138,7 @@ func force_remove_cam_lock():
 
 
 func _physics_process(delta):
+	
 	# Control the roots of the cloth bones
 	animate_cloak_roots()
 	
@@ -160,15 +160,15 @@ func _physics_process(delta):
 		if state_machine.current_state.name != "block":
 			if Input.is_action_pressed("sprint"):
 				animation_tree.set("parameters/walk_or_run/transition_request","run")
-				speed = 10.0
+				speed = MAX_SPEED
 			else:
 				animation_tree.set("parameters/walk_or_run/transition_request","walk")
-				speed = 5.0
+				speed = MAX_SPEED/2
 		
 		# Checks if the player should have control over movement in its current state
 		if state_machine.check_if_can_move():
-			velocity.x = lerp(velocity.x,direction.x*speed,ACCELERATION)
-			velocity.z = lerp(velocity.z,direction.z*speed,ACCELERATION)
+			velocity.x = lerp(velocity.x,direction.x*speed,ACCELERATION*delta)
+			velocity.z = lerp(velocity.z,direction.z*speed,ACCELERATION*delta)
 			target_rotation=atan2(direction.x,direction.z)
 			last_direction=direction
 		# If not make player sprite look at the direction moving
@@ -177,8 +177,8 @@ func _physics_process(delta):
 	
 	# If no buttons are pressed, slow down
 	else:
-		velocity.x = lerp(velocity.x,0.0,ACCELERATION)
-		velocity.z = lerp(velocity.z,0.0,ACCELERATION)
+		velocity.x = lerp(velocity.x,0.0,ACCELERATION*delta)
+		velocity.z = lerp(velocity.z,0.0,ACCELERATION*delta)
 	
 	# Controls camera movement when locked on
 	if cam_mode == "fixed":
@@ -195,7 +195,7 @@ func _physics_process(delta):
 			cam_target.global_position)
 		var target_rot=$cam_origin_y/cam_origin_x/camera_spring/cam_rotation_target.rotation
 		# Makes camera movement smoother
-		camera.rotation = lerp(camera.rotation,target_rot,0.3)
+		camera.rotation = lerp(camera.rotation,target_rot,0.3*delta)
 		
 		# When in dash sprite rotation follows vel, so exept when dashing 
 		if state_machine.current_state.name !="dash":
@@ -306,8 +306,8 @@ func _on_area_3d_area_entered(area):
 		# Controls knockback
 		var vel = (global_position-boss.global_position).normalized()*3
 		vel.y=-10
-		var t=get_tree().create_tween()
-		t.tween_property(self,"velocity",vel,0.2
+		var tween=get_tree().create_tween()
+		tween.tween_property(self,"velocity",vel,0.2
 		).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 		
 		# Checks the possible conditions that can happen when the player is hit
@@ -319,8 +319,6 @@ func _on_area_3d_area_entered(area):
 			
 			# Deletes shield when successful parry
 			var parry_effects=sprite.get_node("shield_spawn").get_children()
-			for effect in parry_effects:
-				effect.parry()
 			
 			# Adds sound effect for parry
 			var sfx=sound_effect_scene.instantiate()

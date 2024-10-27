@@ -1,8 +1,11 @@
 extends Node
 
 class_name CharacterStateMachine
+
+# Nodes accessed by scripts
 @export var character : CharacterBody3D
 @export var current_state : State
+# Saves all states to a var to be accessed
 var states = [State]
 
 
@@ -12,13 +15,12 @@ func _ready():
 		if(child is State):
 			states.append(child)
 			child.character = character
-			#set up states
-			
+		
 		else:
 			push_warning("child" + child.name + "not a state for character state machine")
 
 
-# controls which state is being accessed, runs its process
+# Controls which state is being accessed, runs its process
 func _physics_process(delta):
 	if(current_state.next_state != null):
 		switch_states(current_state.next_state)
@@ -26,12 +28,12 @@ func _physics_process(delta):
 	current_state.state_process(delta)
 
 
-# checks if the player can move while in each state
+# Checks if the player can move while in each state
 func check_if_can_move():
 	return current_state.can_move_state
 
 
-# controls on exit and on enter functions for states
+# Controls on exit and on enter functions for states
 func switch_states(new_state : State):
 	if(current_state != null):
 		current_state.on_exit()
@@ -41,6 +43,6 @@ func switch_states(new_state : State):
 	current_state.on_enter()
 
 
-# calls input functions from state machine
+# Calls input functions from state machine
 func _input(event):
 	current_state.state_input(event)

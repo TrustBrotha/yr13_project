@@ -9,3 +9,5 @@ func _ready():
 	set("parameters/TimeScale 6/scale",float(1.0/Global.boss_speed))
 	set("parameters/TimeScale 7/scale",float(1.0/Global.boss_speed))
 	set("parameters/TimeScale 8/scale",float(1.0/Global.boss_speed))
+	set("parameters/TimeScale 9/scale",float(1.0/Global.boss_speed))
+	set("parameters/TimeScale 10/scale",float(1.0/Global.boss_speed))

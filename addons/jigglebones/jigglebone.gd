@@ -1,4 +1,8 @@
 extends Node3D
+
+## ADDON
+## NOT WRITTEN BY ME
+
 enum Axis {
 	X_Plus, Y_Plus, Z_Plus, X_Minus, Y_Minus, Z_Minus
 }

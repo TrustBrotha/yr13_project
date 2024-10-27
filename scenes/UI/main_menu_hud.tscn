@@ -321,17 +321,13 @@ text = "ENABLED"
 layout_mode = 2
 theme = ExtResource("3_ya8t4")
 theme_override_font_sizes/font_size = 50
-text = " | "
 horizontal_alignment = 1
 
-[node name="apply_fog" type="Button" parent="screens/visual_settings/GridContainer"]
+[node name="break_between_buttons7" type="Label" parent="screens/visual_settings/GridContainer"]
 layout_mode = 2
 theme = ExtResource("3_ya8t4")
 theme_override_font_sizes/font_size = 50
-theme_override_styles/normal = SubResource("StyleBoxTexture_0wbk0")
-theme_override_styles/hover = SubResource("StyleBoxTexture_f72yv")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_jqcr7")
-text = "APPLY"
+horizontal_alignment = 1
 
 [node name="sdfgi" type="Label" parent="screens/visual_settings/GridContainer"]
 layout_mode = 2
@@ -353,17 +349,13 @@ text = "ENABLED"
 layout_mode = 2
 theme = ExtResource("3_ya8t4")
 theme_override_font_sizes/font_size = 50
-text = " | "
 horizontal_alignment = 1
 
-[node name="apply_sdfgi" type="Button" parent="screens/visual_settings/GridContainer"]
+[node name="break_between_buttons8" type="Label" parent="screens/visual_settings/GridContainer"]
 layout_mode = 2
 theme = ExtResource("3_ya8t4")
 theme_override_font_sizes/font_size = 50
-theme_override_styles/normal = SubResource("StyleBoxTexture_0wbk0")
-theme_override_styles/hover = SubResource("StyleBoxTexture_f72yv")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_jqcr7")
-text = "APPLY"
+horizontal_alignment = 1
 
 [node name="cloth" type="Label" parent="screens/visual_settings/GridContainer"]
 layout_mode = 2
@@ -386,17 +378,7 @@ text = "ENABLED"
 layout_mode = 2
 theme = ExtResource("3_ya8t4")
 theme_override_font_sizes/font_size = 50
-text = " | "
 horizontal_alignment = 1
-
-[node name="apply_cloth" type="Button" parent="screens/visual_settings/GridContainer"]
-layout_mode = 2
-theme = ExtResource("3_ya8t4")
-theme_override_font_sizes/font_size = 50
-theme_override_styles/normal = SubResource("StyleBoxTexture_0wbk0")
-theme_override_styles/hover = SubResource("StyleBoxTexture_f72yv")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_jqcr7")
-text = "APPLY"
 
 [node name="visual_settings_back" parent="screens/visual_settings" instance=ExtResource("2_tfxew")]
 offset_left = 50.0
@@ -568,10 +550,7 @@ text = " BACK"
 [connection signal="pressed" from="screens/visual_settings/GridContainer/resolution_mode" to="." method="_on_resolution_mode_pressed"]
 [connection signal="pressed" from="screens/visual_settings/GridContainer/apply_resolution" to="." method="_on_apply_resolution_pressed"]
 [connection signal="pressed" from="screens/visual_settings/GridContainer/change_fog_mode" to="." method="_on_change_fog_mode_pressed"]
-[connection signal="pressed" from="screens/visual_settings/GridContainer/apply_fog" to="." method="_on_apply_fog_pressed"]
 [connection signal="pressed" from="screens/visual_settings/GridContainer/change_sdfgi_mode" to="." method="_on_change_sdfgi_mode_pressed"]
-[connection signal="pressed" from="screens/visual_settings/GridContainer/apply_sdfgi" to="." method="_on_apply_sdfgi_pressed"]
 [connection signal="pressed" from="screens/visual_settings/GridContainer/change_cloth_mode" to="." method="_on_change_cloth_mode_pressed"]
-[connection signal="pressed" from="screens/visual_settings/GridContainer/apply_cloth" to="." method="_on_apply_cloth_pressed"]
 [connection signal="pressed" from="screens/visual_settings/visual_settings_back" to="." method="_on_visual_settings_back_pressed"]
 [connection signal="pressed" from="screens/key_binds/key_binds_back" to="." method="_on_key_binds_back_pressed"]

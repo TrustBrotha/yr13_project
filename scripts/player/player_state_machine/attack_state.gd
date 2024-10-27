@@ -26,6 +26,8 @@ var attack_times=[0.65,0.65,0.65]
 
 # Controls when the player can stop the attack animation
 var can_leave_attack=false
+var can_combo=false
+var combo_time=0.15
 # Controls which attack is used
 var combo=1
 
@@ -39,8 +41,8 @@ var swing_sounds=[
 
 # Sets the collision data up to be used in code
 func _ready():
-	left_weapon_collision=[weapon_collision1,weapon_collision2]
-	right_weapon_collision=[weapon_collision3,weapon_collision4]
+	left_weapon_collision = [weapon_collision1,weapon_collision2]
+	right_weapon_collision = [weapon_collision3,weapon_collision4]
 
 
 func state_process(delta):
@@ -49,48 +51,50 @@ func state_process(delta):
 	character.velocity.z = lerp(character.velocity.z,0.0,0.3)
 	
 	# Controls when the player can leave the attack state and the states which can be changed into
-	if can_leave_attack==true:
+	if can_leave_attack:
 		if Input.is_action_pressed("block"):
-			next_state=block_state_var
+			next_state = block_state_var
+			combo = 1
 		elif (Input.is_action_pressed("left") or
 			Input.is_action_pressed("right") or
 			Input.is_action_pressed("ui_forward") or
 			Input.is_action_pressed("ui_back")
-			):
-			# Saves the combo when going into the ground state (but only briefly)
+		):
+			combo = 1
 			next_state = ground_state_var
-			combo+=1
-			if combo>3:
-				combo=1
 	
 	# Saves combo to be used in other places such as from the boss script
 	Global.player_combo=combo
 
 
 func state_input(event : InputEvent):
-	# Controls which states the player moves into when stopping attack when it can change
-	if can_leave_attack==true:
+	# continues the combo
+	if can_combo:
 		if event.is_action_pressed("attack"):
 			next_state=attack_state_var
-			# Saves combo
+			# Progresses combo
 			combo+=1
 			if combo>3:
 				combo=1
-		
-		elif event.is_action_pressed("ui_jump"):
+			
+	# Controls which states the player moves into when stopping attack when it can change
+	if can_leave_attack:
+		if event.is_action_pressed("ui_jump"):
+			combo=1
 			character.jump()
 		
 		elif event.is_action_pressed("ui_dash"):
 			if character.can_dash:
+				combo=1
 				next_state = dash_state_var
 
 
 func on_enter():
 	# Controls the timing for the attacks
 	character.get_node("timers/combo_timer").stop()
-	
-	character.get_node("timers/exit_attack_timer").wait_time=attack_times[combo-1]
+	character.get_node("timers/exit_attack_timer").wait_time=attack_times[combo-1]+0.05
 	character.get_node("timers/exit_attack_timer").start()
+	
 	# Sets animation 
 	character.animation_tree.set("parameters/combo/transition_request","combo%s"%combo)
 	character.animation_tree.set("parameters/state/transition_request","attack")
@@ -131,34 +135,42 @@ func change_collision(collisions,state):
 
 func move():
 	# Controls the movement of the player when they are attacking
-	var vel = (character.sprite.transform.basis * Vector3(0, 0, 1)).normalized()*attack_vels[combo-1]
-	var t=get_tree().create_tween()
-	t.tween_property(character,"velocity",vel,attack_move_speeds[combo-1]).set_trans(Tween.TRANS_LINEAR)
+	var vel = (character.sprite.transform.basis * Vector3(0, 0, 1)
+	).normalized()*attack_vels[combo-1]
+	var tween=get_tree().create_tween()
+	tween.tween_property(character,"velocity",vel,attack_move_speeds[combo-1]
+	).set_trans(Tween.TRANS_LINEAR)
 
 
 func on_exit():
 	# Resets variables and timers when exitting the state
 	can_leave_attack=false
+	can_combo=false
 	character.get_node("timers/exit_attack_timer").stop()
 	character.get_node("timers/force_exit_attack_timer").stop()
 
 
 func _on_exit_attack_timer_timeout():
-	# Lets the player leave after the attack is finished
-	can_leave_attack=true
-	# Sets timer which forces the player stop attacking after a set amount of time
-	# after the attack is finished
-	character.get_node("timers/force_exit_attack_timer").wait_time = 0.3
-	character.get_node("timers/force_exit_attack_timer").start()
-	# after timer finishes and not reset, combo reset
-	character.get_node("timers/combo_timer").wait_time = 0.4
+	# Lets the player continue to combo after the attack
+	# (Adds delay beween being able to combo and leaving the attack state
+	can_combo=true
+	character.get_node("timers/combo_timer").wait_time = combo_time
 	character.get_node("timers/combo_timer").start()
+	# Sets timer which forces the player leave attack state after a set amount of time
+	# after the attack is finished
+	character.get_node("timers/force_exit_attack_timer").wait_time = combo_time+0.15
+	character.get_node("timers/force_exit_attack_timer").start()
 
 
 func _on_force_exit_attack_timer_timeout():
+	# Resets combo and moves player out of attack state
 	combo=1
 	next_state=ground_state_var
 
 
 func _on_combo_timer_timeout():
-	combo=1
+	# lets player leave attack state
+	can_leave_attack=true
+
+
+

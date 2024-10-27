@@ -1,9 +1,8 @@
 extends State
 
 class_name ground_state
-# constants
 
-# accessed states
+# Accessed states
 @export var air_state_var : State
 @export var dash_state_var : State
 @export var block_state_var : State
@@ -11,25 +10,27 @@ class_name ground_state
 
 
 func state_process(delta):
-	# checks whether or not to switch to the air state
+	# Checks whether or not to switch to the air state
 	if not character.is_on_floor():
 		next_state = air_state_var
 	
-	
-	
-	if character.cam_mode=="free":
-		if character.moving==true:
+	# If camera is in free mode, can either be in moving mode, or idle mode
+	# Lerps to make transition between idle and moving smoother
+	if character.cam_mode == "free":
+		if character.moving:
 			character.animation_tree.set(
 				"parameters/walk_transition/blend_amount",
 				lerp(character.animation_tree.get("parameters/walk_transition/blend_amount"),
 				1.0,0.1))
-			
+		
 		else:
 			character.animation_tree.set(
 				"parameters/walk_transition/blend_amount",
 				lerp(character.animation_tree.get("parameters/walk_transition/blend_amount"),
 				0.0,0.1))
-		
+	
+	# If camera is locked on, has 2 blendspace2d options for running or walking.
+	# The position in this 2d space controls how each movement animation blends together 
 	elif character.cam_mode=="fixed":
 		if character.running==true:
 			character.animation_tree.set("parameters/walk_or_run_locked_on/transition_request","run")
@@ -46,33 +47,34 @@ func state_process(delta):
 
 
 func on_enter():
+	# Sets animation state to ground
 	character.animation_tree.set("parameters/state/transition_request","ground")
-	# if there is a jump buffered, execute the jump
+	# If there is a jump buffered, execute the jump
 	if character.wants_to_jump == true:
 		character.jump()
 		character.wants_to_jump = false
 
 
 func state_input(event : InputEvent):
-	
-	# controls jumping
+	# Controls jumping
 	if event.is_action_pressed("ui_jump"):
 		character.jump()
 	
+	# Controls entering the block state
 	elif event.is_action_pressed("block"):
 		next_state = block_state_var
 	
-	# controls dashing
+	# Controls dashing
 	elif event.is_action_pressed("ui_dash"):
 		if character.can_dash:
 			next_state = dash_state_var
 	
+	# Controls attacking
 	elif event.is_action_pressed("attack"):
 		next_state = attack_state_var
 
 
 func on_exit():
-	# starts the coyote time for falling off an edge
+	# Starts the coyote time for falling off an edge
 	if next_state == air_state_var:
-		# input is length of coyote time
 		character.timers.get_node("coyote_timer").start()

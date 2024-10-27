@@ -15,8 +15,8 @@ func state_process(delta):
 	
 	# Decellerates player if on the ground
 	if character.is_on_floor():
-		character.velocity.x = lerp(character.velocity.x,0.0,character.ACCELERATION)
-		character.velocity.z = lerp(character.velocity.z,0.0,character.ACCELERATION)
+		character.velocity.x = lerp(character.velocity.x,0.0,character.ACCELERATION*delta)
+		character.velocity.z = lerp(character.velocity.z,0.0,character.ACCELERATION*delta)
 	
 	# If the player wants to leave the block state and they can, switch state.
 	if want_to_switch_state and can_switch_state:

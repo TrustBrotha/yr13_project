@@ -24,3 +24,5 @@ explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_4hosf")
 draw_pass_1 = SubResource("QuadMesh_5qwc8")
 script = ExtResource("2_3eojl")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

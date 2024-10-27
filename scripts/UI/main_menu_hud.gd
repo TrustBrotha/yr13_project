@@ -39,15 +39,25 @@ func _ready():
 	update_audio_labels()
 
 
+# Moves a screen into or out of frame
 func move_screen(dir,screen):
+	# Gets the wanted position
 	var locations=[-1000.0,0.0]
 	var loc=locations[dir]
-	var t=get_tree().create_tween()
-	t.tween_property(screen,"position",Vector2(loc,0.0),screen_switch_time).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	
+	# Tweens the screen in or out of frame
+	var tween=get_tree().create_tween()
+	tween.tween_property(screen,"position",Vector2(loc,0.0),screen_switch_time
+	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 
 
+# Controls while screen should be in frame
 func change_screen(wanted_screen):
+	# Moves the current screen out of frame
 	move_screen(0,current_screen)
+	
+	# If there is a screen which wants to be seen, move it into frame after the first frame is gone
+	# Assign this new screen as the current screen
 	if wanted_screen!=null:
 		await get_tree().create_timer(screen_switch_time).timeout
 		current_screen=wanted_screen
@@ -161,9 +171,6 @@ func _on_change_fog_mode_pressed():
 	highlighted_fog_mode+=1
 	highlighted_fog_mode%=2
 	fog_type_text.text=fog_modes[highlighted_fog_mode]
-
-
-func _on_apply_fog_pressed():
 	Global.saved_fog_mode=highlighted_fog_mode
 	if highlighted_fog_mode==0: #enabled
 		Global.fog=true
@@ -176,9 +183,6 @@ func _on_change_sdfgi_mode_pressed():
 	highlighted_sdfgi_mode+=1
 	highlighted_sdfgi_mode%=2
 	sdfgi_type_text.text=sdfgi_modes[highlighted_sdfgi_mode]
-
-
-func _on_apply_sdfgi_pressed():
 	Global.saved_sdfgi_mode=highlighted_sdfgi_mode
 	if highlighted_sdfgi_mode==0: #enabled
 		Global.sdfgi=true
@@ -191,9 +195,6 @@ func _on_change_cloth_mode_pressed():
 	highlighted_cloth_mode+=1
 	highlighted_cloth_mode%=2
 	cloth_type_text.text=cloth_modes[highlighted_cloth_mode]
-
-
-func _on_apply_cloth_pressed():
 	Global.saved_cloth_mode=highlighted_cloth_mode
 	if highlighted_cloth_mode==0: #enabled
 		Global.cloth=true
