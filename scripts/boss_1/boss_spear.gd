@@ -32,12 +32,12 @@ func _process(delta):
 	var offset = 0.0
 	for spear in spear_blade:
 		offset += 0.1
-		spear.rotation.y = spear_rot+offset
+		spear.rotation.y = spear_rot + offset
 	
 	offset = 0.0
 	for spear in spear_guard:
 		offset += 0.3
-		spear.rotation.y =- (spear_rot+offset)
+		spear.rotation.y =- (spear_rot + offset)
 	
 	offset = 0.0
 	for spear in spear_pommel:

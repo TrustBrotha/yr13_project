@@ -33,7 +33,7 @@ func control_collision(collision_times):
 
 
 # Controls what happens when the boss finishes an attack
-func finish_attack(attack_length,follow_up_prob,follow_up_attack):
+func finish_attack(attack_length, follow_up_prob, follow_up_attack):
 	# Adjusts the default times to fit the bosses current speed / collision delay
 	var adjusted_length
 	adjusted_length = attack_length * Global.boss_speed + Global.boss_attack_delay
@@ -46,7 +46,7 @@ func finish_attack(attack_length,follow_up_prob,follow_up_attack):
 	
 	# Makes a random number to decide wether to do a follow up attack
 	# Attacks with no follow up have a probability of 0
-	var random_num = randi_range(0,follow_up_prob)
+	var random_num = randi_range(0, follow_up_prob)
 	if random_num > 0 and follow_up_attack != null:
 		# If the player moved out of attack range during first attack, dont follow up
 		if boss.player_relative_location.length() > boss.attack_range:

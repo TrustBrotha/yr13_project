@@ -18,17 +18,17 @@ var dashing = true
 
 # Accelerate player in dash direction
 func state_process(delta):
-	character.velocity.x = lerp(character.velocity.x,dash_direction.x*DASH_SPEED,DASH_ACCEL)
-	character.velocity.z = lerp(character.velocity.z,dash_direction.z*DASH_SPEED,DASH_ACCEL)
+	character.velocity.x = lerp(character.velocity.x, dash_direction.x * DASH_SPEED, DASH_ACCEL)
+	character.velocity.z = lerp(character.velocity.z, dash_direction.z * DASH_SPEED, DASH_ACCEL)
 
 
 func on_enter():
 	# Control animation
-	character.animation_tree.set("parameters/state/transition_request","dash")
+	character.animation_tree.set("parameters/state/transition_request", "dash")
 	# Saves dash direction
 	dash_direction = character.last_direction
 	# Covers edge case when locked on and not moving
-	if character.cam_mode=="fixed" and character.direction == Vector3.ZERO:
+	if character.cam_mode == "fixed" and character.direction == Vector3.ZERO:
 		dash_direction = (character.cam_pivot_y.transform.basis * Vector3(0, 0, 1)).normalized()
 	
 	# Starts timer to end dash
@@ -44,6 +44,6 @@ func on_exit():
 # Once finished dashing, switch to next state
 func _on_dash_time_timeout():
 	if character.is_on_floor():
-		next_state=ground_state_var
+		next_state = ground_state_var
 	else:
-		next_state=air_state_var
+		next_state = air_state_var

@@ -44,7 +44,7 @@ func _ready() -> void:
 	if not enabled:
 		set_physics_process(false)
 		return
-	top_level = true  # Ignore parent Transform3Dation
+	top_level = true # Ignore parent Transform3Dation
 	skeleton = get_parent() # Parent must be a Skeleton node
 	skeleton.clear_bones_global_pose_override()
 	prev_pos = global_transform.origin
@@ -78,7 +78,7 @@ func _physics_process(delta) -> void:
 	############### Integrate velocity (Verlet integration) ##############	
 
 	# If not using gravity, apply force in the direction of the bone (so it always wants to point "forward")
-	var grav: Vector3 = (bone_transf_rest_world.basis *get_bone_forward_local()).normalized() * 9.81
+	var grav: Vector3 = (bone_transf_rest_world.basis * get_bone_forward_local()).normalized() * 9.81
 	var vel: Vector3 = (global_transform.origin - prev_pos) / delta
 
 	if use_gravity:
@@ -86,7 +86,7 @@ func _physics_process(delta) -> void:
 
 	grav *= stiffness
 	vel += grav 
-	vel -= vel * damping * delta  # Damping
+	vel -= vel * damping * delta # Damping
 
 	prev_pos = global_transform.origin
 	global_transform.origin += vel * delta
@@ -109,12 +109,12 @@ func _physics_process(delta) -> void:
 
 	var bone_forward_local: Vector3 = get_bone_forward_local()
 
-	# The axis+angle to rotate on, in local-to-bone space
+	# The axis + angle to rotate on, in local-to-bone space
 	var bone_rotate_axis: Vector3 = bone_forward_local.cross(diff_vec_local)
 	var bone_rotate_angle: float = acos(bone_forward_local.dot(diff_vec_local))
 
 	if bone_rotate_axis.length() < 1e-3:
-		return  # Already aligned, no need to rotate
+		return # Already aligned, no need to rotate
 
 	bone_rotate_axis = bone_rotate_axis.normalized()
 

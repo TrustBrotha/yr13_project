@@ -19,8 +19,8 @@ var offset = 0 # Used to make each part of the beam off centered to the previous
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Picks a sound to be played
-	var beam_sounds = [beam_sound_1,beam_sound_2]
-	var beam_sound = beam_sounds[randi_range(0,1)]
+	var beam_sounds = [beam_sound_1, beam_sound_2]
+	var beam_sound = beam_sounds[randi_range(0, 1)]
 	$beam_sound.stream = beam_sound
 	
 	# Resets the parts of the beam
@@ -57,14 +57,14 @@ func _process(delta):
 	
 	# If the ending sequence has started, Fade effects away
 	if end:
-		$mid_beam.process_material.color.a = lerp($mid_beam.process_material.color.a,0.0,0.1)
-		$inner_beam.process_material.color.a = lerp($inner_beam.process_material.color.a,0.0,0.1)
-		$outer_beam.process_material.color.a = lerp($outer_beam.process_material.color.a,0.0,0.1)
-		$start.process_material.color.a = lerp($start.process_material.color.a,0.0,0.1)
+		$mid_beam.process_material.color.a = lerp($mid_beam.process_material.color.a, 0.0, 0.1)
+		$inner_beam.process_material.color.a = lerp($inner_beam.process_material.color.a, 0.0, 0.1)
+		$outer_beam.process_material.color.a = lerp($outer_beam.process_material.color.a, 0.0, 0.1)
+		$start.process_material.color.a = lerp($start.process_material.color.a, 0.0, 0.1)
 		$small_dots.emitting = false
 		$sparks.emitting = false
-		$resonance_beam_main.scale.x = lerp($resonance_beam_main.scale.x,0.0,0.1)
-		$resonance_beam_main.scale.y = lerp($resonance_beam_main.scale.y,0.0,0.1)
+		$resonance_beam_main.scale.x = lerp($resonance_beam_main.scale.x, 0.0, 0.1)
+		$resonance_beam_main.scale.y = lerp($resonance_beam_main.scale.y, 0.0, 0.1)
 
 
 # Controls the animation for spinning parts of the beam
@@ -75,7 +75,7 @@ func animation(delta):
 	rot += spin_speed
 	var spine_offset = 0.0
 	for spine in spines:
-		spine.rotation.z = rot+spine_offset
+		spine.rotation.z = rot + spine_offset
 		spine_offset += 0.4 * spin_speed
 
 
@@ -103,7 +103,7 @@ func _on_start_main_beam_timeout():
 	
 	# Controls collision shape
 	var tween = get_tree().create_tween()
-	tween.tween_property($Area3D/CollisionShape3D,"position",Vector3(0,0,-30),0.6
+	tween.tween_property($Area3D/CollisionShape3D, "position", Vector3(0, 0, -30), 0.6
 	).set_trans(Tween.TRANS_LINEAR)
 
 

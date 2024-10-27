@@ -15,7 +15,7 @@ var can_jump = true
 
 func state_process(delta):
 	if character.velocity.y < 0:
-		character.animation_tree.set("parameters/jump_and_fall/transition_request","fall")
+		character.animation_tree.set("parameters/jump_and_fall/transition_request", "fall")
 	
 	# Apply gravity
 	character.velocity.y -= gravity_scale * gravity * delta
@@ -27,7 +27,7 @@ func state_process(delta):
 
 # Runs when entering state
 func on_enter():
-	character.animation_tree.set("parameters/state/transition_request","air")
+	character.animation_tree.set("parameters/state/transition_request", "air")
 	# Sets can jump to true for coyote jump
 	can_jump = true
 
@@ -39,7 +39,7 @@ func state_input(event : InputEvent):
 		if can_jump:
 			if character.velocity.y < 0:
 				character.jump()
-				can_jump=false
+				can_jump = false
 		
 		# If not in coyote time, buffers jump
 		# If jump buffered when hits the floor, jumps instantly (controlled in

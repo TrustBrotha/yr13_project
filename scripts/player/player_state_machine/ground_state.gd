@@ -19,38 +19,42 @@ func state_process(delta):
 	if character.cam_mode == "free":
 		if character.moving:
 			character.animation_tree.set(
-				"parameters/walk_transition/blend_amount",
-				lerp(character.animation_tree.get("parameters/walk_transition/blend_amount"),
-				1.0,0.1))
+				"parameters/walk_transition/blend_amount", 
+				lerp(character.animation_tree.get("parameters/walk_transition/blend_amount"), 
+				1.0, 0.1))
 		
 		else:
 			character.animation_tree.set(
-				"parameters/walk_transition/blend_amount",
-				lerp(character.animation_tree.get("parameters/walk_transition/blend_amount"),
-				0.0,0.1))
+				"parameters/walk_transition/blend_amount", 
+				lerp(character.animation_tree.get("parameters/walk_transition/blend_amount"), 
+				0.0, 0.1))
 	
 	# If camera is locked on, has 2 blendspace2d options for running or walking.
 	# The position in this 2d space controls how each movement animation blends together 
-	elif character.cam_mode=="fixed":
-		if character.running==true:
-			character.animation_tree.set("parameters/walk_or_run_locked_on/transition_request","run")
+	elif character.cam_mode == "fixed":
+		if character.running:
 			character.animation_tree.set(
-				"parameters/locked_on_running/blend_position",
-				lerp(character.animation_tree.get("parameters/locked_on_running/blend_position"),
-				character.input_dir,0.1))
+				"parameters/walk_or_run_locked_on/transition_request", "run")
+			
+			character.animation_tree.set(
+				"parameters/locked_on_running/blend_position", 
+				lerp(character.animation_tree.get("parameters/locked_on_running/blend_position"), 
+				character.input_dir, 0.1))
 		else:
-			character.animation_tree.set("parameters/walk_or_run_locked_on/transition_request","walk")
 			character.animation_tree.set(
-				"parameters/locked_on_walking/blend_position",
-				lerp(character.animation_tree.get("parameters/locked_on_walking/blend_position"),
-				character.input_dir,0.1))
+				"parameters/walk_or_run_locked_on/transition_request", "walk")
+			
+			character.animation_tree.set(
+				"parameters/locked_on_walking/blend_position", 
+				lerp(character.animation_tree.get("parameters/locked_on_walking/blend_position"), 
+				character.input_dir, 0.1))
 
 
 func on_enter():
 	# Sets animation state to ground
-	character.animation_tree.set("parameters/state/transition_request","ground")
+	character.animation_tree.set("parameters/state/transition_request", "ground")
 	# If there is a jump buffered, execute the jump
-	if character.wants_to_jump == true:
+	if character.wants_to_jump:
 		character.jump()
 		character.wants_to_jump = false
 
