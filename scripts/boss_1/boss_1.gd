@@ -11,6 +11,7 @@ const SPEED = 5
 # States which are accessed through this script file
 @export var blank_state_var : State
 @export var attack_state_var : State
+@export var idle_state_var : State
 
 # Instanced scenes 
 @export var parry_particle_var : PackedScene
@@ -49,7 +50,6 @@ var wants_to_chase = false # Used by idle state and set in attack state to make 
 # Player if they run away after an attack
 var half_health_attack_done = false # Makes the special attack when at half health only happen once
 
-
 func _ready():
 	# Checks whether cloth has been enabled in settings
 	if Global.cloth:
@@ -69,10 +69,6 @@ func create_cloak_bones():
 func _physics_process(delta):
 	# Useful print statement
 	#print(state_machine.current_state.name)
-	
-	# Checks if dead, if so stops most processes (blank state empty)
-	if Global.boss_health <= 0:
-		state_machine.current_state.next_state = blank_state_var
 	
 	# Calls to animate the cloth each frame
 	animate_cloak_roots()
@@ -155,7 +151,7 @@ func laser_attack(gap_time, beam_type):
 	
 	# Starts normal attack
 	await get_tree().create_timer(0.2 * Global.boss_speed).timeout
-	state_machine.current_state.next_state = attack_state_var
+	state_machine.current_state.next_state = idle_state_var
 
 
 # Controls different cases when boss hit
@@ -187,6 +183,13 @@ func _on_area_3d_area_entered(area):
 			particles.process_material.color = Color.RED
 			$particles.add_child(particles)
 			Global.boss_health -= Global.player_attack_damage * 1.0
+	
+	
+	# Checks if dead, if so stops most processes (blank state empty)
+	if Global.boss_health <= 0:
+		get_parent().death_effect(global_position)
+		global_position.y=-5.0
+		state_machine.current_state.next_state = blank_state_var
 
 
 # resets immunity

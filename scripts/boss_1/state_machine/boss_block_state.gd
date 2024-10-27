@@ -25,15 +25,14 @@ func state_process(delta):
 	# Else can be replace with other options
 	else:
 		if character.player.state_machine.current_state.combo == 2:
-			if decision == 0:
+			if decision <= 1:
 				next_state = dodge_back_state_var
 			else:
 				pass
 		
 		elif character.player.state_machine.current_state.combo == 3:
-			if decision == 0:
-				pass
-				
+			if decision == 2:
+				next_state = dodge_back_state_var
 			else:
 				attack(0.35)
 	
@@ -56,7 +55,7 @@ func on_enter():
 	# Starts blocking, takes half damage
 	character.blocking = true
 	# Makes decision
-	decision = randi_range(0, 2)
+	decision = randi_range(0, 3)
 	# Switchs to block animation state
 	character.animation_tree.set("parameters/state/transition_request", "block")
 

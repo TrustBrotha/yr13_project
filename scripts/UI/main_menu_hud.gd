@@ -35,8 +35,8 @@ var highlighted_resolution_mode = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	update_text()
-	update_audio_labels()
+	# Reads the saved settings and 
+	update_settings()
 
 
 # Moves a screen into or out of frame
@@ -78,6 +78,7 @@ func _on_credits_pressed():
 
 
 func _on_quit_pressed():
+	Global.save()
 	get_tree().quit()
 
 
@@ -136,10 +137,7 @@ func _on_change_display_type_pressed():
 
 func _on_apply_display_type_pressed():
 	Global.saved_window_mode = highlighted_window_mode
-	if highlighted_window_mode == 0: #windowed
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-	elif highlighted_window_mode == 1: #fullscreen
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	update_settings()
 
 
 func _on_change_border_mode_pressed():
@@ -150,10 +148,7 @@ func _on_change_border_mode_pressed():
 
 func _on_apply_border_mode_pressed():
 	Global.saved_border_mode = highlighted_border_mode
-	if highlighted_border_mode == 0:#disabled
-		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
-	elif highlighted_border_mode == 1:#enabled
-		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)
+	update_settings()
 
 
 func _on_resolution_mode_pressed():
@@ -164,7 +159,7 @@ func _on_resolution_mode_pressed():
 
 func _on_apply_resolution_pressed():
 	Global.saved_resolution_mode = highlighted_resolution_mode
-	DisplayServer.window_set_size(screen_sizes[highlighted_resolution_mode])
+	update_settings()
 
 
 func _on_change_fog_mode_pressed():
@@ -172,11 +167,7 @@ func _on_change_fog_mode_pressed():
 	highlighted_fog_mode %= 2
 	fog_type_text.text = fog_modes[highlighted_fog_mode]
 	Global.saved_fog_mode = highlighted_fog_mode
-	if highlighted_fog_mode == 0: #enabled
-		Global.fog = true
-	elif highlighted_fog_mode == 1: #enabled
-		Global.fog = false
-	get_parent().change_visuals()
+	update_settings()
 
 
 func _on_change_sdfgi_mode_pressed():
@@ -184,11 +175,7 @@ func _on_change_sdfgi_mode_pressed():
 	highlighted_sdfgi_mode %= 2
 	sdfgi_type_text.text = sdfgi_modes[highlighted_sdfgi_mode]
 	Global.saved_sdfgi_mode = highlighted_sdfgi_mode
-	if highlighted_sdfgi_mode == 0: #enabled
-		Global.sdfgi = true
-	elif highlighted_sdfgi_mode == 1: #enabled
-		Global.sdfgi = false
-	get_parent().change_visuals()
+	update_settings()
 
 
 func _on_change_cloth_mode_pressed():
@@ -196,15 +183,45 @@ func _on_change_cloth_mode_pressed():
 	highlighted_cloth_mode %= 2
 	cloth_type_text.text = cloth_modes[highlighted_cloth_mode]
 	Global.saved_cloth_mode = highlighted_cloth_mode
-	if highlighted_cloth_mode == 0: #enabled
-		Global.cloth = true
-	elif highlighted_cloth_mode == 1: #enabled
-		Global.cloth = false
+	update_settings()
 
 
 func _on_visual_settings_back_pressed():
 	update_text()
 	change_screen(screens[1])
+
+
+func update_settings():
+	if Global.saved_window_mode == 0: #windowed
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+	elif Global.saved_window_mode == 1: #fullscreen
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	
+	if Global.saved_border_mode == 0:#disabled
+		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
+	elif Global.saved_border_mode == 1:#enabled
+		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)
+	
+	DisplayServer.window_set_size(screen_sizes[Global.saved_resolution_mode])
+	
+	if Global.saved_fog_mode == 0: #enabled
+		Global.fog = true
+	elif Global.saved_fog_mode == 1: #enabled
+		Global.fog = false
+	
+	if Global.saved_sdfgi_mode == 0: #enabled
+		Global.sdfgi = true
+	elif Global.saved_sdfgi_mode == 1: #enabled
+		Global.sdfgi = false
+	
+	if Global.saved_cloth_mode == 0: #enabled
+		Global.cloth = true
+	elif Global.saved_cloth_mode == 1: #enabled
+		Global.cloth = false
+	
+	get_parent().change_visuals()
+	update_text()
+	update_audio_labels()
 
 
 func update_text():
@@ -222,6 +239,9 @@ func update_text():
 	
 	sdfgi_type_text.text = sdfgi_modes[Global.saved_sdfgi_mode]
 	highlighted_sdfgi_mode = Global.saved_sdfgi_mode
+	
+	cloth_type_text.text = cloth_modes[Global.saved_cloth_mode]
+	highlighted_cloth_mode = Global.saved_cloth_mode
 
 
 func _on_key_binds_back_pressed():

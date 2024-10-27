@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://cii7v3g4w22t3"]
+[gd_scene load_steps=13 format=3 uid="uid://cii7v3g4w22t3"]
 
 [ext_resource type="PackedScene" uid="uid://dt3wnnohrvbua" path="res://scenes/player.tscn" id="1_1nft5"]
 [ext_resource type="Script" path="res://scripts/test_world.gd" id="1_caq4c"]
 [ext_resource type="PackedScene" uid="uid://b1ssecsvg82dl" path="res://scenes/UI/hud.tscn" id="1_senue"]
 [ext_resource type="PackedScene" uid="uid://ghl1chlqvir3" path="res://scenes/beam/beam.tscn" id="2_itec1"]
 [ext_resource type="PackedScene" uid="uid://docshgc7ugibe" path="res://scenes/UI/main_menu_hud.tscn" id="2_sxyvx"]
+[ext_resource type="PackedScene" uid="uid://b7kae7qcc86x6" path="res://scenes/character_hit_particles.tscn" id="3_skjje"]
 [ext_resource type="PackedScene" uid="uid://tyuf3s0xarde" path="res://scenes/boss_1.tscn" id="4_1c4tb"]
 [ext_resource type="PackedScene" uid="uid://ee14rnbpi5rb" path="res://assets/world/boss_room.glb" id="5_vrs2a"]
 
@@ -34,6 +35,7 @@ edge_fade = 0.303143
 script = ExtResource("1_caq4c")
 beam_scene = ExtResource("2_itec1")
 menu = NodePath("main_menu_hud")
+particles_var = ExtResource("3_skjje")
 
 [node name="HUD" parent="." instance=ExtResource("1_senue")]
 
@@ -60,16 +62,16 @@ material = SubResource("FogMaterial_uel5l")
 
 [node name="boss_room" parent="." instance=ExtResource("5_vrs2a")]
 
-[node name="Cube" parent="boss_room" index="93"]
+[node name="Cube" parent="boss_room" index="94"]
 visible = false
 
-[node name="Cube_001" parent="boss_room" index="94"]
+[node name="Cube_001" parent="boss_room" index="95"]
 visible = false
 
-[node name="Cube_002" parent="boss_room" index="95"]
+[node name="Cube_002" parent="boss_room" index="96"]
 visible = false
 
-[node name="Cube_003" parent="boss_room" index="96"]
+[node name="Cube_003" parent="boss_room" index="97"]
 visible = false
 
 [node name="beam_spawns1" type="Node" parent="."]

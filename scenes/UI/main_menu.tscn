@@ -35,16 +35,16 @@ ui = NodePath("main_menu_hud")
 
 [node name="boss_room" parent="." instance=ExtResource("2_r1gps")]
 
-[node name="Cube" parent="boss_room" index="93"]
+[node name="Cube" parent="boss_room" index="94"]
 visible = false
 
-[node name="Cube_001" parent="boss_room" index="94"]
+[node name="Cube_001" parent="boss_room" index="95"]
 visible = false
 
-[node name="Cube_002" parent="boss_room" index="95"]
+[node name="Cube_002" parent="boss_room" index="96"]
 visible = false
 
-[node name="Cube_003" parent="boss_room" index="96"]
+[node name="Cube_003" parent="boss_room" index="97"]
 visible = false
 
 [node name="Sekiro_like_player_character" parent="." instance=ExtResource("3_r4u4m")]

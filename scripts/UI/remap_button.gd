@@ -2,6 +2,7 @@ extends Button
 
 # Controls which input will be changed
 @export var action : String
+
 # Controls when the button is listening
 var listening = false
 
@@ -29,6 +30,7 @@ func remap_key(event):
 	InputMap.action_erase_events(action)
 	InputMap.action_add_event(action, event)
 	text = "%s" %event.as_text()
+
 
 
 # If the button is toggled on, then the button is listening to inputs

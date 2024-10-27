@@ -9,6 +9,7 @@ var menu_open = false # Controls whether the menu is open or closed
 @onready var beam_spawns1 = $beam_spawns1.get_children()
 @onready var beam_spawns2 = $beam_spawns2.get_children()
 @export var menu : CanvasLayer
+@export var particles_var : PackedScene
 
 
 # Called when the node enters the scene tree for the first time.
@@ -55,3 +56,15 @@ func spawn_beams(mode):
 func change_visuals():
 	$WorldEnvironment.environment.volumetric_fog_enabled = Global.fog
 	$WorldEnvironment.environment.sdfgi_enabled = Global.sdfgi
+
+
+func death_effect(last_position):
+	var particles = particles_var.instantiate()
+	particles.amount = 100
+	particles.emitting = true
+	particles.process_material.color = Color(0.2,0.2,0.2,1.0)
+	particles.scale = Vector3(2.0, 2.0, 2.0)
+	add_child(particles)
+	particles.global_position = last_position
+	particles.global_position.y = last_position.y + 1.0
+	Global.boss_health -= Global.player_attack_damage * 1.0

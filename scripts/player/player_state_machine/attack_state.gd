@@ -30,7 +30,6 @@ var can_combo = false
 var combo_time = 0.15
 # Controls which attack is used
 var combo = 1
-
 # Assigns the sounds used so a variable to be accessed through code
 var swing_sounds = [
 	load("res://sfx/player/player_swing_1.wav"), 
